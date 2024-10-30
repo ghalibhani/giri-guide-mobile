@@ -80,7 +80,11 @@ export default function RegisterScreen() {
       return;
     }
 
-    console.log(formData);
+    if (formData.password.length < 6) {
+      alert("Password harus lebih dari 6 karakter");
+      return;
+    }
+    alert("Akun berhasil dibuat");
   };
 
   const handleNavigateToLogin = () => {
