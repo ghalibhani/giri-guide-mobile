@@ -80,8 +80,8 @@ export default function RegisterScreen() {
       return;
     }
 
-    if (formData.password.length < 6) {
-      alert("Password harus lebih dari 6 karakter");
+    if (formData.password.length < 8) {
+      alert("Password harus lebih dari 8 karakter");
       return;
     }
     alert("Akun berhasil dibuat");
@@ -108,7 +108,7 @@ export default function RegisterScreen() {
           submitButtonText='Daftar'
         />
 
-        <View className='flex-row justify-center mt-5'>
+        <View className='flex-row justify-center mt-[16]'>
           <Text>Sudah punya akun?</Text>
           <TouchableOpacity onPress={handleNavigateToLogin}>
             <Text className='ml-1 font-semibold text-blue-500'>

@@ -105,13 +105,13 @@ const ReusableInput = ({ fields, onSubmit, submitButtonText = "Submit" }) => {
                 keyboardType={field.keyboardType}
                 secureTextEntry={
                   field.secureTextEntry && !showPassword[field.name]
-                } // Menggunakan status untuk mengatur secureTextEntry
+                }
                 multiline={field.multiline || false}
                 onChangeText={(value) => handleChange(field.name, value)}
                 value={formData[field.name]}
                 autoCapitalize='none'
               />
-              {field.secureTextEntry && ( // Tambahkan tombol untuk toggle password
+              {field.secureTextEntry && (
                 <TouchableOpacity
                   onPress={() => handleTogglePasswordVisibility(field.name)}
                   className='absolute right-4 top-[50%] transform -translate-y-1/2'

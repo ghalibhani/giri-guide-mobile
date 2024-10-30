@@ -1,10 +1,26 @@
-import { View, Image, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Image, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { useState } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
+import ReusableInput from "../components/ReusableForm";
 
 export default function LoginScreen() {
+  const fields = [
+    {
+      name: "email",
+      label: "Email Address",
+      placeholder: "Email Address",
+      keyboardType: "email-address",
+    },
+    {
+      name: "password",
+      label: "Password",
+      placeholder: "Password",
+      secureTextEntry: true,
+    },
+  ];
+
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigation();
 
@@ -16,6 +32,19 @@ export default function LoginScreen() {
     setShowPassword(!showPassword);
   };
 
+  const handleLogin = (formData) => {
+    if (Object.keys(formData).length === 0) {
+      alert("Silakan isi semua field terlebih dahulu");
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      alert("Password harus lebih dari 8 karakter");
+      return;
+    }
+    alert("Akun berhasil dibuat");
+  };
+
   return (
     <View className='flex-1 justify-center p-[24] bg-white'>
       <Image
@@ -25,41 +54,12 @@ export default function LoginScreen() {
       <Text className='text-2xl font-bold mb-5'>
         Selamat Datang di GiriGuide
       </Text>
-      {/* form */}
-      <Text className='mb-2 text-left'>Email Address</Text>
-      <TextInput
-        className='border border-gray-300 p-3 mb-4 w-full rounded-xl'
-        placeholder='name@email.com'
-        keyboardType='email-address'
-        autoCapitalize='none'
+
+      <ReusableInput
+        fields={fields}
+        onSubmit={handleLogin}
+        submitButtonText='Login'
       />
-
-      <Text className='mb-2 text-left'>Password</Text>
-      <View className='relative mb-4 w-full'>
-        <TextInput
-          className='border border-gray-300 p-3 mb-4 w-full rounded-xl'
-          placeholder='******************'
-          secureTextEntry={!showPassword}
-        />
-        <TouchableOpacity
-          onPress={togglePasswordVisibility}
-          className='absolute right-3 top-[15]'
-        >
-          <Text className='text-blue-500'>
-            {showPassword ? (
-              <Entypo name='eye' size={20} color='black' />
-            ) : (
-              <Entypo name='eye-with-line' size={20} color='black' />
-            )}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <Text className='mb-[20]'>Forgot Password?</Text>
-
-      <TouchableOpacity className='bg-blue-500 h-14 w-full justify-center items-center rounded-xl'>
-        <Text className='text-white'>Login</Text>
-      </TouchableOpacity>
 
       <View className='flex-row items-center justify-center mt-[16]'>
         <Text>Belum punya akun?</Text>
