@@ -64,7 +64,9 @@ export default function LoginScreen() {
       <View className='flex-row items-center justify-center mt-[16]'>
         <Text>Belum punya akun?</Text>
         <TouchableOpacity onPress={navigateToRegister}>
-          <Text className='text-blue-500 ml-1'>Daftar sekarang</Text>
+          <Text className='text-blue-500 font-semibold ml-1'>
+            Daftar sekarang
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
