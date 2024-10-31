@@ -28,8 +28,10 @@ export default function DetailTourGuide() {
   return (
     <ScrollView>
       <View className='flex-1' style={{ backgroundColor: "#f8f8f8" }}>
-        <TouchableOpacity className='flex justify-center items-center bg-ivory border border-soil w-8 h-8 rounded-full absolute top-5 left-6 z-10'>
-          <Ionicons name='chevron-back' size={15} color='black' />
+        <TouchableOpacity className='bg-ivory w-[30] h-[30] absolute top-5 left-6 z-10 items-center justify-center rounded-full'>
+          <View className='justify-center items-center'>
+            <Ionicons name={"chevron-back"} size={15} color={"#503A3A"} />
+          </View>
         </TouchableOpacity>
         <Image
           className='h-[180] w-screen rounded-b-3xl'
