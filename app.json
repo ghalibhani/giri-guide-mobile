@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "myapp",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -23,11 +24,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "assets": [
-      "./assets/fonts/"
-    ],
-    "plugins": [
-      "expo-router"
-    ]
+    "assets": ["./assets/fonts/"],
+    "plugins": ["expo-router"]
   }
 }
