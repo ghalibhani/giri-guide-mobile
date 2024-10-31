@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ProfileScreen from "./screen/ProfileScreen";
 import HeaderBackProfile from "./components/HeaderBackProfile";
 import ProfileInfoScreen from "./screen/ProfileInfoScreen";
+import AboutScreen from "./screen/AboutScreen";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -17,7 +18,7 @@ export default function App() {
           <Stack.Screen
             name='Profile'
             options={{ headerShown: false }}
-            component={ProfileInfoScreen}
+            component={AboutScreen}
           />
           <Stack.Screen
             name='Login'
