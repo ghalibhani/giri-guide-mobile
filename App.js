@@ -13,6 +13,8 @@ import StepOrderScreen from "./screen/StepOrderScreen";
 import DetailTourGuide from "./screen/DetailTourGuide";
 import ListReviewGuide from "./screen/ListReviewGuide";
 import { useFonts } from "expo-font";
+import SewaTourGuideTigaTahap from "./screen/SewaTourGuideTigaTahap";
+import SewaTourGuideTahapStart from "./screen/SewaTourGuideTahapStart";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -36,15 +38,15 @@ export default function App() {
     <SafeAreaView className='flex-1'>
       <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen
-            name='ListReviewGuide'
-            component={ListReviewGuide}
-            options={{ headerShown: false }}
-          /> */}
           <Stack.Screen
-            name='DetailTourGuide'
+            name='sewa1'
             options={{ headerShown: false }}
-            component={DetailTourGuide}
+            component={SewaTourGuideTahapStart}
+          />
+          <Stack.Screen
+            name='SewaTourGuideTigaTahap'
+            options={{ headerShown: false }}
+            component={SewaTourGuideTigaTahap}
           />
           <Stack.Screen
             name='Login'
