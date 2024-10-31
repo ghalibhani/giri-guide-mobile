@@ -54,26 +54,26 @@ export default function DetailTourGuide() {
             <Text className='text-plum text-base'>4,0 (12)</Text>
           </View>
 
-          <Text className='text-lg text-soil font-bold mt-5 mb-4'>
+          <Text className='text-lg text-soil font-ibold mt-5 mb-4'>
             Nama Tour Guide
           </Text>
-          <Text className='text-evergreen'>
+          <Text className='text-evergreen text-sm font-iregular'>
             Deskripsi yang benar benar singkat. Ini harus dibatasi maksimal
             karakternya
           </Text>
         </View>
 
         <View className='bg-white rounded-3xl my-4 p-6'>
-          <Text className='text-evergreen'>
-            <Text className='font-bold'>475 orang</Text> sudah pernah dipandu
-            oleh <Text className='font-bold'>Nama Tour Guide </Text>
+          <Text className='text-evergreen font-iregular text-base'>
+            <Text className='font-ibold'>475 orang</Text> sudah pernah dipandu
+            oleh <Text className='font-ibold'>Nama Tour Guide </Text>
             dalam mendaki gunung.
           </Text>
         </View>
 
         {/* titik pendakian yg dikuasai */}
         <View className='bg-white rounded-3xl p-6'>
-          <Text className='text-lg text-soil font-bold'>
+          <Text className='text-lg text-soil font-ibold'>
             Titik Pendakian yang Dikuasai
           </Text>
 
@@ -110,10 +110,12 @@ export default function DetailTourGuide() {
 
         {/* rating ulasan */}
         <View className='bg-white rounded-3xl my-4 p-6'>
-          <Text className='text-lg text-soil font-bold'>Rating dan Ulasan</Text>
+          <Text className='text-lg text-soil font-ibold'>
+            Rating dan Ulasan
+          </Text>
 
           <View className='flex flex-row gap-6 items-center mt-4'>
-            <Text className='text-5xl font-semibold text-evergreen'>4,5</Text>
+            <Text className='text-5xl font-isemibold text-evergreen'>4,5</Text>
             <View>
               <View className='flex flex-row gap-2 mb-2'>
                 <Ionicons name='star-outline' size={22} color='black' />
@@ -122,7 +124,9 @@ export default function DetailTourGuide() {
                 <Ionicons name='star-outline' size={22} color='black' />
                 <Ionicons name='star-outline' size={22} color='black' />
               </View>
-              <Text className='text-evergreen'>26 Ulasan</Text>
+              <Text className='text-evergreen text-sm font-iregular'>
+                26 Ulasan
+              </Text>
             </View>
           </View>
 
@@ -132,13 +136,15 @@ export default function DetailTourGuide() {
               source={require("../assets/profile-image.jpg")}
             />
             <View>
-              <Text className='text-soil font-bold mb-1'>Nama reviewer</Text>
-              <Text className='text-evergreen opacity-80 font-bold'>
+              <Text className='text-soil text-sm font-ibold mb-1'>
+                Nama reviewer
+              </Text>
+              <Text className='text-evergreen opacity-80 text-sm font-isemibold'>
                 19 Okt 2024
               </Text>
             </View>
           </View>
-          <Text className='text-evergreen mt-5'>
+          <Text className='text-evergreen font-iregular text-sm mt-5'>
             Tour guide akan memandu Anda di titik pendakian pilihan, memberikan
             rute yang aman dan tips mendaki. Nikmati pengalaman mendaki yang
             menyenangkan, lengkap dengan informasi seputar jalur, alam, dan
@@ -146,7 +152,7 @@ export default function DetailTourGuide() {
           </Text>
           <View className='bg-borderCustom h-[1] my-5'></View>
           <TouchableOpacity>
-            <Text className='text-evergreen text-right'>
+            <Text className='text-evergreen font-isemibold text-sm text-right'>
               Lihat Selengkapnya
             </Text>
           </TouchableOpacity>
@@ -155,48 +161,58 @@ export default function DetailTourGuide() {
         {/* rincian biaya */}
         <View className='bg-white rounded-3xl p-6'>
           <View className='bg-ivory py-4 px-6 rounded-verylarge'>
-            <Text className='text-soil'>
+            <Text className='text-soil text-sm font-iregular'>
               Tour guide ini menyediakan{" "}
-              <Text className='font-bold'>10 porter</Text> (ini tidak wajib
+              <Text className='font-ibold'>10 porter</Text> (ini tidak wajib
               dipilih)
             </Text>
           </View>
-          <Text className='text-lg font-bold my-4 text-soil'>
+          <Text className='text-lg font-ibold my-4 text-soil'>
             Rincian Biaya
           </Text>
           <View className='bg-borderCustom h-[1]'></View>
           <View className='flex flex-row justify-between gap-2 mt-4'>
-            <Text className='text-thistle'>Jasa tour guide / hari</Text>
-            <Text className='text-soil'>Rp. 130.000</Text>
+            <Text className='text-thistle font-iregular text-sm'>
+              Jasa tour guide / hari
+            </Text>
+            <Text className='text-soil font-iregular text-sm'>Rp. 130.000</Text>
           </View>
           <View className='flex flex-row justify-between gap-2 mt-4'>
-            <Text className='text-thistle'>Uang masuk gunung / orang</Text>
-            <Text className='text-soil'>Rp. 30.000</Text>
+            <Text className='text-thistle font-iregular text-sm'>
+              Uang masuk gunung / orang
+            </Text>
+            <Text className='text-soil font-iregular text-sm'>Rp. 30.000</Text>
           </View>
           <View className='flex flex-row justify-between gap-2 mt-4'>
-            <Text className='text-thistle'>Pengurusan SIMAKSI / orang</Text>
-            <Text className='text-soil'>Rp. 100.000</Text>
+            <Text className='text-thistle font-iregular text-sm'>
+              Pengurusan SIMAKSI / orang
+            </Text>
+            <Text className='text-soil font-iregular text-sm'>Rp. 100.000</Text>
           </View>
           <View className='bg-borderCustom h-[1] my-4'></View>
           {/* total */}
           <View className='flex flex-row justify-between gap-2'>
-            <Text className='font-bold text-evergreen'>Total</Text>
-            <Text className='font-bold text-evergreen'>Rp. 1.000.000</Text>
+            <Text className='font-ibold text-sm text-evergreen'>Total</Text>
+            <Text className='font-ibold text-sm text-evergreen'>
+              Rp. 1.000.000
+            </Text>
           </View>
-          <Text className='mt-6 mb-5 text-evergreen'>
+          <Text className='mt-6 mb-5 text-sm font-iregular text-evergreen'>
             Berikut merupakan porter maupun tambahan biaya jasa tour guide
             apabila ada tambahan orang. Satu orang porter hanya mampu mengangkat
             beban maksimal 25 kg.
           </Text>
           <View className='flex flex-row justify-between gap-2'>
-            <Text className='w-2/3 text-thistle'>
+            <Text className='w-2/3 text-thistle text-sm font-iregular'>
               Jasa tour guide per penambahan satu orang calon pendaki
             </Text>
-            <Text className='text-soil'>Rp. 50.000</Text>
+            <Text className='text-soil text-sm font-iregular'>Rp. 50.000</Text>
           </View>
           <View className='flex flex-row justify-between gap-2 mt-4'>
-            <Text className=' text-thistle'>Jasa per porter</Text>
-            <Text className='text-soil'>Rp. 30.000</Text>
+            <Text className=' text-thistle font-iregular text-sm'>
+              Jasa per porter
+            </Text>
+            <Text className='text-soil text-sm font-iregular'>Rp. 30.000</Text>
           </View>
         </View>
       </View>

@@ -5,6 +5,7 @@ import LoginScreen from "./screen/LoginScreen";
 import RegisterScreen from "./screen/RegisterScreen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DetailTourGuide from "./screen/DetailTourGuide";
+import ListReviewGuide from "./screen/ListReviewGuide";
 import { useFonts } from "expo-font";
 
 export default function App() {
@@ -30,6 +31,16 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           {/* <Stack.Screen
+            name='ListReviewGuide'
+            component={ListReviewGuide}
+            options={{ headerShown: false }}
+          /> */}
+          <Stack.Screen
+            name='DetailTourGuide'
+            options={{ headerShown: false }}
+            component={DetailTourGuide}
+          />
+          <Stack.Screen
             name='Login'
             options={{ headerShown: false }}
             component={LoginScreen}
@@ -38,11 +49,6 @@ export default function App() {
             name='Register'
             options={{ headerShown: false }}
             component={RegisterScreen}
-          /> */}
-          <Stack.Screen
-            name='DetailTourGuide'
-            options={{ headerShown: false }}
-            component={DetailTourGuide}
           />
         </Stack.Navigator>
       </NavigationContainer>
