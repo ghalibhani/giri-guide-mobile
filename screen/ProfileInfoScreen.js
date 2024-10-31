@@ -6,7 +6,7 @@ import ButtonLogout from "../components/ButtonLogout";
 export default function ProfileInfoScreen() {
 	return (
 		<View className="flex-1 px-6">
-			<HeaderBackProfile />
+			<HeaderBackProfile text={"Informasi Personal"} />
 			<View className="flex-col gap-3">
 				<ProfileInfo label={"NIK"} value={"1234567890"} nameIcon={"card-outline"} />
 				<ProfileInfo label={"Nama Lengkap"} value={"John Doe"} nameIcon={"person-outline"}/>

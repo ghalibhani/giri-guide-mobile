@@ -4,7 +4,7 @@ import HeaderBackProfile from "../components/HeaderBackProfile";
 export default function AboutScreen() {
 	return (
 		<View className="flex-1 px-6 ">
-			<HeaderBackProfile />
+			<HeaderBackProfile text={"Tentang Aplikasi"} />
 			<View className="px-6 py-[30]  mb-3 flex-1 bg-white rounded-[30] items-center">
 				<Image source={require("../assets/logo-dummy.jpg")} className="w-[150] h-[150] mb-[30]" />
 				<Text className="text-evergreen">

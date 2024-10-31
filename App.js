@@ -8,6 +8,8 @@ import ProfileScreen from "./screen/ProfileScreen";
 import HeaderBackProfile from "./components/HeaderBackProfile";
 import ProfileInfoScreen from "./screen/ProfileInfoScreen";
 import AboutScreen from "./screen/AboutScreen";
+import ChangePasswordScreen from "./screen/ChangePasswordScreen";
+import StepOrderScreen from "./screen/StepOrderScreen";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -15,11 +17,6 @@ export default function App() {
     <SafeAreaView className='flex-1'>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
-            name='Profile'
-            options={{ headerShown: false }}
-            component={AboutScreen}
-          />
           <Stack.Screen
             name='Login'
             options={{ headerShown: false }}
