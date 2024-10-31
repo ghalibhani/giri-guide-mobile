@@ -15,6 +15,8 @@ import ListReviewGuide from "./screen/ListReviewGuide";
 import { useFonts } from "expo-font";
 import SewaTourGuideTigaTahap from "./screen/SewaTourGuideTigaTahap";
 import SewaTourGuideTahapStart from "./screen/SewaTourGuideTahapStart";
+import HomeScreen from "./screen/HomeScreen";
+import SearchScreen from "./screen/SearchScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -39,14 +41,14 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name='sewa1'
+            name='Home'
+            component={HomeScreen}
             options={{ headerShown: false }}
-            component={SewaTourGuideTahapStart}
           />
           <Stack.Screen
-            name='SewaTourGuideTigaTahap'
+            name='Search'
+            component={SearchScreen}
             options={{ headerShown: false }}
-            component={SewaTourGuideTigaTahap}
           />
           <Stack.Screen
             name='Login'
