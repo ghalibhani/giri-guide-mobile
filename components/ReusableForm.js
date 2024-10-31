@@ -4,7 +4,12 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import Entypo from "@expo/vector-icons/Entypo";
 
-const ReusableInput = ({ fields, onSubmit, submitButtonText = "Submit" }) => {
+const ReusableInput = ({
+  fields,
+  onSubmit,
+  submitButtonText = "Submit",
+  buttonColor = "bg-blue-500",
+}) => {
   const [formData, setFormData] = React.useState({});
   const [selectedField, setSelectedField] = React.useState(null);
   const [openDatePicker, setOpenDatePicker] = React.useState(false);
@@ -130,7 +135,7 @@ const ReusableInput = ({ fields, onSubmit, submitButtonText = "Submit" }) => {
         </View>
       ))}
       <TouchableOpacity
-        className='bg-blue-500 h-14 w-full justify-center items-center rounded-xl'
+        className={`${buttonColor} h-14 w-full justify-center items-center rounded-xl`}
         onPress={handleSubmit}
       >
         <Text className='text-white'>{submitButtonText}</Text>
