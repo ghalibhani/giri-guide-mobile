@@ -2,6 +2,7 @@ import { Button, View } from "react-native";
 import HeaderBackProfile from "../../../components/HeaderBackProfile";
 import ProfileInfo from "../../../components/ProfileInfo";
 import ButtonLogout from "../../../components/ButtonLogout";
+import { router } from "expo-router";
 
 export default function ProfileInfoScreen() {
   return (
@@ -38,7 +39,10 @@ export default function ProfileInfoScreen() {
           value={"QpFQ5@example.com"}
           nameIcon={"mail-outline"}
         />
-        <ButtonLogout children={"Logout"} />
+        <ButtonLogout
+          onPress={() => router.replace("/login")}
+          children={"Logout"}
+        />
       </View>
     </View>
   );
