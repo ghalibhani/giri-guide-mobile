@@ -13,7 +13,7 @@ export default function ContainerProfile() {
 			</TouchableOpacity>
 			<Text className='mt-[10px] text-thistle text-[12px] font-light'>Email</Text>
 			<Text className='mt-[8px] text-evergreen text-[14px] font-bold'>Full Name</Text>
-			<Text className='mt-[8px] text-thistle text-[12px] font-light'>Bergabung pada Januari 2024</Text>
+			<Text className='mt-[8px] text-thistle text-[12px] font-light'>Bergabung pada Januari 2025</Text>
 		</View>
 	)
 }
