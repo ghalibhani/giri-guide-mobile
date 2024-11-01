@@ -10,7 +10,7 @@ import FixedHarga from '../../../components/bookingTourGuide/FixedHarga'
 import CatatanUntukTourGuide from '../../../components/miniComponent/CatatanUntukTourGuide'
 import TipsMeetingWithGuide from '../../../components/transaksiCustomer/TipsMeetingWithGuide'
 
-const transDoneRejected = ({transDetail}) => {
+const TransactionDoneRejectedScreen = ({transDetail}) => {
     const dummy = moment(new Date()).format('DD MMM YYYY')
 
     return (
@@ -73,4 +73,4 @@ const transDoneRejected = ({transDetail}) => {
     )
 }
 
-export default transDoneRejected
+export default TransactionDoneRejectedScreen

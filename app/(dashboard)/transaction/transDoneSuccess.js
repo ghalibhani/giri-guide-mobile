@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native';
 import moment from 'moment'
 import CustomButton from '../../../components/miniComponent/CustomButton'
 
-const transDoneSuccess = ({transDetail}) => {
+const TransactionDoneSuccessScreen = ({transDetail}) => {
   const dummy = moment(new Date()).format('DD MMM YYYY')
 
   const continueHandling = () => {
@@ -75,4 +75,4 @@ const transDoneSuccess = ({transDetail}) => {
   )
 }
 
-export default transDoneSuccess
+export default TransactionDoneSuccessScreen

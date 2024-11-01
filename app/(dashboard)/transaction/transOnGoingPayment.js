@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native';
 import moment from 'moment'
 import CustomButton from '../../../components/miniComponent/CustomButton'
 
-const transOnGoingPayment = ({transDetail}) => {
+const TransactionOnGoingPaymentScreen = ({transDetail}) => {
     const startDate = new Date()
     const endDate = new Date("2024-11-03T18:55:00")
 
@@ -106,4 +106,4 @@ const transOnGoingPayment = ({transDetail}) => {
     )
 }
 
-export default transOnGoingPayment
+export default TransactionOnGoingPaymentScreen

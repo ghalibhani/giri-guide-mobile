@@ -10,7 +10,7 @@ import FixedHarga from '../../../components/bookingTourGuide/FixedHarga'
 import CatatanUntukTourGuide from '../../../components/miniComponent/CatatanUntukTourGuide'
 import TipsMeetingWithGuide from '../../../components/transaksiCustomer/TipsMeetingWithGuide'
 
-const transOnGoingUpcoming = ({transDetail}) => {
+const TransactionOnGoingUpcomingScreen = ({transDetail}) => {
     const dummy = moment(new Date()).format('DD MMM YYYY')
 
     return (
@@ -66,4 +66,4 @@ const transOnGoingUpcoming = ({transDetail}) => {
     )
 }
 
-export default transOnGoingUpcoming
+export default TransactionOnGoingUpcomingScreen

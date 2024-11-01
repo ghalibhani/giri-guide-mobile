@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native';
 import moment from 'moment'
 import CustomToastWarning from '../../../components/miniComponent/CustomToastWarning'
 
-const transOnGoingApprove = () => {
+const TransactionOnGoingApproveScreen = () => {
     const startDate = new Date()
     const endDate = new Date("2024-11-03T18:55:00")
 
@@ -102,4 +102,4 @@ const transOnGoingApprove = () => {
     )
 }
 
-export default transOnGoingApprove
+export default TransactionOnGoingApproveScreen
