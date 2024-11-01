@@ -14,6 +14,7 @@ const TourGuideCard = ({
   price,
   onPressDetail,
   imageUrl,
+  buttonRating,
 }) => {
   const getImageSource = () => {
     if (imageUrl) {
@@ -47,10 +48,11 @@ const TourGuideCard = ({
         </View>
         <CustomButton
           title='Lihat Detail'
-          customStyle='bg-soil justify-center px-6'
+          customStyle='bg-evergreen justify-center px-6'
           buttonHandling={onPressDetail}
         />
       </View>
+      {buttonRating}
     </View>
   );
 };
