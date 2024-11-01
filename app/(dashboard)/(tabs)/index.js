@@ -1,10 +1,12 @@
-import { FlatList, View, Text } from "react-native";
+import { FlatList, View, Text, TouchableOpacity } from "react-native";
 import OverFlowCarousel from "../../../components/OverFlowCarousel";
 import HeaderHome from "../../../components/HeaderHome";
 import SlideCarousel from "../../../components/SlideCarousel";
-import { Link } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+
   const data = [
     {
       id: 1,
@@ -76,13 +78,20 @@ const HomeScreen = () => {
     return (
       <FlatList
         data={[1]}
-        className="bg-[#f8f8f8]"
+        className='bg-[#f8f8f8]'
         renderItem={() => (
           <View>
-            <HeaderHome />
-            <Link href="/profile/about">
-              <Text>loncat</Text>
+            <HeaderHome
+              fullName={"John Doe"}
+              onPress={() => navigation.navigate("search/search")}
+            />
+
+            {/* test button */}
+            <Link href='/transaction/transCustomer'>
+              <Text className='text-3xl font-bold'>loncat</Text>
             </Link>
+            {/* test button */}
+
             <SlideCarousel data={data} />
             <OverFlowCarousel
               data={data}

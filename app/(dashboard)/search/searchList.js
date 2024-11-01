@@ -1,7 +1,7 @@
 import { View } from "react-native";
-import HeaderSearching from "../components/HeaderSearching";
-import TourGuideSearchedList from "../components/TourGuideSearchedList";
-const Searching = () => {
+import HeaderSearching from "../../../components/HeaderSearching";
+import TourGuideSearchedList from "../../../components/TourGuideSearchedList";
+const SearchListScreen = () => {
   const tourGuides = [
     {
       id: 1,
@@ -48,4 +48,4 @@ const Searching = () => {
   );
 };
 
-export default Searching;
+export default SearchListScreen;

@@ -1,11 +1,11 @@
 import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import MountainButtonGuide from "../components/MountainButtonGuide";
-import ClimbingPointButton from "../components/ClimbingPointButton";
+import MountainButtonGuide from "../../../components/MountainButtonGuide";
+import ClimbingPointButton from "../../../components/ClimbingPointButton";
 import { FlatList } from "react-native";
 
-export default function DetailTourGuide() {
+export default function DetailTourGuideScreen() {
   const mountains = [
     {
       id: 1,
@@ -35,11 +35,11 @@ export default function DetailTourGuide() {
         </TouchableOpacity>
         <Image
           className='h-[180] w-screen rounded-b-3xl'
-          source={require("../assets/gunung-tour-guide.jpg")}
+          source={require("../../../assets/gunung-tour-guide.jpg")}
         />
         <Image
           className='w-24 h-24 absolute top-36 left-10 z-10 rounded-full'
-          source={require("../assets/profile-image.jpg")}
+          source={require("../../../assets/profile-image.jpg")}
         />
 
         <View className='p-6 rounded-b-3xl bg-white'>
@@ -133,7 +133,7 @@ export default function DetailTourGuide() {
           <View className='flex flex-row items-center gap-5 mt-6'>
             <Image
               className='w-10 h-10 rounded-full'
-              source={require("../assets/profile-image.jpg")}
+              source={require("../../../assets/profile-image.jpg")}
             />
             <View>
               <Text className='text-soil text-sm font-ibold mb-1'>
