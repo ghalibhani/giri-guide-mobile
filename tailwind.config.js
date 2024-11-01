@@ -24,6 +24,9 @@ module.exports = {
         cantelope: "#F9D4DB",
         grayCustom: "#F8F8F8",
         borderCustom: "#E4E6EA",
+        warningHover: "#E86339",
+        warningMedium: "#FFB37C",
+        warningLight: "#FFF4E4"
       },
       fontFamily: {
         ithin: ["Inter-Thin", "sans-serif"],

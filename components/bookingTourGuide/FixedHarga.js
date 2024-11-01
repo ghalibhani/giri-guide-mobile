@@ -3,7 +3,7 @@ import React from 'react'
 
 const FixedHarga = ({detailHarga}) => {
     return (
-        <View className="gap-[15] bg-white px-6 py-5 rounded-verylarge">
+        <View className="gap-[15] bg-white px-6 py-6 rounded-verylarge">
             <View className="flex-row justify-between items-center">
                 <View>
                     <Text className="font-iregular text-thistle text-sm">Jasa tour guide 2 hari </Text>
