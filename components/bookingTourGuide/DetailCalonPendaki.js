@@ -36,7 +36,7 @@ const DetailCalonPendaki = ({continueHandling}) => {
                             </View>
 
                             <TouchableOpacity className="w-[45px] align-middle justify-center border- px-4 py-2">
-                                <Octicons name="pencil" color={"#45594E"} size={20} />
+                                <Ionicons name="pencil" color={"#45594E"} size={20} />
                             </TouchableOpacity>
 
                         </View>
@@ -57,7 +57,7 @@ const DetailCalonPendaki = ({continueHandling}) => {
                             </View>
 
                             <TouchableOpacity onPress={showModalPendaki} className="w-[45px] align-middle justify-center border- px-4 py-2">
-                                <Octicons name="pencil" color={"#45594E"} size={20} />
+                                <Ionicons name="pencil" color={"#45594E"} size={20} />
                             </TouchableOpacity>
 
                         </View>

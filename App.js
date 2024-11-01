@@ -17,6 +17,7 @@ import SewaTourGuideTigaTahap from "./screen/SewaTourGuideTigaTahap";
 import SewaTourGuideTahapStart from "./screen/SewaTourGuideTahapStart";
 import HomeScreen from "./screen/HomeScreen";
 import SearchScreen from "./screen/SearchScreen";
+import TransactionCustomerScreen from "./screen/TransactionCustomerScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -40,6 +41,21 @@ export default function App() {
     <SafeAreaView className='flex-1'>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name='TransactionCustomer'
+            component={TransactionCustomerScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='SewaTourGuide'
+            component={SewaTourGuideTahapStart}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='SewaTourGuideTigaTahap'
+            component={SewaTourGuideTigaTahap}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name='Home'
             component={HomeScreen}
