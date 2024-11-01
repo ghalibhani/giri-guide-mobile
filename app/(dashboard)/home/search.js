@@ -1,11 +1,9 @@
-import { FlatList, StatusBar, View } from "react-native";
+import { StatusBar } from "react-native";
+import HeaderSearch from "../../../components/HeaderSearch";
 import OverFlowCarousel from "../../../components/OverFlowCarousel";
-import HeaderHome from "../../../components/HeaderHome";
-import SlideCarousel from "../../../components/SlideCarousel";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-
-const HomeScreen = () => {
+import { SafeAreaView } from "react-native-safe-area-context";
+const SearchScreen = () => {
   const data = [
     {
       id: 1,
@@ -78,63 +76,39 @@ const HomeScreen = () => {
       description: "Description 10",
     },
   ];
+  const [hidden, setHidden] = useState(false);
+  const [statusBarStyle, setStatusBarStyle] = useState("default");
+  const [statusBarTransition, setStatusBarTransition] = useState("fade");
 
-  try {
-    const [hidden, setHidden] = useState(false);
-    const [statusBarStyle, setStatusBarStyle] = useState("default");
-    const [statusBarTransition, setStatusBarTransition] = useState("fade");
+  const handleScroll = (event) => {
+    const { nativeEvent } = event;
+    const { contentOffset } = nativeEvent;
+    const { y } = contentOffset;
+    if (y > 100) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  };
 
-    const handleScroll = (event) => {
-      const { nativeEvent } = event;
-      const { contentOffset } = nativeEvent;
-      const { y } = contentOffset;
-      if (y > 100) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
-    };
-
-    return (
-      <SafeAreaView>
-        <StatusBar
-          animated={true}
-          backgroundColor="#503a3a"
-          barStyle={statusBarStyle}
-          showHideTransition={statusBarTransition}
-          hidden={hidden}
-          style="light"
-        />
-        <FlatList
-          data={[1]}
-          className="bg-[#f8f8f8]"
-          renderItem={() => (
-            <View>
-              <HeaderHome />
-              <SlideCarousel data={data} />
-              <OverFlowCarousel
-                data={data}
-                title={"Jelajahi Gunung di Jawa Timur"}
-              />
-              <OverFlowCarousel
-                data={data}
-                title={"Rute Perjalanan ke Destinasi"}
-                withDescription={true}
-              />
-              <OverFlowCarousel
-                data={data}
-                title={"Pengalaman pendaki lain"}
-                withDescription={true}
-              />
-            </View>
-          )}
-          onScroll={handleScroll}
-        />
-      </SafeAreaView>
-    );
-  } catch (error) {
-    console.error("Error rendering HomeScreen:", error);
-  }
+  return (
+    <SafeAreaView>
+      <StatusBar
+        backgroundColor="#503a3a"
+        barStyle={statusBarStyle}
+        hidden={hidden}
+        animated={true}
+        translucent={true}
+        style={statusBarTransition}
+      />
+      <HeaderSearch />
+      <OverFlowCarousel
+        data={data}
+        title="Rekomendasi"
+        customStyle={"relative top-[150px]"}
+      />
+    </SafeAreaView>
+  );
 };
 
-export default HomeScreen;
+export default SearchScreen;
