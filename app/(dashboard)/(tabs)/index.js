@@ -1,7 +1,8 @@
-import { FlatList, View } from "react-native";
+import { FlatList, View, Text } from "react-native";
 import OverFlowCarousel from "../../../components/OverFlowCarousel";
 import HeaderHome from "../../../components/HeaderHome";
 import SlideCarousel from "../../../components/SlideCarousel";
+import { Link } from "expo-router";
 
 const HomeScreen = () => {
   const data = [
@@ -79,6 +80,9 @@ const HomeScreen = () => {
         renderItem={() => (
           <View>
             <HeaderHome />
+            <Link href="/profile/about">
+              <Text>loncat</Text>
+            </Link>
             <SlideCarousel data={data} />
             <OverFlowCarousel
               data={data}
