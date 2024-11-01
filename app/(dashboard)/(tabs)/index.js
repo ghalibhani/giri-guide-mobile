@@ -45,7 +45,7 @@ const TransactionCustomerScreen = () => {
       numDays: 3,
       dateRange: "10-06-2023 s/d 12-06-2023",
       price: "3.200.000",
-      status: "ONNEARBY",
+      status: "ONWAITINGPAY",
       imageUrl:
         "https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg",
     },
@@ -59,7 +59,7 @@ const TransactionCustomerScreen = () => {
       numDays: 3,
       dateRange: "10-06-2023 s/d 12-06-2023",
       price: "3.200.000",
-      status: "ONNEARBY",
+      status: "ONAPPROVE",
       imageUrl:
         "https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599553_1280.jpg",
     },
@@ -79,13 +79,13 @@ const TransactionCustomerScreen = () => {
     },
   ];
 
-  const [view, setView] = useState("berlangsung");
+  const [show, setShow] = useState("berlangsung");
 
   const selesai = ["DONEHIKING", "DONEREJECT"];
-  const berlangsung = ["ONNEARBY", "ONWAITING", "ONAPPROVE"];
+  const berlangsung = ["ONNEARBY", "ONWAITINGPAY", "ONAPPROVE"];
 
   const filteredData = tourGuideData.filter((tourGuide) =>
-    view === "berlangsung"
+    show === "berlangsung"
       ? berlangsung.includes(tourGuide.status)
       : selesai.includes(tourGuide.status)
   );
@@ -96,8 +96,8 @@ const TransactionCustomerScreen = () => {
       <View className='bg-grayCustom flex-1 gap-6'>
         <View className='gap-5'>
           <TransactionHeader titleHeader='Daftar Transaksi' />
-          <TransactionStatusBar onStatusChange={setView} />
-          {view === "berlangsung" ? (
+          <TransactionStatusBar onStatusChange={setShow} />
+          {show === "berlangsung" ? (
             <TransactionBerlangsung tourGuideData={filteredData} />
           ) : (
             <TransaksiSelesai tourGuideData={filteredData} />

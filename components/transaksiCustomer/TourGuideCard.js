@@ -15,6 +15,7 @@ const TourGuideCard = ({
   onPressDetail,
   imageUrl,
   buttonRating,
+  status,
 }) => {
   const getImageSource = () => {
     if (imageUrl) {
@@ -47,7 +48,13 @@ const TourGuideCard = ({
           <Text className='font-ibold text-soil text-base'>Rp. {price}</Text>
         </View>
         <CustomButton
-          title='Lihat Detail'
+          title={
+            status === "ONNEARBY"
+              ? "Lihat Detail"
+              : status === "ONWAITINGPAY"
+              ? "Bayar"
+              : "Lihat Detail"
+          }
           customStyle='bg-evergreen justify-center px-6'
           buttonHandling={onPressDetail}
         />

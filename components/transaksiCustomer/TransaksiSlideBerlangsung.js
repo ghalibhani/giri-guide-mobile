@@ -1,8 +1,16 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 
-const TransaksiSlideBerlangsung = ({ data, buttonHandling }) => {
+const TransaksiSlideBerlangsung = ({ data, onFilterChange }) => {
+  const [activeButton, setActiveButton] = useState("terdekat");
+
+  const handleButtonPress = (filter) => {
+    setActiveButton(filter);
+    onFilterChange(filter);
+  };
+
   return (
     <View>
       <ScrollView
@@ -11,28 +19,52 @@ const TransaksiSlideBerlangsung = ({ data, buttonHandling }) => {
         showsHorizontalScrollIndicator={false}
       >
         <TouchableOpacity
-          className='py-[16.5] ml-4 rounded-xl items-center px-5 bg-soil border-[1.5px] border-soil'
-          onPress={buttonHandling}
+          className={`py-[16.5] ml-4 rounded-xl items-center px-5 ${
+            activeButton === "terdekat"
+              ? "bg-soil border-soil"
+              : "bg-transparent border-2 border-soil"
+          }`}
+          onPress={() => handleButtonPress("terdekat")}
         >
-          <Text className='font-isemibold text-sm text-white'>
+          <Text
+            className={`font-isemibold text-sm ${
+              activeButton === "terdekat" ? "text-white" : "text-soil"
+            }`}
+          >
             Pendakian Terdekat
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          className='py-[16.5] ml-4 rounded-xl items-center px-5 bg-transparent border-[1.5px] border-soil'
-          onPress={buttonHandling}
+          className={`py-[16.5] ml-4 rounded-xl items-center px-5 ${
+            activeButton === "pembayaran"
+              ? "bg-soil border-soil"
+              : "bg-transparent border-2 border-soil"
+          }`}
+          onPress={() => handleButtonPress("pembayaran")}
         >
-          <Text className='font-isemibold text-sm text-soil'>
+          <Text
+            className={`font-isemibold text-sm ${
+              activeButton === "pembayaran" ? "text-white" : "text-soil"
+            }`}
+          >
             Menunggu Pembayaran
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          className='py-[16.5] mx-4 rounded-xl items-center px-5 bg-transparent border-[1.5px] border-soil'
-          onPress={buttonHandling}
+          className={`py-[16.5] mx-4 rounded-xl items-center px-5 ${
+            activeButton === "approve"
+              ? "bg-soil border-soil"
+              : "bg-transparent border-2 border-soil"
+          }`}
+          onPress={() => handleButtonPress("approve")}
         >
-          <Text className='font-isemibold text-sm text-soil'>
+          <Text
+            className={`font-isemibold text-sm ${
+              activeButton === "approve" ? "text-white" : "text-soil"
+            }`}
+          >
             Proses Approve
           </Text>
         </TouchableOpacity>
@@ -42,4 +74,3 @@ const TransaksiSlideBerlangsung = ({ data, buttonHandling }) => {
 };
 
 export default TransaksiSlideBerlangsung;
-
