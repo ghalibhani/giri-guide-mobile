@@ -5,13 +5,18 @@ import Thumbnail from "../../../components/Thumbnail";
 import MountainRating from "../../../components/MountainRating";
 import Description from "../../../components/Description";
 import HikingTips from "../../../components/HikingTips";
+import { router } from "expo-router";
 
 const mountainDetail = () => {
   return (
     <FlatList
       data={[1]}
       renderItem={({ item }) => (
-        <HeaderComponent text={"Nama Gunung Pilihan"}>
+        <HeaderComponent
+          text={"Nama Gunung Pilihan"}
+          handleOnPress={() => {
+            router.replace("/");
+          }}>
           <View className="px-6 bg-[#f8f8f8]">
             <MountainStatus status={"Gunung dalam keadaan aman"} />
             <Thumbnail

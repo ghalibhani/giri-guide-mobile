@@ -88,7 +88,7 @@ const HomeScreen = () => {
       const { nativeEvent } = event;
       const { contentOffset } = nativeEvent;
       const { y } = contentOffset;
-      if (y > 100) {
+      if (y > 300) {
         setHidden(true);
       } else {
         setHidden(false);

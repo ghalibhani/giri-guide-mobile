@@ -1,10 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import { useState } from "react";
 import { StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const HeaderComponent = ({ children, text }) => {
+const HeaderComponent = ({ children, text, handleOnPress }) => {
   const [hidden, setHidden] = useState(false);
   const [statusBarStyle, setStatusBarStyle] = useState("default");
   const [statusBarTransition, setStatusBarTransition] = useState("fade");
@@ -36,7 +35,7 @@ const HeaderComponent = ({ children, text }) => {
             size={24}
             color={"#FBF6D9"}
             className="absolute top-2 left-3 z-50"
-            onPress={() => router.back()}
+            onPress={handleOnPress}
           />
           <Text className="text-xl font-bold text-ivory">{text}</Text>
         </View>

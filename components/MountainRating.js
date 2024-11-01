@@ -4,6 +4,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Entypo from "@expo/vector-icons/Entypo";
 import { TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { router } from "expo-router";
 
 const MountainRating = ({
   star = 0,
@@ -51,7 +52,12 @@ const MountainRating = ({
             className="flex flex-row gap-2 mb-4"
             style={{ flexWrap: "wrap" }}>
             {pointOfInterest.split(",").map((item, index) => (
-              <TouchableOpacity className="p-3 border rounded-xl" key={index}>
+              <TouchableOpacity
+                className="p-3 border rounded-xl"
+                key={index}
+                onPress={() => {
+                  router.replace(`/home/poinOfInterest`);
+                }}>
                 <Text className="text-xs font-semibold text-soil">{item}</Text>
               </TouchableOpacity>
             ))}
