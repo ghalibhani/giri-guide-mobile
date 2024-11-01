@@ -10,7 +10,7 @@ export default function ProfileScreen() {
       <ContainerProfile />
       <View className="mt-4 mb-3 px-6 py-6 w-full flex-1 bg-white rounded-[30px] items-center">
         <ButtonProfile
-          onPress={() => router.navigate("/profile/profileInfo")}
+          onPress={() => router.navigate("/register")}
           text={"Informasi Profile"}
         >
           <Ionicons name="person-outline" size={18} color={"#F8F8F8"} />
