@@ -1,7 +1,7 @@
 // TourGuideCard.js
 import React from "react";
 import { View, Text, Image } from "react-native";
-import CustomButton from "../../components/miniComponent/CustomButton"; // Pastikan path ini sesuai dengan file CustomButton Anda
+import CustomButton from "../../components/miniComponent/CustomButton";
 
 const TourGuideCard = ({
   guideName,
