@@ -3,12 +3,13 @@ import HeaderBackProfile from "../../../components/HeaderBackProfile";
 import ProfileInfo from "../../../components/ProfileInfo";
 import ButtonLogout from "../../../components/ButtonLogout";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileInfoScreen() {
   return (
-    <View className="flex-1 px-6">
+    <SafeAreaView className="flex-1 px-6">
       <HeaderBackProfile text={"Informasi Personal"} />
-      <View className="flex-col gap-3">
+      <View className="flex-col gap-4">
         <ProfileInfo
           label={"NIK"}
           value={"1234567890"}
@@ -44,6 +45,6 @@ export default function ProfileInfoScreen() {
           children={"Logout"}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

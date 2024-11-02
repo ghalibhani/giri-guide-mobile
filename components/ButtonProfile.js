@@ -5,10 +5,10 @@ export default function ButtonProfile({ text, onPress, children }) {
     <View className="w-full mb-4 justify-center">
       <TouchableOpacity
         onPress={onPress}
-        className="flex-row py-[14] rounded-full bg-soil items-center px-6 gap-3"
+        className="flex-row py-4 rounded-full bg-soil items-center px-6 gap-4"
       >
         {children}
-        <Text className="text-ivory text-lg font-semibold">{text}</Text>
+        <Text className="text-ivory text-sm font-isemibold">{text}</Text>
       </TouchableOpacity>
     </View>
   );

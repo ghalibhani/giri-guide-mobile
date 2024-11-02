@@ -121,7 +121,7 @@ const SewaTourGuideTigaTahap = () => {
         </View>
       </View>
 
-      <ScrollView>
+      <ScrollView >
         <View className='ml-6 mr-6 mb-5'>
           <CardKeteranganSewaTourGuide />
         </View>
