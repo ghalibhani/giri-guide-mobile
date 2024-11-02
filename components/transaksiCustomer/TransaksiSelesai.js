@@ -5,6 +5,7 @@ import TourGuideCard from "./TourGuideCard";
 import CustomButton from "../miniComponent/CustomButton";
 import TransaksiSlideSelesai from "./TransaksiSlideSelesai";
 import { router } from "expo-router";
+import Star from "../Star";
 
 const TransaksiSelesai = ({ tourGuideData }) => {
   const [show, setShow] = useState("selesai");
@@ -52,6 +53,26 @@ const TransaksiSelesai = ({ tourGuideData }) => {
                 });
               }
             }}
+            customElements={
+              tourGuide.status === "DONE" ? (
+                <View>
+                  <View className='my-5 h-[1] bg-borderCustom'></View>
+                  {tourGuide.rating ? (
+                    <View className='flex-row items-center justify-center gap-4'>
+                      <Star star={tourGuide.rating} />
+                    </View>
+                  ) : (
+                    <CustomButton
+                      customStyle={"bg-soil min-w-full"}
+                      title={"Berikan Rating"}
+                      buttonHandling={() =>
+                        router.push("/transaction/beriRating" + tourGuide.id)
+                      }
+                    />
+                  )}
+                </View>
+              ) : null
+            }
           />
         ))}
       </ScrollView>

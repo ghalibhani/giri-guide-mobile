@@ -14,7 +14,7 @@ const TourGuideCard = ({
   price,
   onPressDetail,
   imageUrl,
-  buttonRating,
+  customElements,
   status,
 }) => {
   const getImageSource = () => {
@@ -59,7 +59,7 @@ const TourGuideCard = ({
           buttonHandling={onPressDetail}
         />
       </View>
-      {buttonRating}
+      {customElements}
     </View>
   );
 };
