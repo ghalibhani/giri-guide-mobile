@@ -3,9 +3,9 @@ import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native'
 
-const CardRatingReview = () => {
+const CardRatingReview = ({data}) => {
     return (
-        <View className='bg-white rounded-3xl my-4 p-6'>
+        <View className='bg-white rounded-verylarge my-4 p-6'>
             <Text className='text-lg text-soil font-ibold'>
             Rating dan Ulasan
             </Text>

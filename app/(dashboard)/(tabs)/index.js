@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const index = () => {
     return (
         <SafeAreaView>
-            <Link href='/transaction/transOnGoingUpcoming'>
+            <Link href='/profile/changePassword'>
                 <Text className='text-3xl font-bold'>loncat</Text>
             </Link>
         </SafeAreaView>

@@ -42,6 +42,12 @@ module.exports = {
       borderRadius: {
         verylarge: "30px",
       },
+      margin: {
+        custom: "8.5rem"
+      },
+      padding: {
+        custom: "8.5rem"
+      }
     },
   },
   plugins: [],
