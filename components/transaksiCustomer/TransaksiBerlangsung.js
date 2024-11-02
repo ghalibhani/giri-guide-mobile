@@ -6,57 +6,58 @@ import TourGuideCard from "./TourGuideCard";
 import TransaksiSlideBerlangsung from "./TransaksiSlideBerlangsung";
 import { router } from "expo-router";
 
-const TransactionBerlangsung = ({ tourGuideData }) => {
+const TransactionBerlangsung = ({
+  tourGuideData = [],
+  customerData = [],
+  role,
+}) => {
   const [show, setShow] = useState("terdekat");
 
-  const filteredData = tourGuideData.filter((tourGuide) => {
-    if (show === "terdekat") return tourGuide.status === "UPCOMING";
-    if (show === "pembayaran") return tourGuide.status === "WAITING_PAY";
-    if (show === "approve") return tourGuide.status === "WAITING_APPROVE";
+  const dataToDisplay = role === "tourguide" ? tourGuideData : customerData;
+
+  const filteredData = dataToDisplay.filter((data) => {
+    if (show === "terdekat") return data.status === "UPCOMING";
+    if (show === "pembayaran") return data.status === "WAITING_PAY";
+    if (show === "approve") return data.status === "WAITING_APPROVE";
     return true;
   });
 
   return (
     <>
-      <TransaksiSlideBerlangsung onFilterChange={setShow} />
+      <TransaksiSlideBerlangsung
+        onFilterChange={setShow}
+        titleSlide={"Proses Approve"}
+      />
       <ScrollView contentContainerStyle={{ paddingBottom: 265 }}>
-        {filteredData.map((tourGuide) => (
+        {filteredData.map((item) => (
           <TourGuideCard
-            key={tourGuide.id}
-            guideName={tourGuide.guideName}
-            mountainName={tourGuide.mountainName}
-            hikingPoint={tourGuide.hikingPoint}
-            numHikers={tourGuide.numHikers}
-            numPorters={tourGuide.numPorters}
-            numDays={tourGuide.numDays}
-            dateRange={tourGuide.dateRange}
-            price={tourGuide.price}
-            imageUrl={tourGuide.imageUrl}
-            status={tourGuide.status}
+            key={item.id}
+            guideName={item.guideName}
+            mountainName={item.mountainName}
+            hikingPoint={item.hikingPoint}
+            numHikers={item.numHikers}
+            numPorters={item.numPorters}
+            numDays={item.numDays}
+            dateRange={item.dateRange}
+            price={item.price}
+            imageUrl={item.imageUrl}
+            status={item.status}
             onPressDetail={() => {
-              if (tourGuide.status === "UPCOMING") {
+              if (item.status === "UPCOMING") {
                 router.navigate("/transaction/transOnGoingUpcoming", {
-                  params: {
-                    tourGuideId: tourGuide.id,
-                  },
+                  params: { id: item.id },
                 });
-              } else if (tourGuide.status === "WAITING_PAY") {
+              } else if (item.status === "WAITING_PAY") {
                 router.navigate("/transaction/transOnGoingPayment", {
-                  params: {
-                    tourGuideId: tourGuide.id,
-                  },
+                  params: { id: item.id },
                 });
-              } else if (tourGuide.status === "WAITING_APPROVE") {
+              } else if (item.status === "WAITING_APPROVE") {
                 router.navigate("/transaction/transOnGoingApprove", {
-                  params: {
-                    tourGuideId: tourGuide.id,
-                  },
+                  params: { id: item.id },
                 });
               } else {
                 router.navigate("/transaction/transOnGoing", {
-                  params: {
-                    tourGuideId: tourGuide.id,
-                  },
+                  params: { id: item.id },
                 });
               }
             }}

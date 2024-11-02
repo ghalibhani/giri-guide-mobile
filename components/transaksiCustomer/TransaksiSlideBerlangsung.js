@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 
-const TransaksiSlideBerlangsung = ({ data, onFilterChange }) => {
+const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
   const [activeButton, setActiveButton] = useState("terdekat");
 
   const handleButtonPress = (filter) => {
@@ -65,7 +65,7 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange }) => {
               activeButton === "approve" ? "text-white" : "text-soil"
             }`}
           >
-            Proses Approve
+            {titleSlide}
           </Text>
         </TouchableOpacity>
       </ScrollView>

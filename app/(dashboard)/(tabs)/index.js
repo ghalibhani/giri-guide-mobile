@@ -1,135 +1,127 @@
-import { ScrollView, StatusBar } from "react-native";
-import OverFlowCarousel from "../../../components/OverFlowCarousel";
-import HeaderHome from "../../../components/HeaderHome";
-import SlideCarousel from "../../../components/SlideCarousel";
+import { View, Text, StatusBar } from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
-import { Link } from "expo-router";
+import TransactionHeader from "../../../components/transaksiCustomer/TransactionHeader";
+import TransactionStatusBar from "../../../components/transaksiCustomer/TransactionStatusBar";
+import TransactionBerlangsung from "../../../components/transaksiCustomer/TransaksiBerlangsung";
+import TransaksiSelesai from "../../../components/transaksiCustomer/TransaksiSelesai";
 
-const HomeScreen = () => {
-  const data = [
+// transTourGuide.js ada di folder transaction-tourguide
+
+const transTourGuide = () => {
+  const customerData = [
     {
-      id: 1,
-      text: "Item 1",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 1",
+      id: "1",
+      guideName: "Johan",
+      mountainName: "Gunung Bromo",
+      hikingPoint: "Pos Paltuding",
+      numHikers: 3,
+      numPorters: 2,
+      numDays: 2,
+      dateRange: "05-06-2023 s/d 07-06-2023",
+      price: "2.500.000",
+      status: "UPCOMING",
+      role: "customer",
+      imageUrl:
+        "https://t4.ftcdn.net/jpg/06/08/55/73/360_F_608557356_ELcD2pwQO9pduTRL30umabzgJoQn5fnd.jpg",
     },
     {
-      id: 2,
-      text: "Item 2",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 2",
+      id: "2",
+      guideName: "Siti",
+      mountainName: "Gunung Semeru",
+      hikingPoint: "Pos Ranu Pane",
+      numHikers: 4,
+      numPorters: 3,
+      numDays: 3,
+      dateRange: "10-06-2023 s/d 12-06-2023",
+      price: "3.000.000",
+      status: "WAITING_APPROVE",
+      role: "customer",
+      imageUrl:
+        "https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg",
     },
     {
-      id: 3,
-      text: "Item 3",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 3",
+      id: "3",
+      guideName: "Siti",
+      mountainName: "Gunung Semeru",
+      hikingPoint: "Pos Ranu Pane",
+      numHikers: 4,
+      numPorters: 3,
+      numDays: 3,
+      dateRange: "10-06-2023 s/d 12-06-2023",
+      price: "3.000.000",
+      status: "REJECT",
+      role: "customer",
+      imageUrl:
+        "https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg",
     },
     {
-      id: 4,
-      text: "Item 4",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 4",
+      id: "4",
+      guideName: "Customer Siti",
+      mountainName: "Gunung Semeru",
+      hikingPoint: "Pos Ranu Pane",
+      numHikers: 4,
+      numPorters: 3,
+      numDays: 3,
+      dateRange: "10-06-2023 s/d 12-06-2023",
+      price: "3.000.000",
+      status: "DONE",
+      role: "customer",
+      imageUrl:
+        "https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg",
     },
     {
-      id: 5,
-      text: "Item 5",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 5",
-    },
-    {
-      id: 6,
-      text: "Item 6",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 6",
-    },
-    {
-      id: 7,
-      text: "Item 7",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 7",
-    },
-    {
-      id: 8,
-      text: "Item 8",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 8",
-    },
-    {
-      id: 9,
-      text: "Item 9",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 9",
-    },
-    {
-      id: 10,
-      text: "Item 10",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 10",
+      id: "5",
+      guideName: "Customer Siti",
+      mountainName: "Gunung Semeru",
+      hikingPoint: "Pos Ranu Pane",
+      numHikers: 4,
+      numPorters: 3,
+      numDays: 3,
+      dateRange: "10-06-2023 s/d 12-06-2023",
+      price: "3.000.000",
+      status: "WAITING_PAY",
+      role: "customer",
+      imageUrl:
+        "https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg",
     },
   ];
 
-  try {
-    const [hidden, setHidden] = useState(false);
-    const [statusBarStyle, setStatusBarStyle] = useState("default");
-    const [statusBarTransition, setStatusBarTransition] = useState("fade");
+  const loginRole = "tourguide";
 
-    const handleScroll = (event) => {
-      const { nativeEvent } = event;
-      const { contentOffset } = nativeEvent;
-      const { y } = contentOffset;
-      if (y > 300) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
-    };
+  const [show, setShow] = useState("berlangsung");
 
-    return (
-      <SafeAreaView>
-        <StatusBar
-          animated={true}
-          backgroundColor='#503a3a'
-          barStyle={statusBarStyle}
-          showHideTransition={statusBarTransition}
-          hidden={hidden}
-          style='light'
-        />
-        <ScrollView>
-          <HeaderHome />
-          <SlideCarousel data={data} />
-          <OverFlowCarousel
-            data={data}
-            title={"Jelajahi Gunung di Jawa Timur"}
-          />
-          <OverFlowCarousel
-            data={data}
-            title={"Rute Perjalanan ke Destinasi"}
-            withDescription={true}
-            route="/home/poinOfInterest"
-          />
-          {/* <OverFlowCarousel
-                data={data}
-                title={"Pengalaman pendaki lain"}
-                withDescription={true}
-              /> */}
-        </ScrollView>
-      </SafeAreaView>
-    );
-  } catch (error) {
-    console.error("Error rendering HomeScreen:", error);
-  }
+  const selesai = ["DONE", "REJECT"];
+  const berlangsung = ["UPCOMING", "WAITING_PAY", "WAITING_APPROVE"];
+
+  const filteredData = customerData.filter((hiker) => {
+    if (show === "berlangsung") {
+      return berlangsung.includes(hiker.status);
+    } else {
+      return selesai.includes(hiker.status);
+    }
+  });
+
+  return (
+    <SafeAreaView className='flex-1'>
+      <StatusBar backgroundColor={"#503A3A"} barStyle={"light-content"} />
+      <View className='bg-grayCustom flex-1 gap-6'>
+        <View className='gap-5'>
+          <TransactionHeader titleHeader={"Daftar Transaksi"} />
+          <TransactionStatusBar onStatusChange={setShow} />
+          {show === "berlangsung" ? (
+            <TransactionBerlangsung
+              customerData={filteredData}
+              role={"customer"}
+              loginRole={loginRole}
+            />
+          ) : (
+            <TransaksiSelesai tourGuideData={filteredData} />
+          )}
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 };
 
-export default HomeScreen;
+export default transTourGuide;

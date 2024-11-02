@@ -32,6 +32,8 @@ const TransactionCustomerScreen = () => {
       dateRange: "05-06-2023 s/d 07-06-2023",
       price: "2.500.000",
       status: "UPCOMING",
+      role: "tourguide",
+      rating: 3,
       imageUrl:
         "https://t4.ftcdn.net/jpg/06/08/55/73/360_F_608557356_ELcD2pwQO9pduTRL30umabzgJoQn5fnd.jpg",
     },
@@ -46,6 +48,8 @@ const TransactionCustomerScreen = () => {
       dateRange: "10-06-2023 s/d 12-06-2023",
       price: "3.200.000",
       status: "WAITING_PAY",
+      role: "tourguide",
+      rating: 3,
       imageUrl:
         "https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg",
     },
@@ -60,6 +64,8 @@ const TransactionCustomerScreen = () => {
       dateRange: "10-06-2023 s/d 12-06-2023",
       price: "3.200.000",
       status: "WAITING_APPROVE",
+      role: "tourguide",
+      rating: 3,
       imageUrl:
         "https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599553_1280.jpg",
     },
@@ -74,6 +80,7 @@ const TransactionCustomerScreen = () => {
       dateRange: "05-06-2023 s/d 07-06-2023",
       price: "2.500.000",
       status: "DONE",
+      role: "tourguide",
       rating: 3,
       imageUrl:
         "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
@@ -89,6 +96,8 @@ const TransactionCustomerScreen = () => {
       dateRange: "05-06-2023 s/d 07-06-2023",
       price: "2.500.000",
       status: "REJECT",
+      role: "tourguide",
+      rating: 2,
       imageUrl:
         "https://marketplace.canva.com/EAF21qlw744/1/0/1600w/canva-blue-modern-facebook-profile-picture-mtu4sNVuKIU.jpg",
     },
@@ -113,7 +122,10 @@ const TransactionCustomerScreen = () => {
           <TransactionHeader titleHeader='Daftar Transaksi' />
           <TransactionStatusBar onStatusChange={setShow} />
           {show === "berlangsung" ? (
-            <TransactionBerlangsung tourGuideData={filteredData} />
+            <TransactionBerlangsung
+              tourGuideData={filteredData}
+              role={"tourguide"}
+            />
           ) : (
             <TransaksiSelesai tourGuideData={filteredData} />
           )}
