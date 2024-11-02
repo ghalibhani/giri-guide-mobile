@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Image, Text, View } from "react-native";
 
 import { FlatList } from "react-native";
@@ -10,9 +11,10 @@ const OverFlowCarousel = ({
   const renderItemWrapper = ({ item }) => {
     return (
       <View
-        className={`mr-5 bg-white ${
-          withDescription ? "max-h-[203px] rounded-xl" : ""
-        }`}>
+        className={`mr-5 ${withDescription ? "rounded-xl bg-white" : ""}`}
+        onTouchEnd={() => {
+          router.replace(`/home/mountainDetail`);
+        }}>
         <Image
           source={{ uri: item.image }}
           className={`w-[200px] h-[120px] ${
@@ -27,8 +29,8 @@ const OverFlowCarousel = ({
   };
 
   return (
-    <View className={`px-6 ${customStyle ? customStyle : ""}`}>
-      <View className="my-[15px] flex justify-between flex-row">
+    <View className={`px-6 mb-6 ${customStyle ? customStyle : ""}`}>
+      <View className="mb-4 flex justify-between flex-row">
         <Text className="text-[14px] font-bold">{title}</Text>
         <Text className="text-[14px]">Selengkapnya</Text>
       </View>

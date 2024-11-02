@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { Ionicons, Octicons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons'
 import CustomButton from '../miniComponent/CustomButton'
 import TambahCalonPendaki from './TambahCalonPendaki'
 
@@ -36,7 +36,7 @@ const DetailCalonPendaki = ({continueHandling}) => {
                             </View>
 
                             <TouchableOpacity className="w-[45px] align-middle justify-center border- px-4 py-2">
-                                <Ionicons name="pencil" color={"#45594E"} size={20} />
+                                <MaterialCommunityIcons name="pencil" color={"#45594E"} size={20} />
                             </TouchableOpacity>
 
                         </View>
@@ -57,7 +57,7 @@ const DetailCalonPendaki = ({continueHandling}) => {
                             </View>
 
                             <TouchableOpacity onPress={showModalPendaki} className="w-[45px] align-middle justify-center border- px-4 py-2">
-                                <Ionicons name="pencil" color={"#45594E"} size={20} />
+                                <MaterialCommunityIcons name="pencil" color={"#45594E"} size={20} />
                             </TouchableOpacity>
 
                         </View>

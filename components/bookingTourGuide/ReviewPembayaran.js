@@ -28,6 +28,7 @@ const ReviewPembayaran = ({continueHandling, isEditable, detailCalonPendaki, det
                 isEditable={isEditable}
                 catatan={catatan}
                 setCatatan={setCatatan}
+                title={"Beri catatan ke tour guide"}
             />
 
             <View className="px-6">
