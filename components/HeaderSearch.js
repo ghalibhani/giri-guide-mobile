@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, Image } from "react-native";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { router } from "expo-router";
 
@@ -16,16 +16,18 @@ const HeaderSearch = () => {
       Alert.alert("Dibutuhkan", "Isi semua kolom untuk pencarian");
     }
   };
-
   return (
-    <View
-      className={`w-screen rounded-br-[30px] rounded-bl-[30px] bg-soil pb-[24px] px-[24px] h-[340px]`}>
-      <View className="flex flex-col justify-center items-center mb-[60px]">
+    <View>
+      <Image
+        source={require("../assets/gunung-tour-guide.jpg")}
+        className="w-full h-[320px] rounded-b-[30px]"
+      />
+      <View className="flex flex-col justify-center items-center relative top-[-300px]">
         <Ionicons
           name="arrow-back"
           size={24}
           color={"#FBF6D9"}
-          className="absolute top-2 left-3 z-50"
+          className="absolute left-3 z-50"
           onPress={() => router.replace("/")}
         />
         <Text className="text-[20px] font-bold text-ivory">
@@ -33,11 +35,7 @@ const HeaderSearch = () => {
         </Text>
       </View>
 
-      <Text className="text-[20px] font-bold text-ivory mb-5 text-center">
-        Gambar gunung
-      </Text>
-
-      <View className="p-4 bg-white rounded-xl">
+      <View className="p-4 bg-white rounded-xl mt-[-210px] mx-4">
         <View className="border-[1px] border-[#d9d9d9] rounded-xl p-[10px] flex flex-col mb-5 justify-center">
           <View className="flex flex-row items-center">
             <FontAwesome6

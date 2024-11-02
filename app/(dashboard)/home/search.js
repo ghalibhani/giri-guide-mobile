@@ -102,11 +102,7 @@ const SearchScreen = () => {
         style={statusBarTransition}
       />
       <HeaderSearch />
-      <OverFlowCarousel
-        data={data}
-        title="Rekomendasi"
-        customStyle={"relative top-[150px]"}
-      />
+      <OverFlowCarousel data={data} title="Rekomendasi" customStyle={"mt-5"} />
     </SafeAreaView>
   );
 };

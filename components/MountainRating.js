@@ -18,9 +18,9 @@ const MountainRating = ({
   const maxStar = [1, 2, 3, 4, 5];
   const { width } = Dimensions.get("screen");
   return (
-    <View className="flex flex-wrap justify-between px-6 py-5 bg-white rounded-[30px] mb-5">
+    <View className="flex flex-wrap justify-between px-6 py-5 bg-white rounded-[30px] mb-5 gap-4">
       <View className="flex flex-row justify-between">
-        <View className="flex flex-row items-center mr-4 mb-4">
+        <View className="flex flex-row items-center mr-4">
           {maxStar.map((item, index) => {
             if (item <= star) {
               return (
@@ -48,9 +48,7 @@ const MountainRating = ({
           <Text className="text-sm text-soil font-semibold">
             Titik pendakian
           </Text>
-          <View
-            className="flex flex-row gap-2 mb-4"
-            style={{ flexWrap: "wrap" }}>
+          <View className="flex flex-row gap-2" style={{ flexWrap: "wrap" }}>
             {pointOfInterest.split(",").map((item, index) => (
               <TouchableOpacity
                 className="p-3 border rounded-xl"
@@ -64,13 +62,13 @@ const MountainRating = ({
           </View>
         </View>
       </View>
-      <View className="mb-4 flex flex-row gap-4">
+      <View className="flex flex-row gap-4">
         <FontAwesome name="money" size={20} color="#91b89e" />
         <Text className="text-sm font-semibold text-soil">
           Harga mulai dari Rp {price.toLocaleString("id-ID")}
         </Text>
       </View>
-      <View className="mb-4 flex flex-row gap-4">
+      <View className="flex flex-row gap-4">
         <MaterialIcons name="access-time-filled" size={24} color="#b89191" />
         <Text className="text-sm font-semibold text-soil">
           Durasi berkunjung terbaik {theBestDuration}
