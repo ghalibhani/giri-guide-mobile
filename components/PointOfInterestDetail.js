@@ -52,7 +52,7 @@ const PointOfInterestDetail = ({
       distance: "2 km",
     },
     {
-      from: "Stasiun blimbing",
+      from: "Stasiun blimbing Stasiun blimbingStasiun blimbingStasiun blimbingvStasiun blimbingvStasiun blimbingStasiun blimbingStasiun blimbingStasiun blimbingStasiun blimbing",
       to: "Terminal Arjosari",
       transportation: "angkot",
       estimate: "5 menit",
@@ -108,10 +108,10 @@ const PointOfInterestDetail = ({
             )}
           </View>
           <View className="ml-6 flex gap-5">
-            <Text className="text-sm font-medium text-soil">
+            <Text className="text-sm font-imedium text-soil">
               Dari {item.from}, Naik {item.transportation} ke {item.to}
             </Text>
-            <Text className="text-xs font-normal text-thistle">
+            <Text className="text-xs font-iregular text-thistle">
               ({item.distance} dalam waktu {item.estimate})
             </Text>
             <View

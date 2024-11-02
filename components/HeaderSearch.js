@@ -23,13 +23,15 @@ const HeaderSearch = () => {
         className="w-full h-[320px] rounded-b-[30px]"
       />
       <View className="flex flex-col justify-center items-center relative top-[-300px]">
-        <Ionicons
-          name="arrow-back"
-          size={24}
-          color={"#FBF6D9"}
-          className="absolute left-3 z-50"
-          onPress={() => router.back()}
-        />
+        <TouchableOpacity className="w-[30]  h-[30] rounded-full bg-white border-[1px] border-soil justify-center items-center absolute left-3">
+          <Ionicons
+            name="chevron-back"
+            size={15}
+            color="#503A3A"
+            onPress={() => router.back()}
+          />
+        </TouchableOpacity>
+
         <Text className="text-[20px] font-bold text-ivory">
           Pencarian tour guide
         </Text>

@@ -7,13 +7,14 @@ const OverFlowCarousel = ({
   title,
   withDescription = false,
   customStyle,
+  route = "/home/mountainDetail",
 }) => {
   const renderItemWrapper = ({ item }) => {
     return (
       <View
         className={`mr-5 ${withDescription ? "rounded-xl bg-white" : ""}`}
         onTouchEnd={() => {
-          router.navigate(`/home/mountainDetail`);
+          router.push(route);
         }}>
         <Image
           source={{ uri: item.image }}
@@ -22,7 +23,7 @@ const OverFlowCarousel = ({
           }`}
         />
         {withDescription && (
-          <Text className="text-[14px] font-bold p-4">{item.description}</Text>
+          <Text className="text-[14px] font-ibold p-4">{item.description}</Text>
         )}
       </View>
     );
@@ -31,8 +32,8 @@ const OverFlowCarousel = ({
   return (
     <View className={`px-6 mb-6 ${customStyle ? customStyle : ""}`}>
       <View className="mb-4 flex justify-between flex-row">
-        <Text className="text-[14px] font-bold">{title}</Text>
-        <Text className="text-[14px]">Selengkapnya</Text>
+        <Text className="text-[14px] font-ibold">{title}</Text>
+        <Text className="text-[14px] font-iregular">Selengkapnya</Text>
       </View>
       <FlatList
         data={data}
