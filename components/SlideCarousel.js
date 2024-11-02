@@ -1,30 +1,16 @@
 import { FlatList, View } from "react-native";
-
 import { Dimensions, Image } from "react-native";
-
 const { width, height } = Dimensions.get("window");
 
 const SlideCarousel = ({ data }) => {
   const renderItem = ({ item }) => {
-    if (!item || !item.image) {
-      console.error("Item or image source missing");
-      return null;
-    }
-
     return (
-      <View
-        style={{
-          width: width * 0.8,
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
-        <Image
-          source={{ uri: item.image }}
-          resizeMode="cover"
-          className="w-full h-[214px] rounded-xl"
-          style={{ width, height: 214 }}
-        />
-      </View>
+      <Image
+        source={{ uri: item.image }}
+        resizeMode="cover"
+        className="w-full h-[214px] rounded-xl"
+        style={{ width: width - 40, height: 214, borderRadius: 12 }}
+      />
     );
   };
 
@@ -39,7 +25,7 @@ const SlideCarousel = ({ data }) => {
         pagingEnabled
         snapToAlignment="center"
         decelerationRate="fast"
-        snapToInterval={width * 0.8}
+        snapToInterval={width - 40}
         className="rounded-xl"
       />
     </View>
