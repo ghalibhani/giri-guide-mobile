@@ -37,13 +37,13 @@ export default function HomeProfileScreen() {
           }}>
           <Ionicons name="reorder-four-outline" size={18} color={"#FBF6D9"} />
         </ButtonProfile>
-        <ButtonProfile
+        {/* <ButtonProfile
           text={"Bookmark Gunung"}
           onPress={() => {
             router.push("/profile/bookmark");
           }}>
           <Ionicons name="heart-outline" size={18} color={"#FBF6D9"} />
-        </ButtonProfile>
+        </ButtonProfile> */}
         <ButtonProfile
           text={"Tentang Aplikasi"}
           onPress={() => {

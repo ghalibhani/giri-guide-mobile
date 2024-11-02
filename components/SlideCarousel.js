@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import { FlatList, View } from "react-native";
 import { Dimensions, Image } from "react-native";
 const { width, height } = Dimensions.get("window");
@@ -11,9 +10,6 @@ const SlideCarousel = ({ data }) => {
         resizeMode="cover"
         className="w-full h-[214px] rounded-xl"
         style={{ width: width - 40, height: 214, borderRadius: 12 }}
-        onTouchEnd={() => {
-          router.navigate(`/home/mountainDetail`);
-        }}
       />
     );
   };

@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 const HeaderHome = () => {
   return (
     <View className="w-screen rounded-br-[30px] rounded-bl-[30px] bg-soil pt-5 pb-[24px] px-[24px]">
-      <Text className="text-[20px] font-bold text-ivory mb-5">
+      <Text className="text-[20px] font-ibold text-ivory mb-5">
         Hai, FULL NAME!
       </Text>
       <View className="relative">
@@ -20,7 +20,9 @@ const HeaderHome = () => {
             color="#000"
             className="absolute top-2 left-3 z-50"
           />
-          <Text className="text-evergreen">Cari tour guide di sini</Text>
+          <Text className="text-evergreen font-iregular">
+            Cari tour guide di sini
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

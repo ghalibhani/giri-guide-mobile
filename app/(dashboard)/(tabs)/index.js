@@ -1,4 +1,4 @@
-import { FlatList, StatusBar, View, Text } from "react-native";
+import { ScrollView, StatusBar } from "react-native";
 import OverFlowCarousel from "../../../components/OverFlowCarousel";
 import HeaderHome from "../../../components/HeaderHome";
 import SlideCarousel from "../../../components/SlideCarousel";
@@ -106,34 +106,25 @@ const HomeScreen = () => {
           hidden={hidden}
           style='light'
         />
-        <FlatList
-          data={[1]}
-          className='bg-[#f8f8f8]'
-          renderItem={() => (
-            <View>
-              <HeaderHome />
-              <Link href='/transaction/transCustomer'>
-                <Text className='text-3xl font-bold'>loncat</Text>
-              </Link>
-              <SlideCarousel data={data} />
-              <OverFlowCarousel
-                data={data}
-                title={"Jelajahi Gunung di Jawa Timur"}
-              />
-              <OverFlowCarousel
-                data={data}
-                title={"Rute Perjalanan ke Destinasi"}
-                withDescription={true}
-              />
-              <OverFlowCarousel
+        <ScrollView>
+          <HeaderHome />
+          <SlideCarousel data={data} />
+          <OverFlowCarousel
+            data={data}
+            title={"Jelajahi Gunung di Jawa Timur"}
+          />
+          <OverFlowCarousel
+            data={data}
+            title={"Rute Perjalanan ke Destinasi"}
+            withDescription={true}
+            route="/home/poinOfInterest"
+          />
+          {/* <OverFlowCarousel
                 data={data}
                 title={"Pengalaman pendaki lain"}
                 withDescription={true}
-              />
-            </View>
-          )}
-          onScroll={handleScroll}
-        />
+              /> */}
+        </ScrollView>
       </SafeAreaView>
     );
   } catch (error) {
