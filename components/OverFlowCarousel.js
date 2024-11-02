@@ -13,7 +13,7 @@ const OverFlowCarousel = ({
       <View
         className={`mr-5 ${withDescription ? "rounded-xl bg-white" : ""}`}
         onTouchEnd={() => {
-          router.replace(`/home/mountainDetail`);
+          router.navigate(`/home/mountainDetail`);
         }}>
         <Image
           source={{ uri: item.image }}

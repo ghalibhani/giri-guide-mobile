@@ -13,10 +13,7 @@ const mountainDetail = () => {
       data={[1]}
       renderItem={({ item }) => (
         <HeaderComponent
-          text={"Nama Gunung Pilihan"}
-          handleOnPress={() => {
-            router.replace("/");
-          }}>
+          text={"Nama Gunung Pilihan"}>
           <View className="px-6 bg-[#f8f8f8]">
             <MountainStatus status={"Gunung dalam keadaan aman"} />
             <Thumbnail
@@ -29,7 +26,7 @@ const mountainDetail = () => {
               totalRating={100}
               isBookmark={true}
               pointOfInterest={
-                "Titik pendakian 1, Titik pendakian 2, Titik pendakian 3"
+                "Titik pendakian 1, Titik pendakian 2, Titik pendakian, Titik pendakian 4"
               }
               price={50000}
               theBestDuration={"2 Jam"}

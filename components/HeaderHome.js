@@ -12,7 +12,7 @@ const HeaderHome = () => {
         <TouchableOpacity
           className="text-[14px] text-ivory bg-white h-11 rounded-3xl py-3 px-4 pl-12 justify-center"
           onPress={() => {
-            router.replace("/home/search");
+            router.navigate("/search/search");
           }}>
           <Ionicons
             name="search-outline"

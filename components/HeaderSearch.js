@@ -11,7 +11,7 @@ const HeaderSearch = () => {
 
   const handlePress = () => {
     if (mountain && positionOfInterest) {
-      router.navigate("/home/searching");
+      router.navigate("/search/searchList");
     } else {
       Alert.alert("Dibutuhkan", "Isi semua kolom untuk pencarian");
     }
@@ -28,7 +28,7 @@ const HeaderSearch = () => {
           size={24}
           color={"#FBF6D9"}
           className="absolute left-3 z-50"
-          onPress={() => router.replace("/")}
+          onPress={() => router.back()}
         />
         <Text className="text-[20px] font-bold text-ivory">
           Pencarian tour guide
