@@ -1,13 +1,12 @@
-import { FlatList, StatusBar, View } from "react-native";
+import { FlatList, StatusBar, View, Text } from "react-native";
 import OverFlowCarousel from "../../../components/OverFlowCarousel";
 import HeaderHome from "../../../components/HeaderHome";
 import SlideCarousel from "../../../components/SlideCarousel";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
+import { Link } from "expo-router";
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
-
   const data = [
     {
       id: 1,
@@ -101,18 +100,21 @@ const HomeScreen = () => {
       <SafeAreaView>
         <StatusBar
           animated={true}
-          backgroundColor="#503a3a"
+          backgroundColor='#503a3a'
           barStyle={statusBarStyle}
           showHideTransition={statusBarTransition}
           hidden={hidden}
-          style="light"
+          style='light'
         />
         <FlatList
           data={[1]}
-          className="bg-[#f8f8f8]"
+          className='bg-[#f8f8f8]'
           renderItem={() => (
             <View>
               <HeaderHome />
+              <Link href='/transaction/transCustomer'>
+                <Text className='text-3xl font-bold'>loncat</Text>
+              </Link>
               <SlideCarousel data={data} />
               <OverFlowCarousel
                 data={data}
