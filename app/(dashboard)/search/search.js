@@ -1,9 +1,7 @@
-import { FlatList, View } from "react-native";
-import OverFlowCarousel from "../components/OverFlowCarousel";
-import HeaderHome from "../components/HeaderHome";
-import SlideCarousel from "../components/SlideCarousel";
-
-const HomeScreen = () => {
+import { View } from "react-native";
+import HeaderSearch from "../../../components/HeaderSearch";
+import OverFlowCarousel from "../../../components/OverFlowCarousel";
+const SearchScreen = () => {
   const data = [
     {
       id: 1,
@@ -66,41 +64,16 @@ const HomeScreen = () => {
       description: "Description 10",
     },
   ];
-
-  if (!data) {
-    throw new Error("Data cannot be null or undefined");
-  }
-
-  try {
-    return (
-      <FlatList
-        data={[1]}
-        className="bg-[#f8f8f8]"
-        renderItem={() => (
-          <View>
-            <HeaderHome />
-            <SlideCarousel data={data} />
-            <OverFlowCarousel
-              data={data}
-              title={"Jelajahi Gunung di Jawa Timur"}
-            />
-            <OverFlowCarousel
-              data={data}
-              title={"Rute Perjalanan ke Destinasi"}
-              withDescription={true}
-            />
-            <OverFlowCarousel
-              data={data}
-              title={"Pengalaman pendaki lain"}
-              withDescription={true}
-            />
-          </View>
-        )}
+  return (
+    <View>
+      <HeaderSearch />
+      <OverFlowCarousel
+        data={data}
+        title="Rekomendasi"
+        customStyle={"relative top-[150px]"}
       />
-    );
-  } catch (error) {
-    console.error("Error rendering HomeScreen:", error);
-  }
+    </View>
+  );
 };
 
-export default HomeScreen;
+export default SearchScreen;

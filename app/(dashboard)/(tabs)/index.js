@@ -6,6 +6,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+
   const data = [
     {
       id: 1,

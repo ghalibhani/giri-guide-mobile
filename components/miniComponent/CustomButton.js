@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-const CustomButton = ({title, buttonHandling, customStyle}) => {
+const CustomButton = ({title, buttonHandling, customStyle, isDisabled}) => {
   return (
-    <TouchableOpacity className={`${customStyle} py-[16.5] rounded-xl items-center`} onPress={buttonHandling}>
+    <TouchableOpacity className={`${customStyle} py-[16.5] rounded-xl items-center`} onPress={buttonHandling} disabled={isDisabled}>
         <Text className="font-isemibold text-sm text-white">{title}</Text>
     </TouchableOpacity>
   )
