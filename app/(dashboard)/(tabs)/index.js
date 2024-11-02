@@ -4,6 +4,7 @@ import HeaderHome from "../../../components/HeaderHome";
 import SlideCarousel from "../../../components/SlideCarousel";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
+import { Link } from "expo-router";
 
 const HomeScreen = () => {
   const data = [
@@ -99,11 +100,11 @@ const HomeScreen = () => {
       <SafeAreaView>
         <StatusBar
           animated={true}
-          backgroundColor="#503a3a"
+          backgroundColor='#503a3a'
           barStyle={statusBarStyle}
           showHideTransition={statusBarTransition}
           hidden={hidden}
-          style="light"
+          style='light'
         />
         <ScrollView>
           <HeaderHome />

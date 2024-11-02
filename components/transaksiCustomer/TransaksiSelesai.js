@@ -4,13 +4,14 @@ import { useState } from "react";
 import TourGuideCard from "./TourGuideCard";
 import CustomButton from "../miniComponent/CustomButton";
 import TransaksiSlideSelesai from "./TransaksiSlideSelesai";
+import { router } from "expo-router";
 
 const TransaksiSelesai = ({ tourGuideData }) => {
   const [show, setShow] = useState("selesai");
 
   const filteredData = tourGuideData.filter((tourGuide) => {
-    if (show === "selesai") return tourGuide.status === "DONEHIKING";
-    if (show === "ditolak") return tourGuide.status === "DONEREJECT";
+    if (show === "selesai") return tourGuide.status === "DONE";
+    if (show === "ditolak") return tourGuide.status === "REJECT";
     return true;
   });
 
@@ -30,15 +31,27 @@ const TransaksiSelesai = ({ tourGuideData }) => {
             dateRange={tourGuide.dateRange}
             price={tourGuide.price}
             imageUrl={tourGuide.imageUrl}
-            buttonRating={
-              <>
-                <View className='flex-row my-5 h-[1] bg-borderCustom'></View>
-                <CustomButton title='Beri Rating' customStyle='bg-soil' />
-              </>
-            }
-            onPressDetail={() =>
-              console.log(`Lihat detail ${tourGuide.guideName}`)
-            }
+            onPressDetail={() => {
+              if (tourGuide.status === "DONE") {
+                router.navigate("/transaction/transDoneSuccess", {
+                  params: {
+                    tourGuideId: tourGuide.id,
+                  },
+                });
+              } else if (tourGuide.status === "REJECT") {
+                router.navigate("/transaction/transDoneRejected", {
+                  params: {
+                    tourGuideId: tourGuide.id,
+                  },
+                });
+              } else {
+                router.navigate("/transaction/transDoneSuccess", {
+                  params: {
+                    tourGuideId: tourGuide.id,
+                  },
+                });
+              }
+            }}
           />
         ))}
       </ScrollView>

@@ -49,9 +49,9 @@ const TourGuideCard = ({
         </View>
         <CustomButton
           title={
-            status === "ONNEARBY"
+            status === "UPCOMING"
               ? "Lihat Detail"
-              : status === "ONWAITINGPAY"
+              : status === "WAITING_PAY"
               ? "Bayar"
               : "Lihat Detail"
           }

@@ -4,14 +4,15 @@ import { useState } from "react";
 import { ScrollView } from "react-native";
 import TourGuideCard from "./TourGuideCard";
 import TransaksiSlideBerlangsung from "./TransaksiSlideBerlangsung";
+import { router } from "expo-router";
 
 const TransactionBerlangsung = ({ tourGuideData }) => {
   const [show, setShow] = useState("terdekat");
 
   const filteredData = tourGuideData.filter((tourGuide) => {
-    if (show === "terdekat") return tourGuide.status === "ONNEARBY";
-    if (show === "pembayaran") return tourGuide.status === "ONWAITINGPAY";
-    if (show === "approve") return tourGuide.status === "ONAPPROVE";
+    if (show === "terdekat") return tourGuide.status === "UPCOMING";
+    if (show === "pembayaran") return tourGuide.status === "WAITING_PAY";
+    if (show === "approve") return tourGuide.status === "WAITING_APPROVE";
     return true;
   });
 
@@ -32,9 +33,33 @@ const TransactionBerlangsung = ({ tourGuideData }) => {
             price={tourGuide.price}
             imageUrl={tourGuide.imageUrl}
             status={tourGuide.status}
-            onPressDetail={() =>
-              console.log(`Lihat detail ${tourGuide.guideName}`)
-            }
+            onPressDetail={() => {
+              if (tourGuide.status === "UPCOMING") {
+                router.navigate("/transaction/transOnGoingUpcoming", {
+                  params: {
+                    tourGuideId: tourGuide.id,
+                  },
+                });
+              } else if (tourGuide.status === "WAITING_PAY") {
+                router.navigate("/transaction/transOnGoingPayment", {
+                  params: {
+                    tourGuideId: tourGuide.id,
+                  },
+                });
+              } else if (tourGuide.status === "WAITING_APPROVE") {
+                router.navigate("/transaction/transOnGoingApprove", {
+                  params: {
+                    tourGuideId: tourGuide.id,
+                  },
+                });
+              } else {
+                router.navigate("/transaction/transOnGoing", {
+                  params: {
+                    tourGuideId: tourGuide.id,
+                  },
+                });
+              }
+            }}
           />
         ))}
       </ScrollView>
