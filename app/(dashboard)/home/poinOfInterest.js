@@ -2,17 +2,12 @@ import { FlatList, View } from "react-native";
 import HeaderComponent from "../../../components/HeaderComponent";
 import Thumbnail from "../../../components/Thumbnail";
 import PointOfInterestDetail from "../../../components/PointOfInterestDetail";
-import { router } from "expo-router";
 const poinOfInterest = () => {
   return (
     <FlatList
       data={[1]}
       renderItem={({ item }) => (
-        <HeaderComponent
-          text={"Judul Rute Perjalanan"}
-          handleOnPress={() => {
-            router.replace("/home/mountainDetail");
-          }}>
+        <HeaderComponent text={"Judul Rute Perjalanan"}>
           <View className="px-6 bg-[#f8f8f8]">
             <Thumbnail
               image={
