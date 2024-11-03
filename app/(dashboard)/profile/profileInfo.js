@@ -4,12 +4,34 @@ import ProfileInfo from "../../../components/ProfileInfo";
 import ButtonLogout from "../../../components/ButtonLogout";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { logout } from "../../../redux/authSlice";
 
 export default function ProfileInfoScreen() {
+  const dispatch = useDispatch();
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  const handleLogout = async () => {
+    try {
+      dispatch(logout());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.replace("/login");
+    }
+  }, [isLoggedIn]);
+
   return (
-    <SafeAreaView className="flex-1 px-6">
+    <SafeAreaView className='flex-1 px-6'>
       <HeaderBackProfile text={"Informasi Personal"} />
-      <View className="flex-col gap-4">
+      <View className='flex-col gap-4'>
         <ProfileInfo
           label={"NIK"}
           value={"1234567890"}
@@ -40,10 +62,7 @@ export default function ProfileInfoScreen() {
           value={"QpFQ5@example.com"}
           nameIcon={"mail-outline"}
         />
-        <ButtonLogout
-          onPress={() => router.replace("/login")}
-          children={"Logout"}
-        />
+        <ButtonLogout onPress={handleLogout} children={"Logout"} />
       </View>
     </SafeAreaView>
   );

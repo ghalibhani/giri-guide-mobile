@@ -8,7 +8,7 @@ const ReusableInput = ({
   fields,
   onSubmit,
   submitButtonText = "Submit",
-  buttonColor = "bg-blue-500",
+  buttonColor,
 }) => {
   const [formData, setFormData] = React.useState({});
   const [selectedField, setSelectedField] = React.useState(null);
@@ -138,7 +138,7 @@ const ReusableInput = ({
         className={`${buttonColor} h-14 w-full justify-center items-center rounded-xl`}
         onPress={handleSubmit}
       >
-        <Text className='text-white'>{submitButtonText}</Text>
+        <Text className='text-white font-isemibold'>{submitButtonText}</Text>
       </TouchableOpacity>
     </View>
   );

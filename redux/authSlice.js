@@ -1,38 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 
 // Thunk untuk login
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post("auth/login", credentials);
+      const response = await axiosInstance.post("auth/login", credentials);
       const { data } = response.data;
 
-      // Simpan data login di AsyncStorage
-      await AsyncStorage.setItem("authToken", data.token);
+      await AsyncStorage.setItem("token", data.token);
       await AsyncStorage.setItem("userRole", data.role);
       await AsyncStorage.setItem("userId", data.userId);
 
-      return data; // Return data untuk disimpan di Redux state
+      return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-// Thunk untuk logout
-export const logout = createAsyncThunk(
-  "auth/logout",
-  async (_, { rejectWithValue }) => {
-    try {
-      // Hapus data login dari AsyncStorage
-      await AsyncStorage.removeItem("authToken");
-      await AsyncStorage.removeItem("userRole");
-      await AsyncStorage.removeItem("userId");
-    } catch (error) {
-      return rejectWithValue("Gagal logout");
     }
   }
 );
@@ -40,14 +24,29 @@ export const logout = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
     token: null,
     role: null,
     userId: null,
     loading: false,
     error: null,
+    isLoggedIn: false,
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.token = null;
+      state.role = null;
+      state.userId = null;
+      state.user = null;
+      state.loading = false;
+      state.error = null;
+      state.isLoggedIn = false;
+
+      AsyncStorage.removeItem("token");
+      AsyncStorage.removeItem("userRole");
+      AsyncStorage.removeItem("userId");
+    },
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -56,24 +55,18 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.email;
         state.token = action.payload.token;
         state.role = action.payload.role;
         state.userId = action.payload.userId;
+        state.isLoggedIn = true;
+        state.error = false;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.user = null;
-        state.token = null;
-        state.role = null;
-        state.userId = null;
-        state.loading = false;
-        state.error = null;
       });
   },
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
