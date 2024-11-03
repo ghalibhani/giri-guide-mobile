@@ -1,7 +1,7 @@
 // TourGuideCard.js
 import React from "react";
 import { View, Text, Image } from "react-native";
-import CustomButton from "../../components/miniComponent/CustomButton"; // Pastikan path ini sesuai dengan file CustomButton Anda
+import CustomButton from "../../components/miniComponent/CustomButton";
 
 const TourGuideCard = ({
   guideName,
@@ -14,6 +14,8 @@ const TourGuideCard = ({
   price,
   onPressDetail,
   imageUrl,
+  customElements,
+  status,
 }) => {
   const getImageSource = () => {
     if (imageUrl) {
@@ -46,11 +48,18 @@ const TourGuideCard = ({
           <Text className='font-ibold text-soil text-base'>Rp. {price}</Text>
         </View>
         <CustomButton
-          title='Lihat Detail'
-          customStyle='bg-soil justify-center px-6'
+          title={
+            status === "UPCOMING"
+              ? "Lihat Detail"
+              : status === "WAITING_PAY"
+              ? "Bayar"
+              : "Lihat Detail"
+          }
+          customStyle='bg-evergreen justify-center px-6'
           buttonHandling={onPressDetail}
         />
       </View>
+      {customElements}
     </View>
   );
 };

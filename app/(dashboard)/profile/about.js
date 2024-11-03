@@ -1,9 +1,9 @@
-import { Image, Text, View } from "react-native";
+import { Image, SafeAreaView, Text, View } from "react-native";
 import HeaderBackProfile from "../../../components/HeaderBackProfile";
 
 export default function AboutScreen() {
   return (
-    <View className="flex-1 px-6 ">
+    <SafeAreaView className="flex-1 px-6 py-8">
       <HeaderBackProfile text={"Tentang Aplikasi"} />
       <View className="px-6 py-[30]  mb-3 flex-1 bg-white rounded-[30] items-center">
         <Image
@@ -26,6 +26,6 @@ export default function AboutScreen() {
           sunt ut laboris. Non labore veniam ut proident laboris magna.
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

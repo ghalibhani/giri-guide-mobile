@@ -1,6 +1,8 @@
-import { View } from "react-native";
+import { StatusBar } from "react-native";
 import HeaderSearching from "../../../components/HeaderSearching";
 import TourGuideSearchedList from "../../../components/TourGuideSearchedList";
+import { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 const SearchListScreen = () => {
   const tourGuides = [
     {
@@ -40,11 +42,34 @@ const SearchListScreen = () => {
       totalRating: 50,
     },
   ];
+  const [hidden, setHidden] = useState(false);
+  const [statusBarStyle, setStatusBarStyle] = useState("default");
+  const [statusBarTransition, setStatusBarTransition] = useState("fade");
+
+  const handleScroll = (event) => {
+    const { nativeEvent } = event;
+    const { contentOffset } = nativeEvent;
+    const { y } = contentOffset;
+    if (y > 100) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  };
+
   return (
-    <View>
+    <SafeAreaView>
+      <StatusBar
+        backgroundColor="#503a3a"
+        barStyle={statusBarStyle}
+        hidden={hidden}
+        animated={true}
+        translucent={true}
+        style={statusBarTransition}
+      />
       <HeaderSearching />
       {tourGuides && <TourGuideSearchedList tourGuides={tourGuides} />}
-    </View>
+    </SafeAreaView>
   );
 };
 

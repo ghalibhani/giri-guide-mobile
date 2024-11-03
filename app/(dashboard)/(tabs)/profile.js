@@ -1,33 +1,10 @@
-import { Button, Text, View } from "react-native";
-import ContainerProfile from "../../../components/ContainerProfile";
-import ButtonProfile from "../../../components/ButtonProfile";
-import { AntDesign, Foundation, Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import HomeProfileGuideScreen from "../profile/homeProfileGuide";
+import HomeProfileScreen from "../profile/homeProfile";
 
-export default function ProfileScreen() {
-  return (
-    <View className="flex-1 items-center bg-hex-#F8F8F8">
-      <ContainerProfile />
-      <View className="mt-4 mb-3 px-6 py-6 w-full flex-1 bg-white rounded-[30px] items-center">
-        <ButtonProfile
-          onPress={() => router.navigate("/register")}
-          text={"Informasi Profile"}
-        >
-          <Ionicons name="person-outline" size={18} color={"#F8F8F8"} />
-        </ButtonProfile>
-        <ButtonProfile text={"Ubah Password"}>
-          <Ionicons name="key-outline" size={18} color={"#F8F8F8"} />
-        </ButtonProfile>
-        <ButtonProfile text={"Tata Cara Pemesanan"}>
-          <Ionicons name="reorder-four-outline" size={18} color={"#F8F8F8"} />
-        </ButtonProfile>
-        <ButtonProfile text={"Wishlist Gunung"}>
-          <Ionicons name="heart-outline" size={18} color={"#F8F8F8"} />
-        </ButtonProfile>
-        <ButtonProfile text={"Tentang Aplikasi"}>
-          <AntDesign name="exclamationcircleo" size={18} color={"#F8F8F8"} />
-        </ButtonProfile>
-      </View>
-    </View>
-  );
+export default function ProfileScreen({ isTourGuide = true }) {
+  if (isTourGuide) {
+    return <HomeProfileGuideScreen />;
+  } else {
+    return <HomeProfileScreen />;
+  }
 }

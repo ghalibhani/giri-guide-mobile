@@ -1,21 +1,59 @@
 // TransactionStatusBar.js
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 
-const TransactionStatusBar = () => {
+const TransactionStatusBar = ({ onStatusChange }) => {
+  const [activeStatus, setActiveStatus] = useState("berlangsung");
+  const handlePress = (status) => {
+    setActiveStatus(status);
+    if (onStatusChange) onStatusChange(status);
+  };
+
   return (
-    <View className='bg-white rounded-verylarge py-5 px-6 gap-5'>
-      <View className='flex-row'>
-        <Text className='font-ibold text-sm text-center text-soil w-1/2'>
-          Berlangsung
-        </Text>
-        <Text className='font-iregular text-sm text-center text-soil w-1/2'>
-          Selesai
-        </Text>
-      </View>
-      <View>
-        <View className='h-[1] bg-borderCustom'></View>
-        <View className='h-[4] rounded-xl w-1/2 bg-soil'></View>
+    <View>
+      <View className='bg-white rounded-verylarge py-5 px-6 gap-5'>
+        <View className='flex-row'>
+          <TouchableOpacity
+            className={`w-1/2 `}
+            onPress={() => handlePress("berlangsung")}
+          >
+            <Text
+              className={` text-sm text-center ${
+                activeStatus === "berlangsung" ? "font-ibold" : "text-soil"
+              }`}
+            >
+              Berlangsung
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className={`w-1/2`}
+            onPress={() => handlePress("selesai")}
+          >
+            <Text
+              className={` text-sm text-center ${
+                activeStatus === "selesai" ? "font-ibold" : "text-soil"
+              }`}
+            >
+              Selesai
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View className='flex-row h-[1] bg-borderCustom'>
+          <View
+            className={` rounded-xl ${
+              activeStatus === "berlangsung"
+                ? "w-1/2 h-[4] bg-soil"
+                : "w-1/2 bg-gray-200 mr-1/2"
+            }`}
+          ></View>
+          <View
+            className={` rounded-xl ${
+              activeStatus === "selesai"
+                ? "w-1/2 h-[4] bg-soil"
+                : "w-1/2 bg-gray-200 ml-1/2"
+            }`}
+          ></View>
+        </View>
       </View>
     </View>
   );
