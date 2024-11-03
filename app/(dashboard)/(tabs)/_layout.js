@@ -3,7 +3,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function RootLayout() {
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs
+      screenOptions={{ headerShown: false, tabBarActiveTintColor: "#503a3a" }}>
       <Tabs.Screen
         name="index"
         options={{
@@ -17,7 +18,7 @@ export default function RootLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="chat"
         options={{
           title: "Chat",
@@ -31,7 +32,7 @@ export default function RootLayout() {
             />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="profile"
         options={{
@@ -39,6 +40,19 @@ export default function RootLayout() {
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "person-sharp" : "person-outline"}
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="transaction"
+        options={{
+          title: "Transaction",
+          tabBarIcon: ({ focused, color }) => (
+            <Ionicons
+              name={focused ? "receipt-sharp" : "receipt-outline"}
               color={color}
               size={24}
             />

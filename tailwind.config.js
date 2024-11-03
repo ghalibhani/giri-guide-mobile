@@ -24,6 +24,17 @@ module.exports = {
         cantelope: "#F9D4DB",
         grayCustom: "#F8F8F8",
         borderCustom: "#E4E6EA",
+        warningHover: "#E86339",
+        warningMedium: "#FFB37C",
+        warningLight: "#FFF4E4",
+        errorHover: "#ED3241",
+        errorMedium: "#FF616D",
+        errorLight: "#FFE2E5",
+        successHover: "#298267",
+        successMedium: "#3AC0A0",
+        successLight: "#E7F4E8",
+        info: "#006FFD",
+        infoLight: "#EAF2FF"
       },
       fontFamily: {
         ithin: ["Inter-Thin", "sans-serif"],
@@ -39,6 +50,12 @@ module.exports = {
       borderRadius: {
         verylarge: "30px",
       },
+      margin: {
+        custom: "8.5rem"
+      },
+      padding: {
+        custom: "8.5rem"
+      }
     },
   },
   plugins: [],
