@@ -79,8 +79,8 @@ const index = () => {
         <SafeAreaView className='flex-1'>
             {isModalVisible && <ModalActiveNonActiveTourGuide />}
             <StatusBar backgroundColor={"#503A3A"} barStyle={"light-content"} />
-            
-            
+
+            <Link href="transaction-tourguide/transDoneSuccess">Loncat</Link>            
 
             <View className="gap-5 bg-grayCustom flex-1">
                 <View className='bg-soil flex-row justify-between rounded-b-verylarge py-6 px-6 pt-6'>

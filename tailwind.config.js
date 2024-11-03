@@ -32,7 +32,9 @@ module.exports = {
         errorLight: "#FFE2E5",
         successHover: "#298267",
         successMedium: "#3AC0A0",
-        successLight: "#E7F4E8"
+        successLight: "#E7F4E8",
+        info: "#006FFD",
+        infoLight: "#EAF2FF"
       },
       fontFamily: {
         ithin: ["Inter-Thin", "sans-serif"],
