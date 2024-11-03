@@ -26,7 +26,13 @@ module.exports = {
         borderCustom: "#E4E6EA",
         warningHover: "#E86339",
         warningMedium: "#FFB37C",
-        warningLight: "#FFF4E4"
+        warningLight: "#FFF4E4",
+        errorHover: "#ED3241",
+        errorMedium: "#FF616D",
+        errorLight: "#FFE2E5",
+        successHover: "#298267",
+        successMedium: "#3AC0A0",
+        successLight: "#E7F4E8"
       },
       fontFamily: {
         ithin: ["Inter-Thin", "sans-serif"],

@@ -1,6 +1,10 @@
 {
   "expo": {
     "name": "giri-guide",
+    "permissions": [
+        "CAMERA",
+        "CAMERA_ROLL"
+    ],
     "slug": "giri-guide",
     "version": "1.0.0",
     "orientation": "portrait",

@@ -6,7 +6,7 @@ const CustomInput = ({title, secureTextEntry, value, placeholder, handleChangeTe
     const [showPassword, setShowPassword] = useState(false);
     return (
         <View className="gap-2">
-            <Text className="font-ibold text-sm text-evergreen">Password</Text>
+            <Text className="font-ibold text-sm text-evergreen">{title}</Text>
 
             <View className="flex-row border-[1px] rounded-xl border-borderCustom items-center justify-between bg-white px-4 py-[14px]">
                 <TextInput 
