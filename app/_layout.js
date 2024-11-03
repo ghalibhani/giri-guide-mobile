@@ -2,6 +2,8 @@ import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 
 import "../global.css";
+import { Provider } from "react-redux";
+import store from "../store";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -21,8 +23,10 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name='(dashboard)' />
-    </Stack>
+    <Provider store={store}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='(dashboard)' />
+      </Stack>
+    </Provider>
   );
 }

@@ -2,8 +2,11 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 
 const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
+  const userRole = useSelector((state) => state.user.userRole);
+
   const [activeButton, setActiveButton] = useState("terdekat");
 
   const handleButtonPress = (filter) => {
@@ -48,7 +51,9 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
               activeButton === "pembayaran" ? "text-white" : "text-soil"
             }`}
           >
-            Menunggu Pembayaran
+            {userRole === "tourguide"
+              ? "Butuh Persetujuan"
+              : "Menunggu Pembayaran"}
           </Text>
         </TouchableOpacity>
 
