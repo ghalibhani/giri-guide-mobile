@@ -14,7 +14,7 @@ export default function LoginScreen() {
   const { error, isLoggedIn } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState("solehuddin@gmail.com");
-  const [password, setPassword] = useState("1Soleh@7");
+  const [password, setPassword] = useState("1Soleh@6");
 
   const handleLogin = async () => {
     if (email === "" || password === "") {
@@ -23,19 +23,22 @@ export default function LoginScreen() {
     }
     try {
       const credentials = { email, password };
-      dispatch(login(credentials));
-
-      if (error) {
-        Alert.alert("Error", error.message);
-      }
+      await dispatch(login(credentials)).unwrap();
     } catch (error) {
-      Alert.alert("Error", error.message);
+      const errorMessage =
+        error.message || error.response?.data || "Terjadi kesalahan";
+
+      const cleanMessage = errorMessage.includes("UNAUTHORIZED")
+        ? errorMessage.split("UNAUTHORIZED ")[1]
+        : errorMessage;
+
+      Alert.alert("Error", cleanMessage);
     }
   };
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.replace("/(dashboard)");
+      router.replace("/");
     }
   }, [isLoggedIn]);
 

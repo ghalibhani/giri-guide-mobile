@@ -26,7 +26,6 @@ const HomeScreen = () => {
           dispatch(loginRefresh({ token, role, userId, email }));
         }
       } catch (error) {
-        console.log("Error checking login status:", error);
         router.replace("/login");
       }
     };
