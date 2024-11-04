@@ -1,24 +1,14 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, Modal, StatusBar, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import CustomButton from '../../../components/miniComponent/CustomButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Link } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { ScrollView } from 'react-native';
 
 const HomeMainTourGuideScreen = () => {
     const tourGuideName = "Giri Guide Name";
-    const [isTourGuideActive, setIsTourGuideActive] = useState(true)
-    const [isModalVisible, setIsModalVisible] = useState(false)
-
-    const showModalConfirmation = () => {
-        setIsModalVisible(true)
-    }
-
-    const closeModalConfirmation = () => {
-        setIsModalVisible(false)
-    }
-
-    const saveHandler = () => {
-        setIsTourGuideActive(!isTourGuideActive)
-        setIsModalVisible(false)
-    }
-
+    
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(value)
     }
@@ -31,51 +21,11 @@ const HomeMainTourGuideScreen = () => {
         }).format(date);
     }
 
-    const ModalActiveNonActiveTourGuide = () => {
-        return (
-            <Modal
-                visible={isModalVisible}
-                transparent={true}
-                animationType='fade'
-                onRequestClose={closeModalConfirmation}
-            >
-               <View className="flex-1 justify-center items-center bg-[rgba(0,0,0,0.5)]">
-                    <View className="gap-6 rounded-verylarge bg-white px-6 py-6 mx-6">
-                        <Text className=" text-center font-isemibold text-base text-evergreen items-center">{isTourGuideActive ? (
-                            "Apakah kamu yakin untuk menonaktifkan akun untuk saat ini?"
-                        ) : (
-                            "Apakah kamu yakin untuk mengaktifkan akun untuk saat ini?"
-                        )}
-                        </Text>
-
-                        <View className="flex-row justify-between">
-                            <View className="items-center justify-center flex-1 px-6">
-                                <CustomButton
-                                    buttonHandling={saveHandler}
-                                    customStyle="bg-successHover w-full"
-                                    title="Ya"
-                                />
-                            </View>
-                            <View className="items-center justify-center flex-1 px-6">
-                                <CustomButton
-                                    buttonHandling={closeModalConfirmation}
-                                    customStyle="bg-warningHover w-full"
-                                    title="Tidak" 
-                                />
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            </Modal>
-        )
-    }
-
     return (
         <SafeAreaView className='flex-1'>
-            {isModalVisible && <ModalActiveNonActiveTourGuide />}
             <StatusBar backgroundColor={"#503A3A"} barStyle={"light-content"} />
 
-            <Link href="transaction-tourguide/transDoneSuccess">Loncat</Link>            
+            {/* <Link href="transaction-tourguide/transDoneSuccess">Loncat</Link>             */}
 
             <View className="gap-5 bg-grayCustom flex-1">
                 <View className='bg-soil flex-row justify-between rounded-b-verylarge py-6 px-6 pt-6'>
@@ -86,9 +36,6 @@ const HomeMainTourGuideScreen = () => {
                                 <Ionicons name='power' color={`${!isTourGuideActive ? "#ED3241" : "#298267"}`} size={18} />
                             </Link>
                         </TouchableOpacity> */}
-                        <TouchableOpacity className="rounded-full bg-white w-8 h-8 items-center justify-center" onPress={showModalConfirmation}>
-                                <Ionicons name='power' color={`${!isTourGuideActive ? "#ED3241" : "#298267"}`} size={18} />
-                        </TouchableOpacity>
 
                         <TouchableOpacity>
                             <Link href={'/homeGuide/walletGuide'}>

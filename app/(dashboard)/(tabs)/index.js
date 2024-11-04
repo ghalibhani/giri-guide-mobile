@@ -1,135 +1,163 @@
-import { ScrollView, StatusBar } from "react-native";
-import OverFlowCarousel from "../../../components/OverFlowCarousel";
-import HeaderHome from "../../../components/HeaderHome";
-import SlideCarousel from "../../../components/SlideCarousel";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
-import { Link } from "expo-router";
+import { View, Text, Modal, StatusBar, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import CustomButton from '../../../components/miniComponent/CustomButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Link } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { ScrollView } from 'react-native';
 
-const HomeScreen = () => {
-  const data = [
-    {
-      id: 1,
-      text: "Item 1",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 1",
-    },
-    {
-      id: 2,
-      text: "Item 2",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 2",
-    },
-    {
-      id: 3,
-      text: "Item 3",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 3",
-    },
-    {
-      id: 4,
-      text: "Item 4",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 4",
-    },
-    {
-      id: 5,
-      text: "Item 5",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 5",
-    },
-    {
-      id: 6,
-      text: "Item 6",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 6",
-    },
-    {
-      id: 7,
-      text: "Item 7",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 7",
-    },
-    {
-      id: 8,
-      text: "Item 8",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 8",
-    },
-    {
-      id: 9,
-      text: "Item 9",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 9",
-    },
-    {
-      id: 10,
-      text: "Item 10",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 10",
-    },
-  ];
+const HomeMainTourGuideScreen = () => {
+    const tourGuideName = "Giri Guide Name";
+    const [isTourGuideActive, setIsTourGuideActive] = useState(true)
+    const [isModalVisible, setIsModalVisible] = useState(false)
 
-  try {
-    const [hidden, setHidden] = useState(false);
-    const [statusBarStyle, setStatusBarStyle] = useState("default");
-    const [statusBarTransition, setStatusBarTransition] = useState("fade");
+    const showModalConfirmation = () => {
+        setIsModalVisible(true)
+    }
 
-    const handleScroll = (event) => {
-      const { nativeEvent } = event;
-      const { contentOffset } = nativeEvent;
-      const { y } = contentOffset;
-      if (y > 300) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
-    };
+    const closeModalConfirmation = () => {
+        setIsModalVisible(false)
+    }
+
+    const saveHandler = () => {
+        setIsTourGuideActive(!isTourGuideActive)
+        setIsModalVisible(false)
+    }
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(value)
+    }
+
+    const formattedDate = (date) => {
+        return new Intl.DateTimeFormat("id-ID", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }).format(date);
+    }
+
+    const ModalActiveNonActiveTourGuide = () => {
+        return (
+            <Modal
+                visible={isModalVisible}
+                transparent={true}
+                animationType='fade'
+                onRequestClose={closeModalConfirmation}
+            >
+               <View className="flex-1 justify-center items-center bg-[rgba(0,0,0,0.5)]">
+                    <View className="gap-6 rounded-verylarge bg-white px-6 py-6 mx-6">
+                        <Text className=" text-center font-isemibold text-base text-evergreen items-center">{isTourGuideActive ? (
+                            "Apakah kamu yakin untuk menonaktifkan akun untuk saat ini?"
+                        ) : (
+                            "Apakah kamu yakin untuk mengaktifkan akun untuk saat ini?"
+                        )}
+                        </Text>
+
+                        <View className="flex-row justify-between">
+                            <View className="items-center justify-center flex-1 px-6">
+                                <CustomButton
+                                    buttonHandling={saveHandler}
+                                    customStyle="bg-successHover w-full"
+                                    title="Ya"
+                                />
+                            </View>
+                            <View className="items-center justify-center flex-1 px-6">
+                                <CustomButton
+                                    buttonHandling={closeModalConfirmation}
+                                    customStyle="bg-warningHover w-full"
+                                    title="Tidak" 
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+        )
+    }
 
     return (
-      <SafeAreaView>
-        <StatusBar
-          animated={true}
-          backgroundColor='#503a3a'
-          barStyle={statusBarStyle}
-          showHideTransition={statusBarTransition}
-          hidden={hidden}
-          style='light'
-        />
-        <ScrollView>
-          <HeaderHome />
-          <SlideCarousel data={data} />
-          <OverFlowCarousel
-            data={data}
-            title={"Jelajahi Gunung di Jawa Timur"}
-          />
-          <OverFlowCarousel
-            data={data}
-            title={"Rute Perjalanan ke Destinasi"}
-            withDescription={true}
-            route="/home/poinOfInterest"
-          />
-          {/* <OverFlowCarousel
-                data={data}
-                title={"Pengalaman pendaki lain"}
-                withDescription={true}
-              /> */}
-        </ScrollView>
-      </SafeAreaView>
-    );
-  } catch (error) {
-    console.error("Error rendering HomeScreen:", error);
-  }
-};
+        <SafeAreaView className='flex-1'>
+            {isModalVisible && <ModalActiveNonActiveTourGuide />}
+            <StatusBar backgroundColor={"#503A3A"} barStyle={"light-content"} />
 
-export default HomeScreen;
+            <Link href="register">Loncat</Link>            
+
+            <View className="gap-5 bg-grayCustom flex-1">
+                <View className='bg-soil flex-row justify-between rounded-b-verylarge py-6 px-6 pt-6'>
+                    <Text className='font-ibold text-xl text-ivory'>Hai, {tourGuideName}</Text>
+                    <View className="flex-row gap-5">
+                        {/* <TouchableOpacity className="rounded-full bg-white w-8 h-8 items-center justify-center">
+                            <Link href={'/homeGuide/onOffMountainAndHikingPoint'}>
+                                <Ionicons name='power' color={`${!isTourGuideActive ? "#ED3241" : "#298267"}`} size={18} />
+                            </Link>
+                        </TouchableOpacity> */}
+                        <TouchableOpacity className="rounded-full bg-white w-8 h-8 items-center justify-center" onPress={showModalConfirmation}>
+                                <Ionicons name='power' color={`${!isTourGuideActive ? "#ED3241" : "#298267"}`} size={18} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity>
+                            <Link href={'/homeGuide/walletGuide'}>
+                                <Ionicons name='wallet-outline' color={"#FBF6D9"} size={24} />
+                            </Link>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 0 }}>
+                    <View className="gap-6">
+                        <View className="pt-6 gap-7 rounded-verylarge bg-white mx-6">
+                            <View className="gap-2 px-6 ">
+                                <Text className="font-iregular text-sm text-thistle">Total Balance</Text>
+                                <Text className="font-ibold text-3xl text-evergreen">{formatCurrency(10000000)}</Text>
+                            </View>
+
+                            <View className="rounded-verylarge bg-daisy px-6 py-5 flex-row justify-between">
+                                <View className="gap-[5]">
+                                    <Text className="font-iregular text-sm text-soil">Pemasukan</Text>
+                                    <Text className="font-ibold text-base text-evergreen">{formatCurrency(10000000)}</Text>
+                                </View>
+
+                                <View className="gap-[5]">
+                                    <Text className="font-iregular text-sm text-soil">Pengeluaran</Text>
+                                    <Text className="font-ibold text-base text-evergreen">{formatCurrency(10000000)}</Text>
+                                </View>
+                            </View>
+                        </View> 
+
+                        <View className="flex-row justify-between gap-4 mx-6">
+                            <View className="px-6 py-5 gap-[5] bg-soil rounded-verylarge flex-1">
+                                <Text className="font-iregular text-sm text-oat">Pendakian berhasil</Text>
+                                <Text className="font-ibold text-base text-ivory">300</Text>
+                            </View>
+
+                            <View className="px-6 py-5 gap-[5] bg-soil rounded-verylarge flex-1">
+                                <Text className="font-iregular text-sm text-oat">Pendakian ditolak</Text>
+                                <Text className="font-ibold text-base text-ivory">200</Text>
+                            </View>
+                        </View>
+
+                        <View className="rounded-verylarge bg-daisy px-6 py-5 mx-6 gap-[5]">
+                            <Text className="font-iregular text-sm text-soil">Jadwal terdekat</Text>
+                            <Text className="font-ibold text-base text-evergreen">{formattedDate(new Date())}</Text>
+                        </View>
+
+                        <View className="rounded-verylarge bg-daisy px-6 py-5 mx-6 gap-[5]">
+                            <Text className="font-iregular text-sm text-soil">Banyak pendakian yang belum selesai </Text>
+                            <Text className="font-ibold text-base text-evergreen">100</Text>
+                        </View>
+
+                        <View className="rounded-verylarge bg-daisy px-6 py-5 mx-6 gap-[5]">
+                            <Text className="font-iregular text-sm text-soil">Banyak pendakian yang belum disetujui </Text>
+                            <Text className="font-ibold text-base text-evergreen">100</Text>
+                        </View>
+
+                    </View>
+
+                </ScrollView>
+            </View>
+        </SafeAreaView>
+        
+    )
+}
+
+export default HomeMainTourGuideScreen
