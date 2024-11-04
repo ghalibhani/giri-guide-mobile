@@ -7,9 +7,13 @@ import CustomInput from "../components/miniComponent/CustomInput";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from "react-native-dropdown-picker";
 import CustomButton from "../components/miniComponent/CustomButton";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewHiker } from "../redux/registerSlice";
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.register);
 
   const [nik, setNik] = useState('');
   const [fullName, setFullName] = useState('')
@@ -32,6 +36,8 @@ export default function RegisterScreen() {
   const [successMessage, setSuccessMessage] = useState('');
   const [formErrors, setFormErrors] = useState('');
 
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
   const showBirthDatePickerHandler = () => {
       setShowBirthDatePicker(true);
   };
@@ -50,20 +56,39 @@ export default function RegisterScreen() {
     }).format(date);
   }
 
+  function formatDateToYYYYMMDD(date) {
+    if (!(date instanceof Date)) {
+      throw new Error("Input harus berupa objek Date");
+    }
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Menambahkan 1 ke bulan
+    const day = String(date.getDate()).padStart(2, '0'); // Memastikan dua digit
+
+    return `${year}-${month}-${day}`;
+  }
+
   const validate = () => {
     const regexEmail = /\S+@\S+\.\S+/;
+    const regexInteger = /^\d+$/;
+    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+
     let formErr = {}
 
     if(!nik) {
       formErr.nik = "NIK harus diisi"
+    } else if(!regexInteger.test(nik)){
+      formErr.nik = "Format NIK tidak valid"
+    } else if(nik.length > 16 || nik.length < 16){
+      formErr.nik = "Format NIK harus 16 angka"
     }
 
     if(!fullName) {
       formErr.fullName = "Nama lengkap harus diisi"
     }
 
-    if(!gender) {
-      formErr.gender = "Gender harus dipilih"
+    if(gender !== "MALE" && gender !== "FEMALE") {
+      formErr.gender = "Jenis kelamin harus dipilih"
     }
 
     if(!address) {
@@ -73,11 +98,15 @@ export default function RegisterScreen() {
     if(!email) {
       formErr.email = "Email harus diisi"
     } else if (!regexEmail.test(email)){
-      formErr.email = "Format email invalid"
+      formErr.email = "Format email tidak valid"
     }
 
     if(!password) {
       formErr.password = "Password harus diisi"
+    } else if(password.length < 8) {
+      formErr.password = "Password min 8 karakter"
+    } else if (!regexPassword.test(password)){
+      formErr.password ="Password harus mengandung min. 1 huruf kapital, 1 huruf kecil, dan 1 simbol"
     }
 
     if(!konfirmasiPassword) {
@@ -90,8 +119,41 @@ export default function RegisterScreen() {
     return Object.keys(formErr).length === 0
   }
 
-  const handleRegister = () => {
+  const generateNewHikerData = () => {
+    const jsonString = JSON.stringify({
+      fullName: fullName,
+      email: email,
+      password: password,
+      birthDate: formatDateToYYYYMMDD(birthDate),
+      nik: nik,
+      address: address,
+      gender: gender
+    })
+    return jsonString
+  }
+
+  const handleRegister = async () => {
     if(!validate()) return;
+
+    try{
+      const jsonString = generateNewHikerData()
+      await dispatch(createNewHiker(jsonString)).unwrap()
+      setFormErrors('')
+      setErrorMessage('')
+      setSuccessMessage("Registrasi berhasil!")
+      setFormErrors('')
+      setNik('')
+      setFullName('')
+      setBirthDate(new Date())
+      setGender('')
+      setAddress('')
+      setEmail('')
+      setPassword('')
+      setKonfirmasiPassword('')
+    } catch(e) {
+      setSuccessMessage('')
+      setErrorMessage(error || "Error saat registrasi");
+    }
   };
 
   const handleNavigateToLogin = () => {
@@ -151,7 +213,7 @@ export default function RegisterScreen() {
           </View>
 
           <View className="gap-2">
-            <Text className="font-ibold text-sm text-evergreen">Gender</Text>
+            <Text className="font-ibold text-sm text-evergreen">Jenis Kelamin</Text>
 
             <View className="flex-row border-[1px] rounded-xl border-borderCustom items-center justify-between bg-white px-4 py-[14px]">
               <DropDownPicker
@@ -214,6 +276,7 @@ export default function RegisterScreen() {
                 onChangeValue={setGender}
               />
             </View>
+            {formErrors.gender && <Text className="font-iregular text-errorHover text-sm">{formErrors.gender}</Text>}
           </View>
 
           <View className="gap-2">
@@ -276,6 +339,19 @@ export default function RegisterScreen() {
             title="Daftar"
           />
         </View>
+
+        {errorMessage && 
+          <View className="rounded-xl border-errorHover bg-errorLight px-5 py-5">
+              <Text className="text-sm font-iregular text-errorHover">{errorMessage}</Text>
+          </View>
+        }
+
+        {successMessage && 
+          <View className="rounded-xl border-successHover bg-successLight px-5 py-5">
+              <Text className="text-sm font-iregular text-successHover">Kamu berhasil mendaftar! Silahkan ke halaman login untuk eksplorasi gunung di Jawa Timur</Text>
+          </View>
+        }
+
 
         <View className="flex-row items gap-3 justify-center">
           <Text className="text-thistle font-iregular text-sm">Sudah punya akun?</Text>
