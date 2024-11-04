@@ -6,16 +6,24 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect } from "react";
 import { Link, router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { loginRefresh } from "../../../redux/authSlice";
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
+        const role = await AsyncStorage.getItem("userRole");
+        const userId = await AsyncStorage.getItem("userId");
+        const email = await AsyncStorage.getItem("email");
 
-        console.log(token);
         if (token === null) {
           router.replace("/login");
+        } else {
+          dispatch(loginRefresh({ token, role, userId, email }));
         }
       } catch (error) {
         console.log("Error checking login status:", error);

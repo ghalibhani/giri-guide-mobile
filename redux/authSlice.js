@@ -13,6 +13,7 @@ export const login = createAsyncThunk(
       await AsyncStorage.setItem("token", data.token);
       await AsyncStorage.setItem("userRole", data.role);
       await AsyncStorage.setItem("userId", data.userId);
+      await AsyncStorage.setItem("email", data.email);
 
       return data;
     } catch (error) {
@@ -27,6 +28,7 @@ const authSlice = createSlice({
     token: null,
     role: null,
     userId: null,
+    email: null,
     loading: false,
     error: null,
     isLoggedIn: false,
@@ -34,16 +36,26 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.token = null;
-      state.role = null;
+      state.role = "";
       state.userId = null;
       state.user = null;
       state.loading = false;
       state.error = null;
+      state.email = null;
       state.isLoggedIn = false;
 
       AsyncStorage.removeItem("token");
       AsyncStorage.removeItem("userRole");
       AsyncStorage.removeItem("userId");
+      AsyncStorage.removeItem("email");
+    },
+
+    loginRefresh: (state, action) => {
+      state.token = action.payload.token;
+      state.role = action.payload.role;
+      state.userId = action.payload.userId;
+      state.email = action.payload.email;
+      state.isLoggedIn = true;
     },
   },
 
@@ -58,6 +70,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.role = action.payload.role;
         state.userId = action.payload.userId;
+        state.email = action.payload.email;
         state.isLoggedIn = true;
         state.error = false;
       })
@@ -68,5 +81,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, loginRefresh } = authSlice.actions;
 export default authSlice.reducer;
