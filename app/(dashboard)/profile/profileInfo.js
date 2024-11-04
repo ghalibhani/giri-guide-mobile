@@ -17,16 +17,17 @@ export default function ProfileInfoScreen() {
   const handleLogout = async () => {
     try {
       dispatch(logout());
+      router.replace("/login");
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.replace("/login");
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     router.replace("/login");
+  //   }
+  // }, [isLoggedIn]);
 
   return (
     <SafeAreaView className='flex-1 px-6'>

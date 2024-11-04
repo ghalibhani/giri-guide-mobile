@@ -84,36 +84,40 @@ export default function RootLayout() {
     "Inter-Black": require("./../assets/fonts/Inter-Black.otf"),
   });
 
-  const [initialRoute, setInitialRoute] = useState("loading"); // Default to loading state
+  // const [initialRoute, setInitialRoute] = useState("loading");
 
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const token = await AsyncStorage.getItem("token");
-        if (token !== null) {
-          setInitialRoute("(dashboard)");
-          return;
-        } else {
-          setInitialRoute("login");
-          return;
-        }
-      } catch (error) {
-        console.log("Error checking login status:", error);
-        setInitialRoute("login");
-      }
-    };
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem("token");
+  //       if (token !== null) {
+  //         setInitialRoute("(dashboard)");
+  //         return;
+  //       } else {
+  //         setInitialRoute("login");
+  //         return;
+  //       }
+  //     } catch (error) {
+  //       console.log("Error checking login status:", error);
+  //       setInitialRoute("login");
+  //     }
+  //   };
 
-    checkLoginStatus();
-  }, []);
+  //   checkLoginStatus();
+  // }, []);
 
-  if (!fontsLoaded || initialRoute === "loading") {
-    return <SplashScreen></SplashScreen>;
+  // if (!fontsLoaded || initialRoute === "loading") {
+  //   return <SplashScreen></SplashScreen>;
+  // }
+
+  if (!fontsLoaded) {
+    return null;
   }
 
   return (
     <Provider store={store}>
       <Stack
-        initialRouteName={initialRoute}
+        // initialRouteName={initialRoute}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name='login' />

@@ -3,10 +3,29 @@ import OverFlowCarousel from "../../../components/OverFlowCarousel";
 import HeaderHome from "../../../components/HeaderHome";
 import SlideCarousel from "../../../components/SlideCarousel";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
-import { Link } from "expo-router";
+import { useState, useEffect } from "react";
+import { Link, router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = () => {
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+
+        console.log(token);
+        if (token === null) {
+          router.replace("/login");
+        }
+      } catch (error) {
+        console.log("Error checking login status:", error);
+        router.replace("/login");
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+
   const data = [
     {
       id: 1,
@@ -117,7 +136,7 @@ const HomeScreen = () => {
             data={data}
             title={"Rute Perjalanan ke Destinasi"}
             withDescription={true}
-            route="/home/poinOfInterest"
+            route='/home/poinOfInterest'
           />
           {/* <OverFlowCarousel
                 data={data}

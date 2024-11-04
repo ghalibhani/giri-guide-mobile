@@ -37,12 +37,6 @@ export default function LoginScreen() {
     if (isLoggedIn) {
       router.replace("/(dashboard)");
     }
-
-    const cek = async () => {
-      const token = await AsyncStorage.getItem("token");
-      console.log(token);
-    };
-    cek();
   }, [isLoggedIn]);
 
   const handleRegister = () => {
