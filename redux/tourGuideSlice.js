@@ -15,9 +15,12 @@ export const fetchTourGuideById = createAsyncThunk(
 
 export const fetchTourGuideProfileByUserId = createAsyncThunk(
   "tourGuide/fetchTourGuideProfile",
-  async (_, { rejectWithValue }) => {
+  async (credentials, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`tour-guide/profile`);
+      const response = await axiosInstance.get(
+        `tour-guide/profile`,
+        credentials
+      );
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -43,7 +46,28 @@ const initialState = {
   loading: false,
   error: null,
   // PROFILE GUIDE
-  
+  userId: "",
+  tourGuideId: "",
+  email: "",
+  name: "",
+  gender: "",
+  nik: "",
+  birthDate: "",
+  description: "",
+  address: "",
+  maxHiker: 0,
+  price: 0,
+  additionalPrice: 0,
+  totalPorter: 0,
+  pricePorter: 0,
+  image: "",
+  totalCustomer: 0,
+  donePercentage: 0,
+  rejectPercentage: 0,
+  rating: 0,
+  totalReview: 0,
+  isLoading: false,
+  error: null,
 };
 
 const tourGuideSlice = createSlice({
@@ -99,6 +123,11 @@ const tourGuideSlice = createSlice({
         state.totalPorter = action.payload.totalPorter;
         state.pricePorter = action.payload.pricePorter;
         state.image = action.payload.image;
+        state.totalCustomer = action.payload.totalCustomer;
+        state.donePercentage = action.payload.donePercentage;
+        state.rejectPercentage = action.payload.rejectPercentage;
+        state.rating = action.payload.rating;
+        state.totalReview = action.payload.totalReview;
       })
       .addCase(fetchTourGuideProfileByUserId.rejected, (state, action) => {
         state.isLoading = false;

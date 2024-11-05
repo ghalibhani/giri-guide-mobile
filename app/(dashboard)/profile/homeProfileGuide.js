@@ -7,19 +7,21 @@ import CardRatingReview from "../../../components/profileTourGuide/CardRatingRev
 import SubMenuProfileTourGuide from "../../../components/profileTourGuide/SubMenuProfileTourGuide";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchTourGuide } from "../../../redux/tourGuideSlice";
-import { fetchTourGuideReview } from "../../../redux/guideReviewSlice";
+import { fetchTourGuideProfileByUserId } from "../../../redux/tourGuideSlice";
 
 const HomeProfileGuideScreen = () => {
   const userId = useSelector((state) => state.auth.userId);
+  const tourGuideProfileData = useSelector((state) => state.tourGuide);
   const dispatch = useDispatch();
 
-  console.log(userId);
-
   useEffect(() => {
-    dispatch(fetchTourGuide(userId));
-    dispatch(fetchTourGuideReview(userId));
+    const credentials = { userId };
+    dispatch(fetchTourGuideProfileByUserId(credentials));
   }, [dispatch]);
+
+  console.log(tourGuideProfileData);
+  // console.log(userId);
+
 
   return (
     <SafeAreaView className='flex-1'>
