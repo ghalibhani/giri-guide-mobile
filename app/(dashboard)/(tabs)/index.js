@@ -4,7 +4,9 @@ import HeaderHome from "../../../components/HeaderHome";
 import SlideCarousel from "../../../components/SlideCarousel";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { loginRefresh } from "../../../redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllMountains } from "../../../redux/mountainSlice";
 
@@ -13,6 +15,27 @@ const HomeScreen = () => {
   const mountains = useSelector((state) => state.mountain.mountains)
   const statusMountains = useSelector((state) => state.mountain.status)
   const errorMountains = useSelector((state) => state.mountain.error)
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        const role = await AsyncStorage.getItem("userRole");
+        const userId = await AsyncStorage.getItem("userId");
+        const email = await AsyncStorage.getItem("email");
+
+        if (token === null) {
+          router.replace("/login");
+        } else {
+          dispatch(loginRefresh({ token, role, userId, email }));
+        }
+      } catch (error) {
+        router.replace("/login");
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
 
   useEffect(() => {
     dispatch(fetchAllMountains({page: 1, size: 40}))
@@ -96,7 +119,7 @@ const HomeScreen = () => {
             data={data}
             title={"Rute Perjalanan ke Destinasi"}
             withDescription={true}
-            route="/home/poinOfInterest"
+            route='/home/poinOfInterest'
           />
           {/* <OverFlowCarousel
                 data={data}

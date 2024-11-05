@@ -8,6 +8,7 @@ import JasaPorter from "../../../components/bookingTourGuide/JasaPorter";
 import CustomButton from "../../../components/miniComponent/CustomButton";
 import ReviewPembayaran from "../../../components/bookingTourGuide/ReviewPembayaran";
 import { useNavigation } from "@react-navigation/native";
+import { router } from "expo-router";
 
 const SewaTourGuideTigaTahap = () => {
   const [catatanTourGuide, setCatatanTourGuide] = useState("");
@@ -32,7 +33,7 @@ const SewaTourGuideTigaTahap = () => {
 
   const tahapAjukanHandler = () => {
     try {
-      navigation.navigate("SewaTourGuide");
+      router.replace("/detailGuide/detailGuide");
     } catch (error) {
       console.error("Error in tahapAjukanHandler:", error);
     }
@@ -121,7 +122,7 @@ const SewaTourGuideTigaTahap = () => {
         </View>
       </View>
 
-      <ScrollView >
+      <ScrollView>
         <View className='ml-6 mr-6 mb-5'>
           <CardKeteranganSewaTourGuide />
         </View>

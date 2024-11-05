@@ -51,9 +51,12 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
               activeButton === "pembayaran" ? "text-white" : "text-soil"
             }`}
           >
-            {userRole === "tourguide"
+            {/* {userRole === "tourguide"
               ? "Butuh Persetujuan"
-              : "Menunggu Pembayaran"}
+              : "Menunggu Pembayaran"} */}
+            {userRole === "tourguide"
+              ? "Menunggu Pembayaran"
+              : "Butuh Persetujuan"}
           </Text>
         </TouchableOpacity>
 

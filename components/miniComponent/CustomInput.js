@@ -2,11 +2,20 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
-const CustomInput = ({title, secureTextEntry, value, placeholder, handleChangeText, otherStyles, ...props}) => {
-    const [showPassword, setShowPassword] = useState(false);
-    return (
-        <View className="gap-2">
-            <Text className="font-ibold text-sm text-evergreen">{title}</Text>
+const CustomInput = ({
+  title,
+  secureTextEntry,
+  value,
+  placeholder,
+  handleChangeText,
+  otherStyles,
+  customStyles,
+  ...props
+}) => {
+  const [showPassword, setShowPassword] = useState(false);
+  return (
+    <View className={`${customStyles} gap-2`}>
+      <Text className='font-ibold text-sm text-evergreen'>{title}</Text>
 
             <View className="flex-row border-[1px] rounded-xl border-borderCustom items-center justify-between bg-white px-4 gap-4 py-[14px]">
                 <TextInput 
@@ -30,4 +39,4 @@ const CustomInput = ({title, secureTextEntry, value, placeholder, handleChangeTe
     )
 }
 
-export default CustomInput
+export default CustomInput;

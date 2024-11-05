@@ -1,11 +1,14 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
-const ClimbingPointButton = ({ title }) => {
+const ClimbingPointButton = ({ title, onPress }) => {
   return (
-    <Text className='text-soil text-xs font-isemibold p-4 border border-soil bg-white rounded-xl'>
-      {title}
-    </Text>
+    <TouchableOpacity
+      className='p-4 border border-soil rounded-xl'
+      onPress={onPress}
+    >
+      <Text className='text-soil text-xs font-isemibold'>{title}</Text>
+    </TouchableOpacity>
   );
 };
 

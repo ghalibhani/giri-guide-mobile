@@ -1,9 +1,12 @@
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { useFonts } from "expo-font";
-
-import "../global.css";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Provider } from "react-redux";
 import store from "../store";
+import "../global.css";
+import { View, Text } from "react-native";
+import SplashScreen from "../components/loading/SplashScreen";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -25,8 +28,8 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <Stack screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name="login" options={{ headerShown: false }} /> */}
-        <Stack.Screen name='(dashboard)' options={{ headerShown: false }} />
+        <Stack.Screen name='login' />
+        <Stack.Screen name='(dashboard)' />
       </Stack>
     </Provider>
   );
