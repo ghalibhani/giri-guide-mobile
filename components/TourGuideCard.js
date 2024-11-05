@@ -1,7 +1,7 @@
 import { View, Text, Image } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { router } from "expo-router";
-const TourGuideCard = ({ image, name, description, rating, totalRating, id }) => {
+const TourGuideCard = ({ image, name, description, rating, totalRating, tourGuideId }) => {
   return (
     <View className="bg-white shadow-md rounded-2xl p-4 flex flex-row items-center mb-4" onTouchEnd={() => {router.navigate(`/detailGuide/detailGuide?tourGuideId=${id}`)}}>
       <Image source={{ uri: image }} className="w-16 h-16 rounded-lg" />
