@@ -3,6 +3,7 @@ import authReducer from "./redux/authSlice";
 import userReducer from "./redux/test-userSlice";
 import profileReduce from "./redux/profileSlice";
 import tourGuideReducer from "./redux/tourGuideSlice";
+import tourGuideReviewReducer from "./redux/guideReviewSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     user: userReducer,
     profile: profileReduce,
     tourGuide: tourGuideReducer,
+    tourGuideReview: tourGuideReviewReducer,
   },
 });
 

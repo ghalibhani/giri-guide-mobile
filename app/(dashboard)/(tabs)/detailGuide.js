@@ -18,12 +18,14 @@ import { fetchTourGuide } from "../../../redux/tourGuideSlice";
 import Star from "../../../components/Star";
 import { useState } from "react";
 import CostDetailItem from "../../../components/miniComponent/CostDetailItem";
+import { fetchTourGuideReview } from "../../../redux/guideReviewSlice";
 
 // ada di folder detailGuide
 
 export default function DetailTourGuideScreen() {
   const dispatch = useDispatch();
   const tourGuide = useSelector((state) => state.tourGuide);
+  const tourGuideReview = useSelector((state) => state.tourGuideReview);
   const [showHikingPoints, setShowHikingPoints] = useState([]);
   const [selectedMountain, setSelectedMountain] = useState(null);
   const [selectedClimbingPoint, setSelectedClimbingPoint] = useState(null);
@@ -31,7 +33,38 @@ export default function DetailTourGuideScreen() {
 
   useEffect(() => {
     dispatch(fetchTourGuide("f689ec78-85d1-4606-95bc-bbf7c3ecfe20"));
+    dispatch(fetchTourGuideReview("f689ec78-85d1-4606-95bc-bbf7c3ecfe20"));
   }, [dispatch]);
+
+  const highestRatedReview =
+    tourGuideReview.reviews && tourGuideReview.reviews.length > 0
+      ? tourGuideReview.reviews.reduce((prev, current) => {
+          return prev.rating > current.rating ? prev : current;
+        }, tourGuideReview.reviews[0])
+      : null;
+
+  const formattedDate = (date) => {
+    return new Intl.DateTimeFormat("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(date);
+  };
+
+  const averageRating = () => {
+    if (tourGuideReview.reviews && tourGuideReview.reviews.length > 0) {
+      const totalRating = tourGuideReview.reviews.reduce(
+        (total, review) => total + review.rating,
+        0
+      );
+      return totalRating / tourGuideReview.reviews.length;
+    } else {
+      return 0;
+    }
+  };
+
+  const number = averageRating();
+  const roundedNumber = parseFloat(number.toFixed(1));
 
   const mountainHandler = (mountainId) => {
     const selectedMountain = tourGuide.mountains.find(
@@ -70,8 +103,6 @@ export default function DetailTourGuideScreen() {
     }).format(amount);
   };
 
-  // console.log(climbingPointData.price);
-
   return (
     <SafeAreaView>
       <ScrollView>
@@ -99,9 +130,11 @@ export default function DetailTourGuideScreen() {
           <View className='p-6 rounded-b-3xl bg-white'>
             <View className='flex justify-end items-center gap-2 flex-row'>
               <View className='flex flex-row gap-2'>
-                <Star star={tourGuide.rating} />
+                <Star star={roundedNumber} />
               </View>
-              <Text className='text-plum text-base'>4,0 (12)</Text>
+              <Text className='text-plum text-base'>
+                {roundedNumber} ({tourGuide.totalReview})
+              </Text>
             </View>
 
             <Text className='text-lg text-soil font-ibold mt-5 mb-4'>
@@ -187,7 +220,15 @@ export default function DetailTourGuideScreen() {
           {/* rating ulasan */}
           <CardRatingReview
             totalReview={tourGuide.totalReview}
-            star={tourGuide.rating}
+            averageReview={roundedNumber}
+            star={roundedNumber}
+            customerName={highestRatedReview?.customerName || "Nama Customer"}
+            dateReview={
+              highestRatedReview
+                ? formattedDate(new Date(highestRatedReview.createdAt))
+                : "Tanggal review"
+            }
+            reviewText={highestRatedReview?.review || "Ulasan"}
           />
 
           {/* rincian biaya */}

@@ -4,13 +4,23 @@ import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import Star from "../Star";
 
-const CardRatingReview = ({ data, totalReview, star }) => {
+const CardRatingReview = ({
+  data,
+  totalReview,
+  star,
+  customerName,
+  dateReview,
+  reviewText,
+  averageReview,
+}) => {
   return (
     <View className='bg-white rounded-verylarge my-4 p-6'>
       <Text className='text-lg text-soil font-ibold'>Rating dan Ulasan</Text>
 
       <View className='flex flex-row gap-6 items-center mt-4'>
-        <Text className='text-5xl font-isemibold text-evergreen'>4,5</Text>
+        <Text className='text-5xl font-isemibold text-evergreen'>
+          {averageReview}
+        </Text>
 
         <View>
           <View className='flex flex-row gap-2 mb-2'>
@@ -31,19 +41,16 @@ const CardRatingReview = ({ data, totalReview, star }) => {
 
         <View>
           <Text className='text-soil text-sm font-ibold mb-1'>
-            Nama reviewer
+            {customerName}
           </Text>
           <Text className='text-evergreen opacity-80 text-sm font-isemibold'>
-            19 Okt 2024
+            {dateReview}
           </Text>
         </View>
       </View>
 
       <Text className='text-evergreen font-iregular text-sm mt-5'>
-        Tour guide akan memandu Anda di titik pendakian pilihan, memberikan rute
-        yang aman dan tips mendaki. Nikmati pengalaman mendaki yang
-        menyenangkan, lengkap dengan informasi seputar jalur, alam, dan keunikan
-        lokasi. INI MAKSIMAL 150 KARAKTER
+        {reviewText}
       </Text>
 
       <View className='bg-borderCustom h-[1] my-5'></View>
