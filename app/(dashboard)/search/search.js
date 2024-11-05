@@ -1,81 +1,23 @@
 import { StatusBar } from "react-native";
 import HeaderSearch from "../../../components/HeaderSearch";
 import OverFlowCarousel from "../../../components/OverFlowCarousel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllMountains } from "../../../redux/mountainSlice";
+
 const SearchScreen = () => {
-  const data = [
-    {
-      id: 1,
-      text: "Item 1",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 1",
-    },
-    {
-      id: 2,
-      text: "Item 2",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 2",
-    },
-    {
-      id: 3,
-      text: "Item 3",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 3",
-    },
-    {
-      id: 4,
-      text: "Item 4",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 4",
-    },
-    {
-      id: 5,
-      text: "Item 5",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 5",
-    },
-    {
-      id: 6,
-      text: "Item 6",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 6",
-    },
-    {
-      id: 7,
-      text: "Item 7",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 7",
-    },
-    {
-      id: 8,
-      text: "Item 8",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 8",
-    },
-    {
-      id: 9,
-      text: "Item 9",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 9",
-    },
-    {
-      id: 10,
-      text: "Item 10",
-      image:
-        "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380",
-      description: "Description 10",
-    },
-  ];
+  
+  const dispatch = useDispatch()
+  const mountains = useSelector((state) => state.mountain.mountains)
+  const statusMountains = useSelector((state) => state.mountain.status)
+  const errorMountains = useSelector((state) => state.mountain.error)
+
+  useEffect(() => {
+    dispatch(fetchAllMountains({page: 1, size: 40}))
+    console.log(statusMountains)
+  }, [dispatch])
+
   const [hidden, setHidden] = useState(false);
   const [statusBarStyle, setStatusBarStyle] = useState("default");
   const [statusBarTransition, setStatusBarTransition] = useState("fade");
@@ -91,6 +33,10 @@ const SearchScreen = () => {
     }
   };
 
+  const filteredMountains = mountains.filter(
+    (mountain) => mountain.status !== "SIAGA" && mountain.status !== "AWAS" && mountain.hikingPointCount > 0
+  );
+
   return (
     <SafeAreaView>
       <StatusBar
@@ -101,8 +47,13 @@ const SearchScreen = () => {
         translucent={true}
         style={statusBarTransition}
       />
-      <HeaderSearch />
-      <OverFlowCarousel data={data} title="Rekomendasi" customStyle={"mt-5"} />
+      <HeaderSearch mountains={filteredMountains} />
+      <OverFlowCarousel
+        data={mountains}
+        title={"Jelajahi Gunung di Jawa Timur"}
+        continueToAllLists={"/home/allMountainCards"}
+        customStyle={"mt-5"}
+      />
     </SafeAreaView>
   );
 };

@@ -12,7 +12,7 @@ export const createNewHiker = createAsyncThunk(
             });
             return response.data.message;
         } catch(e) {
-            console.log(e.response.data.message)
+            // console.log(e.response.data.message)
             return rejectedWithValue(e.response.data.message)
         }
     }

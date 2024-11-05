@@ -1,7 +1,8 @@
 import { View, Text } from "react-native";
 
-const HikingTips = ({ withFixedButton = false }) => {
-  const tips = [
+const HikingTips = ({ withFixedButton = false, dataHikingTips }) => {
+
+  const tips = dataHikingTips ? dataHikingTips.split(", ") : [
     "Siapkan fisik",
     "Gunakan pakaian yang sesuai",
     "Bawalah peralatan yang sesuai",
@@ -9,13 +10,7 @@ const HikingTips = ({ withFixedButton = false }) => {
     "Bawalah obat-obatan",
     "Bawalah air minum yang cukup",
     "Gunakan sarung tangan",
-    "Gunakan masker",
-    "Gunakan masker",
-    "Gunakan masker",
-    "Gunakan masker",
-    "Gunakan masker",
-    "Gunakan masker",
-    "Gunakan masker",
+    "Gunakan masker"
   ];
 
   return (
@@ -23,7 +18,7 @@ const HikingTips = ({ withFixedButton = false }) => {
       className={`p-6 bg-white rounded-[30px] ${
         withFixedButton ? "mb-24" : "mb-5"
       }`}>
-      <Text className="text-base font-isemibold">
+      <Text className="text-base text-soil font-isemibold">
         Tips Pendakian yang ingin berkunjung
       </Text>
       <View className="mt-3">

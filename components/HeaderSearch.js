@@ -1,106 +1,199 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
-import { View, Text, TouchableOpacity, Alert, Image } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import CustomButton from "./miniComponent/CustomButton";
+import RNPickerSelect from '../node_modules/react-native-picker-select/src/index';
+import { useDispatch, useSelector } from "react-redux";
+import { getHikingPointsByMountainId } from "../redux/mountainSlice";
+import { useFocusEffect } from "@react-navigation/native";
 
-const HeaderSearch = () => {
-  const [mountain, setMountain] = useState("");
-  const [positionOfInterest, setPositionOfInterest] = useState("");
+const HeaderSearch = ({mountains}) => {
+  const {mountainId} = useLocalSearchParams();
+
+  const dispatch = useDispatch();
+  const hikingPoints = useSelector((state) => state.mountain.hikingPoints);
+
+  const [mountain, setMountain] = useState();
+  const [positionOfInterest, setPositionOfInterest] = useState(null);
+  const [mountainList, setMountainList] = useState([]);
+  const [positionOfInterestList, setPositionOfInterestList] = useState([]);
+  const [isPositionOfInterestPickerEnabled, setIsPositionOfInterestPickerEnabled] = useState(false);
+
+  const [mountainName, setMountainName] = useState('');
+  const [hikingPointName, setHikingPointName] = useState('');
+
+  useEffect(() => {
+    if (mountains && mountains.length > 0) {
+      const formattedItems = mountains.map(mountain => ({
+        label: mountain.name,  
+        value: mountain.id,  
+      }));
+      setMountainList(formattedItems);
+      // console.log(mountainList)
+    }
+  }, [mountains]);
+
+  useEffect(() => {
+    if (mountainId) {
+      setMountain(mountainId);
+    } else {
+      setMountain(null); 
+    }
+    // console.log(mountainId)
+  }, [mountainId]);
+
+  useEffect(() => {
+    if (mountain) {
+      // console.log("Dispatching getHikingPointsByMountainId with mountain:", mountain);
+      dispatch(getHikingPointsByMountainId(mountain));
+      setIsPositionOfInterestPickerEnabled(true);
+    } else {
+      setIsPositionOfInterestPickerEnabled(false);
+      setPositionOfInterest(null);
+    }
+  }, [mountain, dispatch]);
+
+  useEffect(() => {
+    if (hikingPoints && hikingPoints.length > 0) {
+      const formattedItems = hikingPoints.map(hikingPoint => ({
+        label: hikingPoint.name,
+        value: hikingPoint.id,
+      }));
+      setPositionOfInterestList(formattedItems);
+      // console.log(positionOfInterestList)
+    }
+  }, [hikingPoints]);
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setMountain(null);
+        setPositionOfInterest(null);
+        setPositionOfInterestList([])
+        setIsPositionOfInterestPickerEnabled(false);
+      };
+    }, [])
+  );
 
   const handlePress = () => {
     if (mountain && positionOfInterest) {
-      router.navigate("/search/searchList");
+      router.navigate(`/search/searchList?hikingPointId=${positionOfInterest}&hikingPointName=${hikingPointName}&mountainName=${mountainName}`);
+      setMountain(null);
+      setPositionOfInterest(null);
     } else {
       Alert.alert("Dibutuhkan", "Isi semua kolom untuk pencarian");
     }
   };
+
   return (
     <View>
-      <Image
-        source={require("../assets/gunung-tour-guide.jpg")}
-        className="w-full h-[320px] rounded-b-[30px]"
-      />
-      <View className="flex flex-col justify-center items-center relative top-[-300px]">
-        <TouchableOpacity className="w-[30]  h-[30] rounded-full bg-white border-[1px] border-soil justify-center items-center absolute left-3">
+      <View className="bg-soil w-full h-[250px] rounded-b-[30px]"></View>
+
+      <View className="flex flex-col justify-center items-center align-middle relative top-[-230px]">
+        <TouchableOpacity className="w-[30] ml-6 h-[30] rounded-full bg-ivory border-[1px] border-soil justify-center items-center absolute left-1" onPress={() => router.back()}>
           <Ionicons
             name="chevron-back"
             size={15}
             color="#503A3A"
-            onPress={() => router.back()}
           />
         </TouchableOpacity>
 
-        <Text className="text-[20px] font-bold text-ivory">
+        <Text className="text-lg font-isemibold text-ivory">
           Pencarian tour guide
         </Text>
       </View>
 
-      <View className="p-4 bg-white rounded-xl mt-[-210px] mx-4">
-        <View className="border-[1px] border-[#d9d9d9] rounded-xl p-[10px] flex flex-col mb-5 justify-center">
-          <View className="flex flex-row items-center">
-            <FontAwesome6
-              name="mountain-sun"
-              size={15}
-              color="#ecd768"
-              className="w-10 h-full relative top-5"
-            />
-            <Text className="ml-2 text-xs text-thistle">Tujuan gunung</Text>
+      <View className="p-4 bg-white rounded-xl mt-[-180px] mx-6">
+        <View className="flex-row justify-around mb-5 items-center border-borderCustom border-[1px] rounded-xl px-5 pt-5 pb-7 bg-white">
+          <View className="flex-row items-center justify-between gap-5">
+            <FontAwesome6 name="mountain-sun" size={15} color="#ecd768" />
+            <View className="flex-col gap-3 flex-1">
+              <Text className="font-iregular text-sm w-full text-thistle">Tujuan Gunung</Text>
+              <RNPickerSelect
+                placeholder={{
+                  label: "Pilih Tujuan Gunung",
+                  value: null,
+                  color: '#45594E',
+                }}
+                value={mountain}
+                onValueChange={(value) => {
+                  setMountain(value)
+                  const selectedMountain = mountains.find(mountain => mountain.id === value);
+                  setMountainName(selectedMountain ? selectedMountain.name : '');
+                }}
+                items={mountainList}
+                style={{
+                  inputIOS: {
+                    fontSize: 14,
+                    fontFamily: 'Inter-Medium',
+                    color: '#45594E',
+                    paddingRight: 30,
+                  },
+                  inputAndroid: {
+                    fontSize: 14,
+                    fontFamily: 'Inter-Medium',
+                    color: '#45594E',
+                    paddingRight: 30,
+                  },
+                  iconContainer: { top: 6, right: 5 },
+                }}
+                useNativeAndroidPickerStyle={false}
+                Icon={() => <Ionicons name="chevron-down" size={18} color="#503A3A" />}
+              />
+            </View>
           </View>
-          <Picker
-            selectedValue={mountain}
-            onValueChange={(itemValue) => setMountain(itemValue)}
-            style={{
-              height: 50,
-              width: "80%",
-              marginLeft: 29,
-              marginTop: -10,
-              fontSize: 16,
-              color: "#45594e",
-            }}>
-            <Picker.Item label="Pilihan gunung" value="" />
-            <Picker.Item label="Gunung Gede" value="Gunung Gede" />
-            <Picker.Item
-              label="Gunung Gede Pangrango"
-              value="Gunung Gede Pangrango"
-            />
-            <Picker.Item label="Gunung Salak" value="Gunung Salak" />
-          </Picker>
         </View>
 
-        <View className="border-[1px] border-[#d9d9d9] rounded-xl p-[10px] flex flex-col mb-5 justify-center">
-          <View className="flex flex-row items-center">
-            <FontAwesome6
-              name="mountain-sun"
-              size={15}
-              color="#ecd768"
-              className="w-10 h-full relative top-5"
-            />
-            <Text className="ml-2 text-thistle text-xs">Titik pendakian</Text>
+        <View className="flex-row justify-around mb-5 items-center border-borderCustom border-[1px] rounded-xl px-5 pt-5 pb-7 bg-white">
+          <View className="flex-row items-center justify-between gap-5">
+            <FontAwesome6 name="mountain-sun" size={15} color="#ecd768" />
+            <View className=" gap-3 flex-1 flex-shrink">
+              <Text className="font-iregular text-sm w-full text-thistle">Tujuan Titik Pendakian</Text>
+              <RNPickerSelect
+                placeholder={{
+                  label: "Pilih Titik Pendakian",
+                  value: null,
+                  color: '#45594E',
+                }}
+                value={positionOfInterest}
+                onValueChange={(value) => {
+                  setPositionOfInterest(value)
+                  const selectedHikingPoint = hikingPoints.find(hikingPoint => hikingPoint.id === value);
+                  setHikingPointName(selectedHikingPoint ? selectedHikingPoint.name : '');
+                }}
+                items={positionOfInterestList}
+                style={{
+                  inputIOS: {
+                    fontSize: 14,
+                    fontFamily: 'Inter-Medium',
+                    color: '#45594E',
+                    paddingRight: 30,
+                  },
+                  inputAndroid: {
+                    fontSize: 14,
+                    fontFamily: 'Inter-Medium',
+                    color: '#45594E',
+                    paddingRight: 30,
+                  },
+                  iconContainer: { top: 6, right: 5 },
+                }}
+                enabled={isPositionOfInterestPickerEnabled}
+                useNativeAndroidPickerStyle={false}
+                Icon={() => <Ionicons name="chevron-down" size={18} color="#503A3A" />}
+              />
+            </View>
           </View>
-          <Picker
-            selectedValue={positionOfInterest}
-            onValueChange={(itemValue) => setPositionOfInterest(itemValue)}
-            style={{
-              height: 50,
-              width: "80%",
-              marginLeft: 29,
-              marginTop: -10,
-              fontSize: 16,
-              color: "#45594e",
-            }}>
-            <Picker.Item label="Pilihan titik pendakian" value="" />
-            <Picker.Item label="Titik pendakian 1" value="Titik pendakian 1" />
-            <Picker.Item label="Titik pendakian 2" value="Titik pendakian 2" />
-            <Picker.Item label="Titik pendakian 3" value="Titik pendakian 3" />
-          </Picker>
         </View>
-        <TouchableOpacity
-          className="w-full bg-soil rounded-xl h-12 flex items-center justify-center"
-          onPress={handlePress}>
-          <Text className="text-ivory font-bold">Cari tour guide</Text>
-        </TouchableOpacity>
+
+        <View>
+          <CustomButton
+            buttonHandling={handlePress}
+            customStyle="bg-soil min-w-full z-10"
+            title="Cari tour guide"
+          />
+        </View>
       </View>
     </View>
   );

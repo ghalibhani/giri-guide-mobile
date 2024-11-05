@@ -1,63 +1,71 @@
-import { StatusBar } from "react-native";
+import { Animated, Image, StatusBar, View } from "react-native";
 import HeaderSearching from "../../../components/HeaderSearching";
 import TourGuideSearchedList from "../../../components/TourGuideSearchedList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useLocalSearchParams } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getTourGuideListsByHikingPointId } from "../../../redux/tourGuideSlice";
+import CustomNotFound from "../../../components/miniComponent/CustomNotFound";
 const SearchListScreen = () => {
-  const tourGuides = [
-    {
-      id: 1,
-      name: "Rafi",
-      image: "https://picsum.photos/id/1015/200/300",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.",
-      rating: 4.5,
-      totalRating: 100,
-    },
-    {
-      id: 2,
-      name: "Rio",
-      image: "https://picsum.photos/id/1016/200/300",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.",
-      rating: 4.2,
-      totalRating: 50,
-    },
-    {
-      id: 3,
-      name: "Rafi",
-      image: "https://picsum.photos/id/1015/200/300",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.",
-      rating: 4.5,
-      totalRating: 100,
-    },
-    {
-      id: 4,
-      name: "Rio",
-      image: "https://picsum.photos/id/1016/200/300",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet nulla auctor, vestibulum magna sed, convallis ex.",
-      rating: 4.2,
-      totalRating: 50,
-    },
-  ];
+  const {hikingPointId, hikingPointName, mountainName} = useLocalSearchParams()
+  
+  const dispatch = useDispatch()
+  const tourGuideLists = useSelector((state) => state.tourGuide.tourGuides)
+  const statusTourGuideLists = useSelector((state) => state.tourGuide.status)
+  const errorTourGuideLists = useSelector((state) => state.tourGuide.error)
+
+  const [loading, setLoading] = useState(true)
+  const fadeAnim = useState(new Animated.Value(0))[0]; 
+
+  useEffect(() => {
+    if(hikingPointId) {
+      dispatch(getTourGuideListsByHikingPointId({hikingPointId, page: 1, size: 40}))
+    }
+
+    const loadingTimeout = setTimeout(() => setLoading(false), 1000)
+
+    return () => clearTimeout(loadingTimeout)
+  }, [dispatch, hikingPointId])
+
+  useEffect(() => {
+    if (!loading && statusTourGuideLists === "succeed"){
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }).start()
+    }
+  }, [loading, statusTourGuideLists, fadeAnim   ])
+
+
   const [hidden, setHidden] = useState(false);
   const [statusBarStyle, setStatusBarStyle] = useState("default");
   const [statusBarTransition, setStatusBarTransition] = useState("fade");
 
-  const handleScroll = (event) => {
-    const { nativeEvent } = event;
-    const { contentOffset } = nativeEvent;
-    const { y } = contentOffset;
-    if (y > 100) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-  };
+  // const handleScroll = (event) => {
+  //   const { nativeEvent } = event;
+  //   const { contentOffset } = nativeEvent;
+  //   const { y } = contentOffset;
+  //   if (y > 100) {
+  //     setHidden(true);
+  //   } else {
+  //     setHidden(false);
+  //   }
+  // };
+  if (loading || statusTourGuideLists === "loading") {
+    return (
+      <View className="flex-1 items-center justify-center bg-white">
+        <Image
+          source={require("../../../assets/loading.gif")}
+          style={{ width: 80, height: 80 }}
+        />
+      </View>
+    );
+  }
 
   return (
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
     <SafeAreaView>
       <StatusBar
         backgroundColor="#503a3a"
@@ -67,9 +75,14 @@ const SearchListScreen = () => {
         translucent={true}
         style={statusBarTransition}
       />
-      <HeaderSearching />
-      {tourGuides && <TourGuideSearchedList tourGuides={tourGuides} />}
+      <HeaderSearching 
+        choosenHikingPoint={hikingPointName}
+        choosenMountain={mountainName}
+      />
+      {tourGuideLists.length !== 0 && <TourGuideSearchedList tourGuides={tourGuideLists} />}
+      {tourGuideLists.length === 0 && <CustomNotFound title={"Belum ada tour guide yang tersedia"}/>}
     </SafeAreaView>
+    </Animated.View>
   );
 };
 
