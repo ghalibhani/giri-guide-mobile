@@ -4,6 +4,9 @@ import userReducer from "./redux/test-userSlice";
 import profileReduce from "./redux/profileSlice";
 import tourGuideReducer from "./redux/tourGuideSlice";
 import tourGuideReviewReducer from "./redux/guideReviewSlice";
+import registerReducer from "./redux/registerSlice";
+import mountainReducer from "./redux/mountainSlice";
+
 
 const store = configureStore({
   reducer: {
@@ -12,6 +15,8 @@ const store = configureStore({
     profile: profileReduce,
     tourGuide: tourGuideReducer,
     tourGuideReview: tourGuideReviewReducer,
+    register: registerReducer,
+    mountain: mountainReducer,
   },
 });
 

@@ -14,28 +14,35 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchTourGuide } from "../../../redux/tourGuideSlice";
 import Star from "../../../components/Star";
 import { useState } from "react";
 import CostDetailItem from "../../../components/miniComponent/CostDetailItem";
 import { fetchTourGuideReview } from "../../../redux/guideReviewSlice";
+import { fetchTourGuideById } from "../../../redux/tourGuideSlice";
 
 // ada di folder detailGuide
 
 export default function DetailTourGuideScreen() {
+  const { tourGuideId } = useLocalSearchParams();
+
   const dispatch = useDispatch();
-  const tourGuide = useSelector((state) => state.tourGuide);
+  const tourGuide = useSelector((state) => state.tourGuide.tourGuide);
+  const statusTourGuide = useSelector((state) => state.tourGuide.status);
+  const errorTourGuide = useSelector((state) => state.tourGuide.error);
+
   const tourGuideReview = useSelector((state) => state.tourGuideReview);
+  const statusTourGuideReview = useSelector((state) => state.tourGuideReview.isLoading)
   const [showHikingPoints, setShowHikingPoints] = useState([]);
   const [selectedMountain, setSelectedMountain] = useState(null);
   const [selectedClimbingPoint, setSelectedClimbingPoint] = useState(null);
   const [climbingPointData, setClimbingPointData] = useState(null);
-  const { tourGuideId } = useLocalSearchParams();
 
   useEffect(() => {
-    dispatch(fetchTourGuide(tourGuideId));
+    console.log("ini tour guide id: ", tourGuideId);
+    dispatch(fetchTourGuideById(tourGuideId));
     dispatch(fetchTourGuideReview(tourGuideId));
-  }, [dispatch]);
+  }, [dispatch, tourGuideId]);
+
 
   const highestRatedReview =
     tourGuideReview.reviews && tourGuideReview.reviews.length > 0
@@ -103,6 +110,14 @@ export default function DetailTourGuideScreen() {
       maximumFractionDigits: 0,
     }).format(amount);
   };
+
+  if (statusTourGuide === "loading" && statusTourGuideReview) {
+    return (
+      <View className='flex-1 items-center justify-center'>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView>

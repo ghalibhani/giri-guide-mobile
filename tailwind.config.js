@@ -33,6 +33,9 @@ module.exports = {
         successHover: "#298267",
         successMedium: "#3AC0A0",
         successLight: "#E7F4E8",
+        yellowHover: "#A29415",
+        yellowMedium: "#E3D026",
+        yellowLight: "#FFF9C5",
         info: "#006FFD",
         infoLight: "#EAF2FF"
       },
