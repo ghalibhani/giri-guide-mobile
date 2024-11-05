@@ -49,16 +49,17 @@ export default function LoginScreen() {
   return (
     <View className='flex-1 justify-center p-[24] bg-white'>
       <Image
-        source={require("../assets/logo-dummy.jpg")}
+        source={require("../assets/logoFixedWithText.png")}
         className='w-[200] h-[200] mb-[30] mx-auto'
       />
-      <Text className='text-2xl text-soil font-bold mb-9'>
+      <Text className='text-xl text-soil font-ibold mb-9'>
         Selamat Datang di GiriGuide
       </Text>
 
       <CustomInput
         title={"Email Address"}
         value={email}
+        autoCapitalize={false}
         handleChangeText={setEmail}
         placeholder={"Email Address"}
         keyboardType={"email-address"}
@@ -70,6 +71,7 @@ export default function LoginScreen() {
         handleChangeText={setPassword}
         placeholder={"Password"}
         secureTextEntry={true}
+        autoCapitalize={false}
         customStyles={"mb-[20]"}
       />
       <CustomButton

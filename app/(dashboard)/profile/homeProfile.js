@@ -6,7 +6,7 @@ import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchProfile } from "../../../redux/profileSlice";
+import { fetchProfile, fetchProfileCustomer } from "../../../redux/profileSlice";
 
 export default function HomeProfileScreen() {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function HomeProfileScreen() {
   const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
-    dispatch(fetchProfile(userId));
+    dispatch(fetchProfileCustomer(userId));
   }, [dispatch, userId]);
 
   return (

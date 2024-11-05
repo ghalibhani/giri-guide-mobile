@@ -15,7 +15,7 @@ export default function ListReviewGuideScreen() {
     dispatch(fetchTourGuideReview("f689ec78-85d1-4606-95bc-bbf7c3ecfe20"));
   }, [dispatch]);
 
-  console.log(tourGuideReview.reviews);
+  // console.log(tourGuideReview.reviews);
 
   const formattedDate = (date) => {
     return new Intl.DateTimeFormat("id-ID", {

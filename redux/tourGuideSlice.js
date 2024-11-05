@@ -86,12 +86,12 @@ export const fetchTourGuideById = createAsyncThunk(
   "tourGuide/fetchTourGuide",
   async (id, { rejectWithValue }) => {
     try {
-      console.log("console in slice", id);
+    //   console.log("console in slice", id);
       const response = await axiosInstance.get(`/tour-guide/${id}`);
-      console.log("console in slice", response.data);
+    //   console.log("console in slice", response.data);
       return response.data;
     } catch (error) {
-      console.log(error.response);
+    //   console.log(error.response);
       return rejectWithValue(error.response?.data);
     }
   }

@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Buat instance Axios
 const axiosInstance = axios.create({
-  baseURL: "http://10.10.102.67:8080/api/v1",
+  baseURL: "http://10.10.102.148:8080/api/v1",
 });
 
 // Request interceptor untuk menyertakan token dari AsyncStorage

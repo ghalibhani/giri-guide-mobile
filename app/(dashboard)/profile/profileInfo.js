@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { logout } from "../../../redux/authSlice";
-import { clearProfile, fetchProfile } from "../../../redux/profileSlice";
+import { clearProfile, fetchProfileCustomer } from "../../../redux/profileSlice";
 
 export default function ProfileInfoScreen() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export default function ProfileInfoScreen() {
   const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
-    dispatch(fetchProfile(userId));
+    dispatch(fetchProfileCustomer(userId));
   }, [dispatch, userId]);
 
   const formattedDate = (date) => {
@@ -28,11 +28,19 @@ export default function ProfileInfoScreen() {
   };
 
   const tanggalLahir = () => {
-    const birthDate = new Date(profile?.birthDate);
-    return formattedDate(birthDate);
+    // const birthDate = new Date(profile?.birthDate);
+    // return formattedDate(birthDate);
+
+    if (profile?.birthDate) {
+      const birthDate = new Date(profile.birthDate);
+      if (!isNaN(birthDate)) {
+        return formattedDate(birthDate);
+      }
+    }
+    return "Tanggal tidak tersedia";
   };
 
-  jenisKelamin = () => {
+  const jenisKelamin = () => {
     if (profile?.gender === "MALE") {
       return "Pria";
     } else {
