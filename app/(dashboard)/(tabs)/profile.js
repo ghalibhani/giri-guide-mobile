@@ -25,9 +25,17 @@ export default function ProfileScreen() {
     checkRole();
   }, []);
 
+  // DATA ASLI
   if (isCustomer) {
     return <HomeProfileScreen />;
   } else {
     return <HomeProfileGuideScreen />;
   }
+
+  // SEMENTARA PAKE INI BUAT DEVELOPMENT PROFILE TOURGUIDE SCREEN
+  // if (!isCustomer) {
+  //   return <HomeProfileScreen />;
+  // } else {
+  //   return <HomeProfileGuideScreen />;
+  // }
 }

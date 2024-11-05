@@ -11,7 +11,7 @@ import MountainButtonGuide from "../../../components/MountainButtonGuide";
 import { FlatList } from "react-native";
 import CardRatingReview from "../../../components/profileTourGuide/CardRatingReview";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchTourGuide } from "../../../redux/tourGuideSlice";
@@ -30,10 +30,11 @@ export default function DetailTourGuideScreen() {
   const [selectedMountain, setSelectedMountain] = useState(null);
   const [selectedClimbingPoint, setSelectedClimbingPoint] = useState(null);
   const [climbingPointData, setClimbingPointData] = useState(null);
+  const { tourGuideId } = useLocalSearchParams();
 
   useEffect(() => {
-    dispatch(fetchTourGuide("f689ec78-85d1-4606-95bc-bbf7c3ecfe20"));
-    dispatch(fetchTourGuideReview("f689ec78-85d1-4606-95bc-bbf7c3ecfe20"));
+    dispatch(fetchTourGuide(tourGuideId));
+    dispatch(fetchTourGuideReview(tourGuideId));
   }, [dispatch]);
 
   const highestRatedReview =

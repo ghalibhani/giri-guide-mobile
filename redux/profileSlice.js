@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../api/axiosInstance";
 
-export const fetchProfile = createAsyncThunk(
+export const fetchProfileCustomer = createAsyncThunk(
   "profile/fetchProfile",
   async (id, { rejectWithValue }) => {
     try {
@@ -48,11 +48,11 @@ const profileSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProfile.pending, (state) => {
+      .addCase(fetchProfileCustomer.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProfile.fulfilled, (state, action) => {
+      .addCase(fetchProfileCustomer.fulfilled, (state, action) => {
         state.loading = false;
         state.id = action.payload.id;
         state.fullName = action.payload.fullName;
@@ -63,7 +63,7 @@ const profileSlice = createSlice({
         state.email = action.payload.email;
         state.imageId = action.payload.imageId;
       })
-      .addCase(fetchProfile.rejected, (state, action) => {
+      .addCase(fetchProfileCustomer.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload
           ? action.payload.message

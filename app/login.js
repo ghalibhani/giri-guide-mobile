@@ -13,8 +13,8 @@ export default function LoginScreen() {
   const dispatch = useDispatch();
   const { error, isLoggedIn } = useSelector((state) => state.auth);
 
-  const [email, setEmail] = useState("solehuddin@gmail.com");
-  const [password, setPassword] = useState("1Soleh@6");
+  const [email, setEmail] = useState("kokoro@email.com");
+  const [password, setPassword] = useState("admin123");
 
   const handleLogin = async () => {
     if (email === "" || password === "") {

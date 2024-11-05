@@ -1,20 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../api/axiosInstance";
 
-export const fetchTourGuide = createAsyncThunk(
+export const fetchTourGuideById = createAsyncThunk(
   "tourGuide/fetchTourGuide",
   async (id, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`tour-guide/${id}`);
       return response.data.data;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchTourGuideProfileByUserId = createAsyncThunk(
+  "tourGuide/fetchTourGuideProfile",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`tour-guide/profile`);
+      return response.data.data;
+    } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
 const initialState = {
+  // FETCH TOUR GUIDE BY ID
   id: "",
   name: "",
   image: "",
@@ -27,9 +39,11 @@ const initialState = {
   additionalPrice: 0,
   totalPorter: 0,
   pricePorter: 0,
-  mountains: [], // Menyimpan daftar gunung
+  mountains: [],
   loading: false,
   error: null,
+  // PROFILE GUIDE
+  
 };
 
 const tourGuideSlice = createSlice({
@@ -38,11 +52,12 @@ const tourGuideSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTourGuide.pending, (state) => {
+      // FETCH TOUR GUIDE BY ID
+      .addCase(fetchTourGuideById.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchTourGuide.fulfilled, (state, action) => {
+      .addCase(fetchTourGuideById.fulfilled, (state, action) => {
         state.loading = false;
         state.name = action.payload.name;
         state.image = action.payload.image;
@@ -57,8 +72,36 @@ const tourGuideSlice = createSlice({
         state.pricePorter = action.payload.pricePorter;
         state.mountains = action.payload.mountains;
       })
-      .addCase(fetchTourGuide.rejected, (state, action) => {
+      .addCase(fetchTourGuideById.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
+      })
+
+      // FETCH PROFILE GUIDE BY USER ID
+      .addCase(fetchTourGuideProfileByUserId.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchTourGuideProfileByUserId.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userId = action.payload.userId;
+        state.tourGuideId = action.payload.tourGuideId;
+        state.email = action.payload.email;
+        state.name = action.payload.name;
+        state.gender = action.payload.gender;
+        state.nik = action.payload.nik;
+        state.birthDate = action.payload.birthDate;
+        state.description = action.payload.description;
+        state.address = action.payload.address;
+        state.maxHiker = action.payload.maxHiker;
+        state.price = action.payload.price;
+        state.additionalPrice = action.payload.additionalPrice;
+        state.totalPorter = action.payload.totalPorter;
+        state.pricePorter = action.payload.pricePorter;
+        state.image = action.payload.image;
+      })
+      .addCase(fetchTourGuideProfileByUserId.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload;
       });
   },
