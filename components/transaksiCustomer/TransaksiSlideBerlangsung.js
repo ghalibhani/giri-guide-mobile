@@ -55,8 +55,8 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
               ? "Butuh Persetujuan"
               : "Menunggu Pembayaran"} */}
             {userRole === "tourguide"
-              ? "Menunggu Pembayaran"
-              : "Butuh Persetujuan"}
+              ? "Butuh Persetujuan"
+              : "Menunggu Pembayaran"}
           </Text>
         </TouchableOpacity>
 

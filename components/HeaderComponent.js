@@ -24,10 +24,10 @@ const HeaderComponent = ({
   const [statusBarTransition, setStatusBarTransition] = useState("fade");
 
   return (
-    <SafeAreaView className="bg-[#f8f8f8] flex-1">
+    <SafeAreaView className='bg-[#f8f8f8] flex-1'>
       <StatusBar
-        backgroundColor="#503A3A"
-        barStyle={'light-content'}
+        backgroundColor='#503A3A'
+        barStyle={"light-content"}
         hidden={hidden}
         animated={true}
         translucent={true}
@@ -38,40 +38,46 @@ const HeaderComponent = ({
         <HeaderSubMenu title={text} />
       </View>
 
-      <ScrollView className="flex-grow pb-40" style={{ height: "90%" }}>
+      <ScrollView className='flex-grow pb-40' style={{ height: "90%" }}>
         {children}
       </ScrollView>
 
-      {withFixedButton && hikingPoint.length !== 0 && mountainStatus !== 'SIAGA' && mountainStatus !== 'AWAS' &&
-        <View className="bg-white flex-1 w-full">
-          <CustomButton 
-            title={"Cari tour guide untuk gunung ini"}
-            buttonHandling={findTourGuideHandler}
-            customStyle={"bg-soil absolute bottom-5 left-5 right-5"}
-          />
-        </View>
-      }
+      {withFixedButton &&
+        hikingPoint.length !== 0 &&
+        mountainStatus !== "SIAGA" &&
+        mountainStatus !== "AWAS" && (
+          <View className='bg-white flex-1 w-full'>
+            <CustomButton
+              title={"Cari tour guide untuk gunung ini"}
+              buttonHandling={findTourGuideHandler}
+              customStyle={"bg-soil absolute bottom-5 left-5 right-5"}
+            />
+          </View>
+        )}
 
-      {withFixedButton && hikingPoint.length === 0 && 
-        <View className="bg-white flex-1 w-full">
-          <CustomButton 
+      {withFixedButton && hikingPoint.length === 0 && (
+        <View className='bg-white flex-1 w-full'>
+          <CustomButton
             title={"Belum ada tour guide untuk gunung ini"}
             buttonHandling={findTourGuideHandler}
             customStyle={"bg-info absolute bottom-5 left-5 right-5"}
             isDisabled={true}
           />
         </View>
-      }
+      )}
 
-      {withFixedButton && hikingPoint.length !== 0 && (mountainStatus === 'SIAGA' || mountainStatus === 'AWAS') &&
-        <View className="bg-white flex-1 w-full">
-          <CustomButton 
-            buttonHandling={findTourGuideHandler}
-            customStyle={"bg-errorHover absolute bottom-5 left-5 right-5"}
-            isDisabled={true}
-          />
-        </View>
-      }
+      {withFixedButton &&
+        hikingPoint.length !== 0 &&
+        (mountainStatus === "SIAGA" || mountainStatus === "AWAS") && (
+          <View className='bg-white flex-1 w-full'>
+            <CustomButton
+              buttonHandling={findTourGuideHandler}
+              title={"Gunung tidak memungkinkan untuk didaki!"}
+              customStyle={"bg-errorHover absolute bottom-5 left-5 right-5"}
+              isDisabled={true}
+            />
+          </View>
+        )}
     </SafeAreaView>
   );
 };

@@ -33,7 +33,7 @@ const SewaTourGuideTigaTahap = () => {
 
   const tahapAjukanHandler = () => {
     try {
-      router.replace("/detailGuide/detailGuide");
+      router.replace("/transaction");
     } catch (error) {
       console.error("Error in tahapAjukanHandler:", error);
     }

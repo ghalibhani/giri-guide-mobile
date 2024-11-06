@@ -2,20 +2,26 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ReviewGuideCard from "../../../components/ReviewGuideCard";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchTourGuideReview } from "../../../redux/guideReviewSlice";
 
 export default function ListReviewGuideScreen() {
   const dispatch = useDispatch();
-  const tourGuideReview = useSelector((state) => state.tourGuideReview);
+
+  const searchParams = useLocalSearchParams();
+  const tourGuideId = searchParams.get;
+
+  const tourGuideReview = useSelector(
+    (state) => state.tourGuideReview.reviews?.data
+  );
 
   useEffect(() => {
-    dispatch(fetchTourGuideReview("f689ec78-85d1-4606-95bc-bbf7c3ecfe20"));
-  }, [dispatch]);
-
-  console.log(tourGuideReview.reviews);
+    if (tourGuideId) {
+      dispatch(fetchTourGuideReview(tourGuideId));
+    }
+  }, [dispatch, tourGuideId]);
 
   const formattedDate = (date) => {
     return new Intl.DateTimeFormat("id-ID", {
@@ -45,8 +51,8 @@ export default function ListReviewGuideScreen() {
 
         {/* list */}
         <View>
-          {tourGuideReview.reviews.length > 0 ? (
-            tourGuideReview.reviews.map((ulasan) => (
+          {tourGuideReview.length > 0 ? (
+            tourGuideReview.map((ulasan) => (
               <ReviewGuideCard
                 key={ulasan.id}
                 reviewerName={ulasan.customerName}

@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { login } from "../redux/authSlice";
 import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();

@@ -8,15 +8,25 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { logout } from "../../../redux/authSlice";
-import { clearProfile, fetchProfile } from "../../../redux/profileSlice";
+import {
+  clearProfile,
+  fetchProfileCustomer,
+} from "../../../redux/profileSlice";
+import { fetchTourGuideProfileByUserId } from "../../../redux/tourGuideSlice";
 
 export default function ProfileInfoScreen() {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
-  const profile = useSelector((state) => state.profile);
+  const profileCustomer = useSelector((state) => state.profile);
+  const role = useSelector((state) => state.auth.role);
+  const profileTourGuide = useSelector((state) => state.tourGuide.tourGuide);
 
   useEffect(() => {
-    dispatch(fetchProfile(userId));
+    if (role === "ROLE_CUSTOMER") {
+      dispatch(fetchProfileCustomer(userId));
+    } else {
+      dispatch(fetchTourGuideProfileByUserId(userId));
+    }
   }, [dispatch, userId]);
 
   const formattedDate = (date) => {
@@ -28,15 +38,28 @@ export default function ProfileInfoScreen() {
   };
 
   const tanggalLahir = () => {
-    const birthDate = new Date(profile?.birthDate);
-    return formattedDate(birthDate);
+    if (role === "ROLE_CUSTOMER") {
+      const birthDate = new Date(profileCustomer?.birthDate);
+      return formattedDate(birthDate);
+    } else {
+      const birthDate = new Date(profileTourGuide?.birthDate);
+      return formattedDate(birthDate);
+    }
   };
 
-  jenisKelamin = () => {
-    if (profile?.gender === "MALE") {
-      return "Pria";
+  const jenisKelamin = () => {
+    if (role === "ROLE_CUSTOMER") {
+      if (profileCustomer?.gender === "MALE") {
+        return "Pria";
+      } else {
+        return "Wanita";
+      }
     } else {
-      return "Wanita";
+      if (profileTourGuide?.gender === "MALE") {
+        return "Pria";
+      } else {
+        return "Wanita";
+      }
     }
   };
 
@@ -46,7 +69,7 @@ export default function ProfileInfoScreen() {
       dispatch(clearProfile());
       router.replace("/login");
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -56,12 +79,20 @@ export default function ProfileInfoScreen() {
       <View className='flex-col gap-4'>
         <ProfileInfo
           label={"NIK"}
-          value={profile?.nik}
+          value={
+            role === "ROLE_CUSTOMER"
+              ? profileCustomer?.nik
+              : profileTourGuide?.nik
+          }
           nameIcon={"card-outline"}
         />
         <ProfileInfo
           label={"Nama Lengkap"}
-          value={profile?.fullName}
+          value={
+            role === "ROLE_CUSTOMER"
+              ? profileCustomer?.fullName
+              : profileTourGuide?.name
+          }
           nameIcon={"person-outline"}
         />
         <ProfileInfo
@@ -76,12 +107,21 @@ export default function ProfileInfoScreen() {
         />
         <ProfileInfo
           label={"Alamat"}
-          value={profile?.address}
+          // value={profileCustomer?.address}
+          value={
+            role === "ROLE_CUSTOMER"
+              ? profileCustomer?.address
+              : profileTourGuide?.address
+          }
           nameIcon={"home-outline"}
         />
         <ProfileInfo
           label={"Email"}
-          value={profile?.email}
+          value={
+            role === "ROLE_CUSTOMER"
+              ? profileCustomer?.email
+              : profileTourGuide?.email
+          }
           nameIcon={"mail-outline"}
         />
         <ButtonLogout onPress={handleLogout} children={"Logout"} />

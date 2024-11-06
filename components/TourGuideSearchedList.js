@@ -4,20 +4,21 @@ import TourGuideCard from "./TourGuideCard";
 
 const TourGuideSearchedList = ({ tourGuides }) => {
   const renderTourGuide = ({ item }) => {
-    return (<TourGuideCard
-      image={item.image}
-      name={item.name}
-      description={item.description}
-      rating={item.rating}
-      totalRating={item.totalReview}
-      tourGuideId={item.id}
-    />)
-  ;}
-
+    return (
+      <TourGuideCard
+        image={item.image}
+        name={item.name}
+        description={item.description}
+        rating={item.rating}
+        totalRating={item.totalReview}
+        tourGuideId={item.id}
+      />
+    );
+  };
 
   return (
-    <View className="px-6">
-      <Text className="mb-4 font-ibold text-soil text-base">
+    <View className='px-6'>
+      <Text className='mb-4 font-ibold text-soil text-base'>
         Tour guide terbaik untuk kamu
       </Text>
       <FlatList

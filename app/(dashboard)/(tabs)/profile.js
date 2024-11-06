@@ -18,7 +18,7 @@ export default function ProfileScreen() {
           setIsCustomer(false);
         }
       } catch (error) {
-        console.log("Error checking login status:", error);
+        // console.log("Error checking login status:", error);
       }
     };
 

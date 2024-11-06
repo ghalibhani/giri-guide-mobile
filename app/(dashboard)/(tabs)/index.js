@@ -11,10 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllMountains } from "../../../redux/mountainSlice";
 
 const HomeScreen = () => {
-  const dispatch = useDispatch()
-  const mountains = useSelector((state) => state.mountain.mountains)
-  const statusMountains = useSelector((state) => state.mountain.status)
-  const errorMountains = useSelector((state) => state.mountain.error)
+  const dispatch = useDispatch();
+  const mountains = useSelector((state) => state.mountain.mountains);
+  const statusMountains = useSelector((state) => state.mountain.status);
+  const errorMountains = useSelector((state) => state.mountain.error);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -23,11 +23,18 @@ const HomeScreen = () => {
         const role = await AsyncStorage.getItem("userRole");
         const userId = await AsyncStorage.getItem("userId");
         const email = await AsyncStorage.getItem("email");
+        const name = await AsyncStorage.getItem("guideName");
 
         if (token === null) {
           router.replace("/login");
+        } else if (role === "ROLE_GUIDE") {
+          // console.log("role checking", role);
+          // console.log("token checking", token);
+          // console.log("userId checking", userId);
+          router.replace("/homeGuide/homeMainTourGuide");
+          dispatch(loginRefresh({ token, role, userId, email, name }));
         } else {
-          dispatch(loginRefresh({ token, role, userId, email }));
+          dispatch(loginRefresh({ token, role, userId, email, name }));
         }
       } catch (error) {
         router.replace("/login");
@@ -38,9 +45,9 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchAllMountains({page: 1, size: 40}))
+    dispatch(fetchAllMountains({ page: 1, size: 40 }));
     // console.log(statusMountains)
-  }, [dispatch])
+  }, [dispatch]);
 
   const data = [
     {
@@ -130,7 +137,7 @@ const HomeScreen = () => {
       </SafeAreaView>
     );
   } catch (error) {
-    console.error("Error rendering HomeScreen:", error);
+    // console.error("Error rendering HomeScreen:", error);
   }
 };
 

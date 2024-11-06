@@ -17,12 +17,12 @@ const CardProfile = ({ data }) => {
               <View className='mr-1'>
                 <AntDesign name='star' size={20} color={"#ECD768"} />
               </View>
-              <Text className='font-ibold text-soil'>4.4</Text>
+              <Text className='font-ibold text-soil'>{data.rating}</Text>
             </View>
           </View>
 
           <Text className=' mt-4 font-ibold text-lg text-ivory'>
-            Nama Tour Guide
+            {data.name}
           </Text>
         </View>
       </View>
@@ -30,7 +30,9 @@ const CardProfile = ({ data }) => {
       <View className='bg-white rounded-xl mx-6 px-5 py-5 -mt-32 z-0'>
         <View className='flex-col justify-around gap-4'>
           <View className='items-center gap-[5]'>
-            <Text className='text-2xl font-ibold text-evergreen'>450</Text>
+            <Text className='text-2xl font-ibold text-evergreen'>
+              {data.totalCustomer}
+            </Text>
             <Text className='text-xs font-iregular text-thistle'>
               Banyak pendakian yang selesai
             </Text>
@@ -40,7 +42,9 @@ const CardProfile = ({ data }) => {
 
           <View className='flex-row'>
             <View className='items-center gap-[5] w-1/2'>
-              <Text className='text-2xl font-ibold text-evergreen'>40%</Text>
+              <Text className='text-2xl font-ibold text-evergreen'>
+                {data.donePercentage}%
+              </Text>
               <Text className='text-xs font-iregular text-thistle'>
                 Persentase selesai
               </Text>
@@ -49,7 +53,9 @@ const CardProfile = ({ data }) => {
             <View className='w-[0.5] bg-thistle'></View>
 
             <View className='items-center gap-[5] w-1/2'>
-              <Text className='text-2xl font-ibold text-evergreen'>60%</Text>
+              <Text className='text-2xl font-ibold text-evergreen'>
+                {data.rejectPercentage}%
+              </Text>
               <Text className='text-xs font-iregular text-thistle'>
                 Persentase menolak
               </Text>

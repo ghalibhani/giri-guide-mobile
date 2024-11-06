@@ -28,51 +28,30 @@ export default function DetailTourGuideScreen() {
   const dispatch = useDispatch();
   const tourGuide = useSelector((state) => state.tourGuide.tourGuide);
   const statusTourGuide = useSelector((state) => state.tourGuide.status);
-  const errorTourGuide = useSelector((state) => state.tourGuide.error);
-
-  const tourGuideReview = useSelector((state) => state.tourGuideReview);
-  const statusTourGuideReview = useSelector((state) => state.tourGuideReview.isLoading)
+  const tourGuideReview = useSelector(
+    (state) => state.tourGuideReview.reviews.data
+  );
+  const statusTourGuideReview = useSelector(
+    (state) => state.tourGuideReview.isLoading
+  );
   const [showHikingPoints, setShowHikingPoints] = useState([]);
   const [selectedMountain, setSelectedMountain] = useState(null);
   const [selectedClimbingPoint, setSelectedClimbingPoint] = useState(null);
   const [climbingPointData, setClimbingPointData] = useState(null);
 
   useEffect(() => {
-    console.log("ini tour guide id: ", tourGuideId);
     dispatch(fetchTourGuideById(tourGuideId));
     dispatch(fetchTourGuideReview(tourGuideId));
   }, [dispatch, tourGuideId]);
 
+  console.log(tourGuide, "tourGuide");
 
   const highestRatedReview =
-    tourGuideReview.reviews && tourGuideReview.reviews.length > 0
-      ? tourGuideReview.reviews.reduce((prev, current) => {
+    tourGuideReview && tourGuideReview.length > 0
+      ? tourGuideReview.reduce((prev, current) => {
           return prev.rating > current.rating ? prev : current;
-        }, tourGuideReview.reviews[0])
+        }, tourGuideReview[0])
       : null;
-
-  const formattedDate = (date) => {
-    return new Intl.DateTimeFormat("id-ID", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }).format(date);
-  };
-
-  const averageRating = () => {
-    if (tourGuideReview.reviews && tourGuideReview.reviews.length > 0) {
-      const totalRating = tourGuideReview.reviews.reduce(
-        (total, review) => total + review.rating,
-        0
-      );
-      return totalRating / tourGuideReview.reviews.length;
-    } else {
-      return 0;
-    }
-  };
-
-  const number = averageRating();
-  const roundedNumber = parseFloat(number.toFixed(1));
 
   const mountainHandler = (mountainId) => {
     const selectedMountain = tourGuide.mountains.find(
@@ -138,6 +117,7 @@ export default function DetailTourGuideScreen() {
             className='h-[180] w-screen rounded-b-3xl'
             source={require("../../../assets/gunung-tour-guide.jpg")}
           />
+
           <Image
             className='w-24 h-24 absolute top-36 left-10 z-10 rounded-full'
             source={require("../../../assets/profile-image.jpg")}
@@ -146,10 +126,10 @@ export default function DetailTourGuideScreen() {
           <View className='p-6 rounded-b-3xl bg-white'>
             <View className='flex justify-end items-center gap-2 flex-row'>
               <View className='flex flex-row gap-2'>
-                <Star star={roundedNumber} />
+                <Star star={tourGuide.rating} />
               </View>
               <Text className='text-plum text-base'>
-                {roundedNumber} ({tourGuide.totalReview})
+                {tourGuide.rating} ({tourGuide.totalReview})
               </Text>
             </View>
 
@@ -234,18 +214,7 @@ export default function DetailTourGuideScreen() {
           </View>
 
           {/* rating ulasan */}
-          <CardRatingReview
-            totalReview={tourGuide.totalReview}
-            averageReview={roundedNumber}
-            star={roundedNumber}
-            customerName={highestRatedReview?.customerName || "Nama Customer"}
-            dateReview={
-              highestRatedReview
-                ? formattedDate(new Date(highestRatedReview.createdAt))
-                : "Tanggal review"
-            }
-            reviewText={highestRatedReview?.review || "Ulasan"}
-          />
+          <CardRatingReview data={highestRatedReview} averageData={tourGuide} />
 
           {/* rincian biaya */}
           <View className='bg-white rounded-3xl p-6'>
