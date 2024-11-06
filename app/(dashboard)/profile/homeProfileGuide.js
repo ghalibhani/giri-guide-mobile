@@ -18,9 +18,6 @@ const HomeProfileGuideScreen = () => {
   );
   const reviews = useSelector((state) => state.tourGuideReview.reviews.data);
 
-  const tourGuideName = useSelector((state) => state.auth.guideName);
-  console.log("tourGuideName", tourGuideName);
-
   useEffect(() => {
     if (userId) {
       dispatch(fetchTourGuideProfileByUserId(userId));
