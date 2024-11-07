@@ -151,7 +151,8 @@ export default function DetailTourGuideScreen() {
                 <Star star={tourGuide.rating} />
               </View>
               <Text className='text-plum text-base'>
-                {formatDecimal(tourGuide.rating)} ({tourGuide.totalReview})
+                {tourGuide.rating ? formatDecimal(tourGuide.rating) : 0} (
+                {tourGuide.totalReview})
               </Text>
             </View>
 

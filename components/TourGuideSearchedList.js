@@ -13,7 +13,7 @@ const TourGuideSearchedList = ({ tourGuides }) => {
         image={item.image}
         name={item.name}
         description={item.description}
-        rating={formatDecimal(item.rating)}
+        rating={item?.rating ? formatDecimal(item?.rating) : 0}
         totalRating={item.totalReview}
         tourGuideId={item.id}
       />

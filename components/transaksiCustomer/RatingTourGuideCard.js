@@ -1,8 +1,17 @@
 import { View, Text, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Star from "../Star";
+import TouchStarRating from "../miniComponent/TouchStarRating";
+
+import React, { useState } from "react";
 
 const RatingTourGuideCard = ({ guideName, guideImage }) => {
+  const [rating, setRating] = useState(null);
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+    console.log("Rating changed:", newRating);
+  };
+
   const getImageSource = () => {
     if (guideImage) {
       return { uri: guideImage };
@@ -31,7 +40,10 @@ const RatingTourGuideCard = ({ guideName, guideImage }) => {
       </View>
       <View className='my-5 h-[1] bg-borderCustom'></View>
       <View className='flex-row justify-center items-center gap-4'>
-        <Star></Star>
+        <TouchStarRating
+          onRatingChange={handleRatingChange}
+          initialRating={rating}
+        />
       </View>
     </View>
   );

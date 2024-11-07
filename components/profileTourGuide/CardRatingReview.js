@@ -23,8 +23,7 @@ const CardRatingReview = ({ averageData, data }) => {
 
       <View className='flex flex-row gap-6 items-center mt-4'>
         <Text className='text-5xl font-isemibold text-evergreen'>
-          {formatDecimal(averageData?.rating)}
-          {/* {1} */}
+          {averageData?.rating ? formatDecimal(averageData?.rating) : 0}
         </Text>
 
         <View>

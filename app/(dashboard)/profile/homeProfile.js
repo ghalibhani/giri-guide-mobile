@@ -6,9 +6,7 @@ import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import {
-  fetchProfileCustomer,
-} from "../../../redux/profileSlice";
+import { fetchProfileCustomer } from "../../../redux/profileSlice";
 
 export default function HomeProfileScreen() {
   const dispatch = useDispatch();
@@ -26,6 +24,7 @@ export default function HomeProfileScreen() {
   useEffect(() => {
     dispatch(fetchProfileCustomer(userId));
   }, [dispatch, userId]);
+
 
   return (
     <View className='flex-1 items-center bg-hex-#F8F8F8'>

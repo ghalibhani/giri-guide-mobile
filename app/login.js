@@ -50,7 +50,7 @@ export default function LoginScreen() {
   return (
     <View className='flex-1 justify-center p-[24] bg-white'>
       <Image
-        source={require("../assets/logo-dummy.jpg")}
+        source={require("../assets/logo-giri-guide.png")}
         className='w-[200] h-[200] mb-[30] mx-auto'
       />
       <Text className='text-2xl text-soil font-bold mb-9'>

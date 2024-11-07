@@ -9,8 +9,7 @@ import {
 
 const imageUrl =
   "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380";
-const profileUrl =
-  "https://img.freepik.com/free-photo/portrait-volunteer-who-organized-donations-charity_23-2149230567.jpg?t=st=1730346064~exp=1730349664~hmac=cbb7f5766546308cb4968873a8e5c98132b14f1d7383ef959fa87b8c9f332233&w=740";
+
 export default function ContainerProfile({ email, fullName, birthDate }) {
   return (
     <View className='bg-white h-[367] w-full items-center rounded-b-[30]'>
@@ -20,12 +19,12 @@ export default function ContainerProfile({ email, fullName, birthDate }) {
         resizeMode='cover'
       />
       <Image
-        source={{ uri: profileUrl }}
+        source={require("./../assets/profile-image.jpg")}
         className='w-[150] h-[150] rounded-full mt-[-75]'
       />
-      <TouchableOpacity className='w-[40] h-[40] rounded-full bg-daisy items-center justify-center border-[2px] border-white mt-[-40] mr-[-90]'>
+      {/* <TouchableOpacity className='w-[40] h-[40] rounded-full bg-daisy items-center justify-center border-[2px] border-white mt-[-40] mr-[-90]'>
         <Feather name='edit-2' size={18} color='black' />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <Text className='mt-[10px] text-thistle text-[12px] font-light'>
         {email}
       </Text>

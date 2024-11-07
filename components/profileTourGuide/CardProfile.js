@@ -2,6 +2,25 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
+const getImageSource = (imageUser) => {
+  if (!imageUser) {
+    return require("../../assets/profile-image.jpg");
+  }
+
+  if (
+    typeof imageUser === "string" &&
+    (imageUser.startsWith("http") || imageUser.startsWith("https"))
+  ) {
+    return { uri: imageUser };
+  }
+
+  return require("../../assets/profile-image.jpg");
+};
+
+function formatDecimal(value) {
+  return value % 1 === 0 ? `${value.toFixed(1)}` : `${value.toFixed(1)}`;
+}
+
 const CardProfile = ({ data }) => {
   return (
     <View className='gap-5'>
@@ -9,7 +28,7 @@ const CardProfile = ({ data }) => {
         <View className='items-center gap-4'>
           <View className='relative'>
             <Image
-              source={require("../../assets/giri-dummy-image.jpg")}
+              source={getImageSource(data.image)}
               className='rounded-full w-[100px] h-[100px] border-4 border-white'
             />
 
@@ -17,7 +36,9 @@ const CardProfile = ({ data }) => {
               <View className='mr-1'>
                 <AntDesign name='star' size={20} color={"#ECD768"} />
               </View>
-              <Text className='font-ibold text-soil'>{data.rating}</Text>
+              <Text className='font-ibold text-soil'>
+                {data?.rating ? formatDecimal(data?.rating) : 0}
+              </Text>
             </View>
           </View>
 
