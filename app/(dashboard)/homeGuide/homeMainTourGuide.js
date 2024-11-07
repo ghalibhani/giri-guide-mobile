@@ -1,19 +1,31 @@
 import { View, Text, Modal, StatusBar, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomButton from "../../../components/miniComponent/CustomButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchHomeTransactionGuide } from "../../../redux/statsTransactionGuideSlice";
 
 const HomeMainTourGuideScreen = () => {
   const tourGuideName = useSelector((state) => state.auth.name);
+  const tourGuideUserId = useSelector((state) => state.auth.userId);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchHomeTransactionGuide(tourGuideUserId));
+  }, [dispatch]);
+
+  const { statsGuide } = useSelector((state) => state.statsTransactionGuide);
+  // console.log("---------", statsGuide);
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     }).format(value);
   };
 
@@ -44,7 +56,9 @@ const HomeMainTourGuideScreen = () => {
                         </TouchableOpacity> */}
 
             <TouchableOpacity>
-              <Link href={"/homeGuide/walletGuide"}>
+              <Link
+                href={`/homeGuide/walletGuide?id=${statsGuide?.totalBalance}`}
+              >
                 <Ionicons name='wallet-outline' color={"#FBF6D9"} size={24} />
               </Link>
             </TouchableOpacity>
@@ -62,7 +76,7 @@ const HomeMainTourGuideScreen = () => {
                   Total Balance
                 </Text>
                 <Text className='font-ibold text-3xl text-evergreen'>
-                  {formatCurrency(10000000)}
+                  {formatCurrency(statsGuide?.totalBalance)}
                 </Text>
               </View>
 
@@ -72,7 +86,7 @@ const HomeMainTourGuideScreen = () => {
                     Pemasukan
                   </Text>
                   <Text className='font-ibold text-base text-evergreen'>
-                    {formatCurrency(10000000)}
+                    {formatCurrency(statsGuide?.totalIncome)}
                   </Text>
                 </View>
 
@@ -81,7 +95,7 @@ const HomeMainTourGuideScreen = () => {
                     Pengeluaran
                   </Text>
                   <Text className='font-ibold text-base text-evergreen'>
-                    {formatCurrency(10000000)}
+                    {formatCurrency(statsGuide?.totalWithdraw)}
                   </Text>
                 </View>
               </View>
@@ -92,14 +106,18 @@ const HomeMainTourGuideScreen = () => {
                 <Text className='font-iregular text-sm text-oat'>
                   Pendakian berhasil
                 </Text>
-                <Text className='font-ibold text-base text-ivory'>300</Text>
+                <Text className='font-ibold text-base text-ivory'>
+                  {statsGuide?.hikingDone}
+                </Text>
               </View>
 
               <View className='px-6 py-5 gap-[5] bg-soil rounded-verylarge flex-1'>
                 <Text className='font-iregular text-sm text-oat'>
                   Pendakian ditolak
                 </Text>
-                <Text className='font-ibold text-base text-ivory'>200</Text>
+                <Text className='font-ibold text-base text-ivory'>
+                  {statsGuide?.hikingRejected}
+                </Text>
               </View>
             </View>
 
@@ -108,7 +126,9 @@ const HomeMainTourGuideScreen = () => {
                 Jadwal terdekat
               </Text>
               <Text className='font-ibold text-base text-evergreen'>
-                {formattedDate(new Date())}
+                {statsGuide?.nextHiking
+                  ? formattedDate(new Date(statsGuide?.nextHiking))
+                  : "-"}
               </Text>
             </View>
 
@@ -116,14 +136,18 @@ const HomeMainTourGuideScreen = () => {
               <Text className='font-iregular text-sm text-soil'>
                 Banyak pendakian yang belum selesai{" "}
               </Text>
-              <Text className='font-ibold text-base text-evergreen'>100</Text>
+              <Text className='font-ibold text-base text-evergreen'>
+                {statsGuide?.waitingHiking}
+              </Text>
             </View>
 
             <View className='rounded-verylarge bg-daisy px-6 py-5 mx-6 gap-[5]'>
               <Text className='font-iregular text-sm text-soil'>
                 Banyak pendakian yang belum disetujui{" "}
               </Text>
-              <Text className='font-ibold text-base text-evergreen'>100</Text>
+              <Text className='font-ibold text-base text-evergreen'>
+                {statsGuide?.waitingApprove}
+              </Text>
             </View>
           </View>
         </ScrollView>

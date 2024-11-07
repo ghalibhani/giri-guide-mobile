@@ -13,6 +13,7 @@ import { fetchTourGuideReview } from "../../../redux/guideReviewSlice";
 const HomeProfileGuideScreen = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
+
   const tourGuideProfileData = useSelector(
     (state) => state.tourGuide.tourGuide
   );
