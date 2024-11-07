@@ -44,7 +44,8 @@ export default function DetailTourGuideScreen() {
     dispatch(fetchTourGuideReview(tourGuideId));
   }, [dispatch, tourGuideId]);
 
-  console.log(tourGuide.image, "tourGuide");
+  // console.log(tourGuide.image, "tourGuide");
+  console.log(tourGuide.totalReview, "tourGuide");
 
   const highestRatedReview =
     tourGuideReview && tourGuideReview.length > 0
@@ -237,7 +238,11 @@ export default function DetailTourGuideScreen() {
           </View>
 
           {/* rating ulasan */}
-          <CardRatingReview data={highestRatedReview} averageData={tourGuide} />
+          <CardRatingReview
+            show={true}
+            data={highestRatedReview}
+            averageData={tourGuide}
+          />
 
           {/* rincian biaya */}
           <View className='bg-white rounded-3xl p-6'>

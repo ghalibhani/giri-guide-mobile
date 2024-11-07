@@ -57,7 +57,9 @@ const HomeProfileGuideScreen = () => {
             <CardRatingReview
               data={highestRatedReview}
               averageData={tourGuideProfileData}
+              show={false}
             />
+
             <SubMenuProfileTourGuide />
           </View>
         </ScrollView>

@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import Star from "../Star";
 
-const CardRatingReview = ({ averageData, data }) => {
+const CardRatingReview = ({ averageData, data, show }) => {
   const formattedDate = (date) => {
     return new Intl.DateTimeFormat("id-ID", {
       day: "numeric",
@@ -37,27 +37,31 @@ const CardRatingReview = ({ averageData, data }) => {
         </View>
       </View>
 
-      <View className='flex flex-row items-center gap-5 mt-6'>
-        <Image
-          className='w-10 h-10 rounded-full'
-          source={require("../../assets/profile-image.jpg")}
-        />
+      {show === true ? (
+        <>
+          <View className='flex flex-row items-center gap-5 mt-6'>
+            <Image
+              className='w-10 h-10 rounded-full'
+              source={require("../../assets/profile-image.jpg")}
+            />
 
-        <View>
-          <Text className='text-soil text-sm font-ibold mb-1'>
-            {data?.customerName}
-          </Text>
-          <Text className='text-evergreen opacity-80 text-sm font-isemibold'>
-            {data?.createdAt
-              ? formattedDate(new Date(data.createdAt))
-              : "Tanggal review"}
-          </Text>
-        </View>
-      </View>
+            <View>
+              <Text className='text-soil text-sm font-ibold mb-1'>
+                {data?.customerName}
+              </Text>
+              <Text className='text-evergreen opacity-80 text-sm font-isemibold'>
+                {data?.createdAt
+                  ? formattedDate(new Date(data.createdAt))
+                  : "Tanggal review"}
+              </Text>
+            </View>
+          </View>
 
-      <Text className='text-evergreen font-iregular text-sm mt-5'>
-        {data?.review}
-      </Text>
+          <Text className='text-evergreen font-iregular text-sm mt-5'>
+            {data?.review}
+          </Text>
+        </>
+      ) : null}
 
       <View className='bg-borderCustom h-[1] my-5'></View>
 

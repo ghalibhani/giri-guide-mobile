@@ -16,10 +16,12 @@ export default function ListReviewGuideScreen() {
   const tourGuideReview = useSelector(
     (state) => state.tourGuideReview.reviews?.data
   );
+  const tourGuideData = useSelector((state) => state.tourGuide.tourGuide);
 
   useEffect(() => {
     if (tourGuideId) {
       dispatch(fetchTourGuideReview(tourGuideId));
+      dispatch(fetchTourGuideById(tourGuideId));
     }
   }, [dispatch, tourGuideId]);
 
@@ -36,7 +38,7 @@ export default function ListReviewGuideScreen() {
       <SafeAreaView>
         {/* Header */}
         <Text className='text-3xl text-center mt-5 text-soil font-ibold'>
-          Ulasan (311)
+          Ulasan ({tourGuideData?.totalReview})
         </Text>
         <TouchableOpacity
           className='bg-ivory w-[30] h-[30] border border-soil absolute top-10 left-6 z-10 items-center justify-center rounded-full'
