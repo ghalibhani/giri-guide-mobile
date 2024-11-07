@@ -86,9 +86,9 @@ export const fetchTourGuideById = createAsyncThunk(
   "tourGuide/fetchTourGuide",
   async (id, { rejectWithValue }) => {
     try {
-    //   console.log("console in slice", id);
+      console.log("console in slice", id);
       const response = await axiosInstance.get(`/tour-guide/${id}`);
-    //   console.log("console in slice", response.data);
+      console.log("console in slice", response.data);
       return response.data;
     } catch (error) {
     //   console.log(error.response);
@@ -150,10 +150,12 @@ const tourGuideSlice = createSlice({
         state.tourGuide = action.payload.data;
         state.error = null;
         state.status = "succeed";
+        console.log(action.payload)
       })
       .addCase(fetchTourGuideById.rejected, (state, action) => {
         state.error = action.payload;
         state.status = "failed";
+        console.log(action.payload)
       })
 
       // FETCH PROFILE GUIDE BY USER ID

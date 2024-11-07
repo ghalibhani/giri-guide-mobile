@@ -61,7 +61,7 @@ const FixedHarga = ({
 
             <View className="flex-row justify-between items-center">
                 <View>
-                    <Text className="font-iregular text-thistle text-sm">Jasa tour guide per penambahan</Text>
+                    <Text className="font-iregular text-thistle text-sm">Jasa tour guide untuk penambahan orang</Text>
                     <Text className="font-iregular text-thistle text-sm">(1 pendaki 1 hari = {formatCurrency(additionalTourGuidePricePerDayPerPerson)})</Text>
                 </View>
                 
@@ -80,7 +80,7 @@ const FixedHarga = ({
             {!isTourGuide && (
                 <View className="flex-row justify-between items-center">
                     <View>
-                        <Text className="font-iregular text-thistle text-sm">Biaya admin</Text>
+                        <Text className="font-iregular text-thistle text-sm">Biaya lain-lain</Text>
                     </View>
                     
                     <Text className="font-iregular text-soil text-sm">{formatCurrency(adminCost)}</Text>

@@ -5,7 +5,7 @@ const CostDetailItem = ({ label, amount, customStyle, customLabelStyle }) => {
   return (
     <View className={`${customStyle} flex flex-row justify-between gap-2 mt-4`}>
       <Text
-        className={`${customLabelStyle} text-thistle font-iregular text-sm`}
+        className={`${customLabelStyle} text-thistle font-iregular text-sm max-w-[80%] flex-shrink`}
       >
         {label}
       </Text>

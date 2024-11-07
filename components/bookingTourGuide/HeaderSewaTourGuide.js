@@ -1,12 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
+import { router } from 'expo-router'
 
 const HeaderSewaTourGuide = () => {
   return (
     <View>
         <View className="flex-row items-center">
-            <TouchableOpacity className="bg-ivory w-[30] h-[30] mt- items-center justify-center rounded-full">
+            <TouchableOpacity className="bg-ivory w-[30] h-[30] mt- items-center justify-center rounded-full" onPress={() => router.back()}>
                 <View className="justify-center items-center">
                     <Ionicons name={'chevron-back'} size={15} color={"#503A3A"} />
                 </View>

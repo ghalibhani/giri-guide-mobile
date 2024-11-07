@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import { FlatList } from "react-native";
 import TourGuideCard from "./TourGuideCard";
 
-const TourGuideSearchedList = ({ tourGuides }) => {
+const TourGuideSearchedList = ({ tourGuides, hikingPointId, hikingPointName, mountainName, mountainId }) => {
   const renderTourGuide = ({ item }) => {
     return (<TourGuideCard
       image={item.image}
@@ -11,6 +11,10 @@ const TourGuideSearchedList = ({ tourGuides }) => {
       rating={item.rating}
       totalRating={item.totalReview}
       tourGuideId={item.id}
+      hikingPointId={hikingPointId}
+      hikingPointName={hikingPointName}
+      mountainName={mountainName}
+      mountainId={mountainId}
     />)
   ;}
 

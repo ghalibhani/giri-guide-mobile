@@ -4,20 +4,15 @@ import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-const FormTanggalCounter = () => {
-    const initialDate = moment().add(4, 'days').toDate()
-
-    const [startDate, setStartDate] = useState(initialDate);
+const FormTanggalCounter = ({count, setCount, startDate, setStartDate, endDate, setEndDate, initialDate, maxHiker}) => {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
-    const [endDate, setEndDate] = useState(initialDate);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
-
-    const [count, setCount] = useState(0);
 
     const minStartDate = initialDate
     const [minEndDate, setMinEndDate] = useState(initialDate);
-    const [maxEndDate, setMaxEndDate] = useState(moment(initialDate).add(7, 'days').toDate());
-    
+    const [maxEndDate, setMaxEndDate] = useState(moment(initialDate).add(2, 'days').toDate());
+
+    const [maxHikerErrorMessage, setMaxHikerErrorMessage] = useState('');
 
     const showStartDatePickerHandler = () => {
         setShowStartDatePicker(true);
@@ -28,7 +23,7 @@ const FormTanggalCounter = () => {
         setShowStartDatePicker(!showStartDatePicker);
         setStartDate(currentDate);
 
-        const newMaxEndDate = moment(currentDate).add(7, 'days').toDate();
+        const newMaxEndDate = moment(currentDate).add(2, 'days').toDate();
         setMaxEndDate(newMaxEndDate);
         setMinEndDate(currentDate)
 
@@ -48,11 +43,19 @@ const FormTanggalCounter = () => {
     };
 
     const increment = () => {
-        setCount(count + 1);
+        if(count < maxHiker) {
+            setCount(count + 1);
+            setMaxHikerErrorMessage('')
+        } else{
+            setMaxHikerErrorMessage(`Tour guide ini hanya bisa memandu maksimal ${maxHiker} pendaki`)
+        }
     }
 
     const decrement = () => {
-        setCount(count - 1);
+        if (count > 1) {
+            setCount(count - 1);
+            setMaxHikerErrorMessage('');
+        }
     }
 
     return (
@@ -121,7 +124,14 @@ const FormTanggalCounter = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {maxHikerErrorMessage && (
+                    <View className="px-5">
+                        <Text className="text-errorHover text-sm font-iregular">{maxHikerErrorMessage}</Text>
+                    </View>
+                )}
             </View>
+
+            
         </View>
     );
 };
