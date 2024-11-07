@@ -44,7 +44,7 @@ export default function DetailTourGuideScreen() {
     dispatch(fetchTourGuideReview(tourGuideId));
   }, [dispatch, tourGuideId]);
 
-  console.log(tourGuide, "tourGuide");
+  console.log(tourGuide.image, "tourGuide");
 
   const highestRatedReview =
     tourGuideReview && tourGuideReview.length > 0
@@ -90,6 +90,10 @@ export default function DetailTourGuideScreen() {
     }).format(amount);
   };
 
+  function formatDecimal(value) {
+    return value % 1 === 0 ? `${value.toFixed(1)}` : `${value.toFixed(1)}`;
+  }
+
   if (statusTourGuide === "loading" && statusTourGuideReview) {
     return (
       <View className='flex-1 items-center justify-center'>
@@ -98,18 +102,36 @@ export default function DetailTourGuideScreen() {
     );
   }
 
+  const getImageSource = (imageUser) => {
+    if (!imageUser) {
+      return require("../../../assets/profile-image.jpg");
+    }
+
+    if (
+      typeof imageUser === "string" &&
+      (imageUser.startsWith("http") || imageUser.startsWith("https"))
+    ) {
+      return { uri: imageUser };
+    }
+
+    return require("../../../assets/profile-image.jpg");
+  };
+
   return (
     <SafeAreaView>
       <ScrollView>
         <StatusBar translucent style='auto' />
         <View className='flex-1 pb-24' style={{ backgroundColor: "#f8f8f8" }}>
-          <TouchableOpacity className='bg-ivory w-[30] h-[30] absolute top-5 left-6 z-10 items-center justify-center rounded-full'>
+          <TouchableOpacity
+            className='bg-ivory w-[30] h-[30] absolute top-5 left-6 z-10 items-center justify-center rounded-full'
+            onPress={() => router.back()}
+          >
             <View className='justify-center items-center'>
               <Ionicons
                 name={"chevron-back"}
                 size={15}
                 color={"#503A3A"}
-                onPress={() => router.back()}
+                // onPress={() => router.back()}
               />
             </View>
           </TouchableOpacity>
@@ -120,7 +142,7 @@ export default function DetailTourGuideScreen() {
 
           <Image
             className='w-24 h-24 absolute top-36 left-10 z-10 rounded-full'
-            source={require("../../../assets/profile-image.jpg")}
+            source={getImageSource(tourGuide.image)}
           />
 
           <View className='p-6 rounded-b-3xl bg-white'>
@@ -129,7 +151,7 @@ export default function DetailTourGuideScreen() {
                 <Star star={tourGuide.rating} />
               </View>
               <Text className='text-plum text-base'>
-                {tourGuide.rating} ({tourGuide.totalReview})
+                {formatDecimal(tourGuide.rating)} ({tourGuide.totalReview})
               </Text>
             </View>
 

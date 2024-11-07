@@ -13,13 +13,17 @@ const CardRatingReview = ({ averageData, data }) => {
     }).format(date);
   };
 
+  function formatDecimal(value) {
+    return value % 1 === 0 ? `${value.toFixed(1)}` : `${value.toFixed(1)}`;
+  }
+
   return (
     <View className='bg-white rounded-verylarge my-4 p-6'>
       <Text className='text-lg text-soil font-ibold'>Rating dan Ulasan</Text>
 
       <View className='flex flex-row gap-6 items-center mt-4'>
         <Text className='text-5xl font-isemibold text-evergreen'>
-          {averageData?.rating}
+          {formatDecimal(averageData?.rating)}
           {/* {1} */}
         </Text>
 

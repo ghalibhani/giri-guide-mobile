@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { login } from "../redux/authSlice";
 import { router } from "expo-router";
+import TextInvalidRed from "../components/miniComponent/TextInvalidRed";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
@@ -14,10 +15,11 @@ export default function LoginScreen() {
 
   const [email, setEmail] = useState("kokoro@email.com");
   const [password, setPassword] = useState("admin123");
+  const [cleanMessage, setCleanMessage] = useState("");
 
   const handleLogin = async () => {
     if (email === "" || password === "") {
-      alert("Email and Password cannot be empty");
+      setCleanMessage("Email and Password cannot be empty");
       return;
     }
     try {
@@ -27,11 +29,11 @@ export default function LoginScreen() {
       const errorMessage =
         error.message || error.response?.data || "Terjadi kesalahan";
 
-      const cleanMessage = errorMessage.includes("UNAUTHORIZED")
-        ? errorMessage.split("UNAUTHORIZED ")[1]
-        : errorMessage;
-
-      Alert.alert("Error", cleanMessage);
+      // Bersihkan pesan error tanpa `useEffect`
+      const cleaned = errorMessage.includes("UNAUTHORIZED")
+        ? errorMessage.split("UNAUTHORIZED ")[1].replace(/['"]+/g, "")
+        : errorMessage.replace(/['"]+/g, "");
+      setCleanMessage(cleaned);
     }
   };
 
@@ -71,6 +73,9 @@ export default function LoginScreen() {
         secureTextEntry={true}
         customStyles={"mb-[20]"}
       />
+
+      {cleanMessage ? <TextInvalidRed errorMessage={cleanMessage} /> : null}
+
       <CustomButton
         title={"Login"}
         customStyle={"bg-soil"}

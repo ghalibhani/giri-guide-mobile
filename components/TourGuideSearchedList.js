@@ -3,13 +3,17 @@ import { FlatList } from "react-native";
 import TourGuideCard from "./TourGuideCard";
 
 const TourGuideSearchedList = ({ tourGuides }) => {
+  function formatDecimal(value) {
+    return value % 1 === 0 ? `${value.toFixed(1)}` : `${value.toFixed(1)}`;
+  }
+
   const renderTourGuide = ({ item }) => {
     return (
       <TourGuideCard
         image={item.image}
         name={item.name}
         description={item.description}
-        rating={item.rating}
+        rating={formatDecimal(item.rating)}
         totalRating={item.totalReview}
         tourGuideId={item.id}
       />

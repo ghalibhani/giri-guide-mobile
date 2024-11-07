@@ -42,6 +42,36 @@ export const fetchTourGuideProfileByUserId = createAsyncThunk(
   }
 );
 
+export const fetchTourGuideProfileHikingPointsByUserId = createAsyncThunk(
+  "tourGuide/fetchTourGuideProfileHikingPoints",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(
+        `tour-guide/profile/${id}/hiking-points`
+      );
+      return response.data;
+    } catch (error) {
+      // console.log(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const toggleTourGuideHikingPoint = createAsyncThunk(
+  "tourGuide/toggleTourGuideHikingPoint",
+  async ({ tourGuideId, hikingPointId }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.patch(
+        `tour-guide/profile/${tourGuideId}/hiking-points/${hikingPointId}/toggle`
+      );
+      // console.log("---------", response.data);
+      return response.data;
+    } catch (error) {
+      // console.log(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 // export const updateTourGuideProfile = createAsyncThunk(
 //   "tourGuide/updateTourGuideProfile",
 //   async ({ id, profileData }, { rejectWithValue }) => {
@@ -77,7 +107,7 @@ const tourGuideSlice = createSlice({
     builder
       // MARTA
       .addCase(getTourGuideListsByHikingPointId.pending, (state) => {
-        state.status = "loading"; // Set loading status while fetching
+        state.status = "loading";
       })
       .addCase(getTourGuideListsByHikingPointId.fulfilled, (state, action) => {
         state.tourGuides = action.payload.data;
@@ -108,14 +138,32 @@ const tourGuideSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchTourGuideProfileByUserId.fulfilled, (state, action) => {
-        // console.log("dalem slice ------- : ", action.payload);
         state.tourGuide = action.payload;
         state.error = null;
         state.status = "succeed";
       })
       .addCase(fetchTourGuideProfileByUserId.rejected, (state, action) => {
         state.error = action.payload;
-      });
+      })
+
+      // FETCH PROFILE GUIDE HIKING POINT BY USER ID
+      .addCase(fetchTourGuideProfileHikingPointsByUserId.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(
+        fetchTourGuideProfileHikingPointsByUserId.fulfilled,
+        (state, action) => {
+          state.tourGuides = action.payload.data;
+          state.error = null;
+          state.status = "succeed";
+        }
+      )
+      .addCase(
+        fetchTourGuideProfileHikingPointsByUserId.rejected,
+        (state, action) => {
+          state.error = action.payload;
+        }
+      );
   },
 });
 

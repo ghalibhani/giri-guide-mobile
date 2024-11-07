@@ -38,13 +38,16 @@ export default function ListReviewGuideScreen() {
         <Text className='text-3xl text-center mt-5 text-soil font-ibold'>
           Ulasan (311)
         </Text>
-        <TouchableOpacity className='bg-ivory w-[30] h-[30] border border-soil absolute top-10 left-6 z-10 items-center justify-center rounded-full'>
+        <TouchableOpacity
+          className='bg-ivory w-[30] h-[30] border border-soil absolute top-10 left-6 z-10 items-center justify-center rounded-full'
+          onPress={() => router.back()}
+        >
           <View className='justify-center items-center'>
             <Ionicons
               name={"chevron-back"}
               size={15}
               color={"#503A3A"}
-              onPress={() => router.back()}
+              // onPress={() => router.back()}
             />
           </View>
         </TouchableOpacity>
