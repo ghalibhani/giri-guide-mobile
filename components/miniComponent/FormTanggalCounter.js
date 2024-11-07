@@ -5,12 +5,19 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 const FormTanggalCounter = () => {
-    const [startDate, setStartDate] = useState(new Date());
+    const initialDate = moment().add(4, 'days').toDate()
+
+    const [startDate, setStartDate] = useState(initialDate);
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
-    const [endDate, setEndDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(initialDate);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
     const [count, setCount] = useState(0);
+
+    const minStartDate = initialDate
+    const [minEndDate, setMinEndDate] = useState(initialDate);
+    const [maxEndDate, setMaxEndDate] = useState(moment(initialDate).add(7, 'days').toDate());
+    
 
     const showStartDatePickerHandler = () => {
         setShowStartDatePicker(true);
@@ -20,6 +27,14 @@ const FormTanggalCounter = () => {
         const currentDate = selectedDate || startDate;
         setShowStartDatePicker(!showStartDatePicker);
         setStartDate(currentDate);
+
+        const newMaxEndDate = moment(currentDate).add(7, 'days').toDate();
+        setMaxEndDate(newMaxEndDate);
+        setMinEndDate(currentDate)
+
+        if (endDate > newMaxEndDate || endDate < currentDate) {
+            setEndDate(currentDate);
+        }
     };
 
     const showEndDatePickerHandler = () => {
@@ -56,6 +71,7 @@ const FormTanggalCounter = () => {
                                 mode='date'
                                 display='default'
                                 onChange={onChangeStartDate}
+                                minimumDate={minStartDate}
                             />
                         )}
                     </View>
@@ -76,6 +92,8 @@ const FormTanggalCounter = () => {
                                 mode='date'
                                 display='default'
                                 onChange={onChangeEndDate}
+                                minimumDate={minEndDate}
+                                maximumDate={maxEndDate}
                             />
                         )}
                     </View>

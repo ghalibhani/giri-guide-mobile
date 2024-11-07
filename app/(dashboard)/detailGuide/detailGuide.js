@@ -315,7 +315,7 @@ export default function DetailTourGuideScreen() {
           borderRadius: 10,
           alignItems: "center",
         }}
-        onPress={() => router.push("/bookGuide/bookThreeStep")}
+        onPress={() => router.push("/bookGuide/bookFirst")}
       >
         <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "bold" }}>
           Sewa Tour Guide Ini
