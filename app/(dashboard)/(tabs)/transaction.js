@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TransaksiSlideBerlangsung from "../../../components/transaksiCustomer/TransaksiSlideBerlangsung";
@@ -16,103 +16,46 @@ import CustomButton from "../../../components/miniComponent/CustomButton";
 import TourGuideCard from "../../../components/transaksiCustomer/TourGuideCard";
 import TransactionBerlangsung from "../../../components/transaksiCustomer/TransaksiBerlangsung";
 import TransaksiSelesai from "../../../components/transaksiCustomer/TransaksiSelesai";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllTransactionsByUserId } from "../../../redux/transactionSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //  transCustomer.js ada di folder transaction
 
 const TransactionCustomerScreen = () => {
-  const tourGuideData = [
-    {
-      id: "1",
-      guideName: "Johan",
-      mountainName: "Gunung Bromo",
-      hikingPoint: "Pos Paltuding",
-      numHikers: 3,
-      numPorters: 2,
-      numDays: 2,
-      dateRange: "05-06-2023 s/d 07-06-2023",
-      price: "2.500.000",
-      status: "UPCOMING",
-      role: "tourguide",
-      rating: 3,
-      imageUrl:
-        "https://t4.ftcdn.net/jpg/06/08/55/73/360_F_608557356_ELcD2pwQO9pduTRL30umabzgJoQn5fnd.jpg",
-    },
-    {
-      id: "2",
-      guideName: "Siti",
-      mountainName: "Gunung Semeru",
-      hikingPoint: "Pos Ranu Pane",
-      numHikers: 5,
-      numPorters: 3,
-      numDays: 3,
-      dateRange: "10-06-2023 s/d 12-06-2023",
-      price: "3.200.000",
-      status: "WAITING_PAY",
-      role: "tourguide",
-      rating: 3,
-      imageUrl:
-        "https://www.perfocal.com/blog/content/images/2021/01/Perfocal_17-11-2019_TYWFAQ_100_standard-3.jpg",
-    },
-    {
-      id: "3",
-      guideName: "Siti",
-      mountainName: "Gunung Semeru",
-      hikingPoint: "Pos Ranu Pane",
-      numHikers: 5,
-      numPorters: 3,
-      numDays: 3,
-      dateRange: "10-06-2023 s/d 12-06-2023",
-      price: "3.200.000",
-      status: "WAITING_APPROVE",
-      role: "tourguide",
-      rating: 3,
-      imageUrl:
-        "https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599553_1280.jpg",
-    },
-    {
-      id: "4",
-      guideName: "Budi",
-      mountainName: "Gunung Bromo",
-      hikingPoint: "Pos Paltuding",
-      numHikers: 3,
-      numPorters: 2,
-      numDays: 2,
-      dateRange: "05-06-2023 s/d 07-06-2023",
-      price: "2.500.000",
-      status: "DONE",
-      role: "tourguide",
-      rating: 3,
-      imageUrl:
-        "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-    },
-    {
-      id: "5",
-      guideName: "Dodo",
-      mountainName: "Gunung Bromo",
-      hikingPoint: "Pos Paltuding",
-      numHikers: 3,
-      numPorters: 2,
-      numDays: 2,
-      dateRange: "05-06-2023 s/d 07-06-2023",
-      price: "2.500.000",
-      status: "REJECT",
-      role: "tourguide",
-      rating: 2,
-      imageUrl:
-        "https://marketplace.canva.com/EAF21qlw744/1/0/1600w/canva-blue-modern-facebook-profile-picture-mtu4sNVuKIU.jpg",
-    },
-  ];
 
+  const dispatch = useDispatch()
+  const transactionHistoryLists = useSelector((state) => state.transaction.transactionsHistory)
   const [show, setShow] = useState("berlangsung");
 
-  const selesai = ["DONE", "REJECT"];
+  const selesai = ["DONE", "REJECTED"];
   const berlangsung = ["UPCOMING", "WAITING_PAY", "WAITING_APPROVE"];
 
-  const filteredData = tourGuideData.filter((tourGuide) =>
-    show === "berlangsung"
-      ? berlangsung.includes(tourGuide.status)
-      : selesai.includes(tourGuide.status)
-  );
+  const [loading, setLoading] = useState(true);
+
+  const selesaiString = "done%2Crejected";
+  const berlangsungString = "upcoming%2Cwaiting_pay%2Cwaiting_approve";
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        if (!userId) {
+          console.error("User ID not found.");
+          return;
+        }
+        const listStatus = show === "berlangsung" ? berlangsungString : selesaiString;
+        setLoading(true)
+        dispatch(getAllTransactionsByUserId({ userId, listStatus, page: 1, size: 40 })).then(() => setLoading(false));
+      } catch (error) {
+        console.error("Failed to fetch transactions:", error);
+        setLoading(false);
+      }
+    };
+    console.log(show)
+    console.log(transactionHistoryLists)
+    fetchTransactions();
+  }, [dispatch, show]);
 
   return (
     <SafeAreaView className='flex-1'>
@@ -121,14 +64,31 @@ const TransactionCustomerScreen = () => {
         <View className='gap-5'>
           <TransactionHeader titleHeader='Daftar Transaksi' />
           <TransactionStatusBar onStatusChange={setShow} />
-          {show === "berlangsung" ? (
+
+          {loading ? (
+            <View className="flex-1 items-center bg-grayCustom" style={{ marginTop: 200 }}>
+              <Image
+                source={require("../../../assets/loading.gif")}
+                style={{ width: 80, height: 80 }}
+              />
+            </View> 
+          ):(
+            <>
+              {show === "berlangsung" ? (
             <TransactionBerlangsung
-              tourGuideData={filteredData}
+              key={`berlangsung-${Date.now()}`}
+              tourGuideData={transactionHistoryLists}
               role={"tourguide"}
             />
           ) : (
-            <TransaksiSelesai tourGuideData={filteredData} />
+            <TransaksiSelesai 
+              key={`selesai-${Date.now()}`}
+              tourGuideData={transactionHistoryLists} 
+            />
           )}
+            </>
+          )}
+          
         </View>
       </View>
     </SafeAreaView>

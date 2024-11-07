@@ -50,6 +50,7 @@ export const getHikingPointDetailByHikingPointId = createAsyncThunk(
     }
 )
 
+
 const mountainSlice = createSlice({
     name: 'mountain',
     initialState: {

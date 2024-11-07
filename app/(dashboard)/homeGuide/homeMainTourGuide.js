@@ -49,18 +49,18 @@ const HomeMainTourGuideScreen = () => {
                     <View className="gap-6">
                         <View className="pt-6 gap-7 rounded-verylarge bg-white mx-6">
                             <View className="gap-2 px-6 ">
-                                <Text className="font-iregular text-sm text-thistle">Total Balance</Text>
+                                <Text className="font-iregular text-sm text-thistle">Total yang bisa ditarik</Text>
                                 <Text className="font-ibold text-3xl text-evergreen">{formatCurrency(10000000)}</Text>
                             </View>
 
                             <View className="rounded-verylarge bg-daisy px-6 py-5 flex-row justify-between">
                                 <View className="gap-[5]">
-                                    <Text className="font-iregular text-sm text-soil">Pemasukan</Text>
+                                    <Text className="font-iregular text-sm text-soil">Pemasukan bulan lalu</Text>
                                     <Text className="font-ibold text-base text-evergreen">{formatCurrency(10000000)}</Text>
                                 </View>
 
                                 <View className="gap-[5]">
-                                    <Text className="font-iregular text-sm text-soil">Pengeluaran</Text>
+                                    <Text className="font-iregular text-sm text-soil">Withdraw bulan lalu</Text>
                                     <Text className="font-ibold text-base text-evergreen">{formatCurrency(10000000)}</Text>
                                 </View>
                             </View>

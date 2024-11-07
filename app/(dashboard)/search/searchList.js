@@ -80,7 +80,7 @@ const SearchListScreen = () => {
         choosenMountain={mountainName}
       />
       {tourGuideLists.length !== 0 && <TourGuideSearchedList tourGuides={tourGuideLists} />}
-      {tourGuideLists.length === 0 && <CustomNotFound title={"Belum ada tour guide yang tersedia"}/>}
+      {tourGuideLists.length === 0 && <CustomNotFound title={"Belum ada tour guide yang tersedia"} customStyle={"mt-10"}/>}
     </SafeAreaView>
     </Animated.View>
   );
