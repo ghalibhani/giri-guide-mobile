@@ -1,70 +1,91 @@
-import { View, Image, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Image, Text, TouchableOpacity, Alert } from "react-native";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import Entypo from "@expo/vector-icons/Entypo";
-import { useNavigation } from "@react-navigation/native";
-import ReusableInput from "../components/ReusableForm";
+import CustomInput from "../components/miniComponent/CustomInput";
+import CustomButton from "../components/miniComponent/CustomButton";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { login } from "../redux/authSlice";
+import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen() {
-  const fields = [
-    {
-      name: "email",
-      label: "Email Address",
-      placeholder: "Email Address",
-      keyboardType: "email-address",
-    },
-    {
-      name: "password",
-      label: "Password",
-      placeholder: "Password",
-      secureTextEntry: true,
-    },
-  ];
+  const dispatch = useDispatch();
+  const { error, isLoggedIn } = useSelector((state) => state.auth);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigation();
+  const [email, setEmail] = useState("kokoro@email.com");
+  const [password, setPassword] = useState("admin123");
 
-  const navigateToRegister = () => {
-    navigate.replace("Register");
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleLogin = (formData) => {
-    if (Object.keys(formData).length === 0) {
-      alert("Silakan isi semua field terlebih dahulu");
+  const handleLogin = async () => {
+    if (email === "" || password === "") {
+      alert("Email and Password cannot be empty");
       return;
     }
+    try {
+      const credentials = { email, password };
+      await dispatch(login(credentials)).unwrap();
+    } catch (error) {
+      const errorMessage =
+        error.message || error.response?.data || "Terjadi kesalahan";
 
-    if (formData.password.length < 8) {
-      alert("Password harus lebih dari 8 karakter");
-      return;
+      const cleanMessage = errorMessage.includes("UNAUTHORIZED")
+        ? errorMessage.split("UNAUTHORIZED ")[1]
+        : errorMessage;
+
+      Alert.alert("Error", cleanMessage);
     }
-    alert("Akun berhasil dibuat");
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.replace("/");
+    }
+  }, [isLoggedIn]);
+
+  const handleRegister = () => {
+    router.push("/register");
   };
 
   return (
     <View className='flex-1 justify-center p-[24] bg-white'>
       <Image
-        source={require("../assets/logo-dummy.jpg")}
+        source={require("../assets/logoFixedWithText.png")}
         className='w-[200] h-[200] mb-[30] mx-auto'
       />
-      <Text className='text-2xl font-bold mb-5'>
+      <Text className='text-xl text-soil font-ibold mb-9'>
         Selamat Datang di GiriGuide
       </Text>
 
-      <ReusableInput
-        fields={fields}
-        onSubmit={handleLogin}
-        submitButtonText='Login'
+      <CustomInput
+        title={"Email Address"}
+        value={email}
+        autoCapitalize={false}
+        handleChangeText={setEmail}
+        placeholder={"Email Address"}
+        keyboardType={"email-address"}
+        customStyles={"mb-[20]"}
+      />
+      <CustomInput
+        title={"Password"}
+        value={password}
+        handleChangeText={setPassword}
+        placeholder={"Password"}
+        secureTextEntry={true}
+        autoCapitalize={false}
+        customStyles={"mb-[20]"}
+      />
+      <CustomButton
+        title={"Login"}
+        customStyle={"bg-soil"}
+        buttonHandling={handleLogin}
       />
 
       <View className='flex-row items-center justify-center mt-[16]'>
-        <Text>Belum punya akun?</Text>
-        <TouchableOpacity onPress={navigateToRegister}>
-          <Text className='text-blue-500 font-semibold ml-1'>
+        <Text className='text-thistle text-sm font-iregular'>
+          Belum punya akun?
+        </Text>
+        <TouchableOpacity onPress={handleRegister}>
+          <Text className='text-soil text-sm font-isemibold ml-1'>
             Daftar sekarang
           </Text>
         </TouchableOpacity>

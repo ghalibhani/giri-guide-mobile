@@ -2,6 +2,7 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Star from "./Star";
 
 const getImageSource = (imageUser) => {
   if (!imageUser) {
@@ -42,14 +43,7 @@ const ReviewGuideCard = ({
           </View>
         </View>
         <View className='flex flex-row gap-2'>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <Ionicons
-              key={index}
-              name={index < rating ? "star" : "star-outline"}
-              size={20}
-              color='black'
-            />
-          ))}
+          <Star star={rating} />
         </View>
       </View>
       <Text className='text-evergreen text-sm font-iregular my-4'>

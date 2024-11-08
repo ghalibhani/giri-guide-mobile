@@ -2,20 +2,26 @@ import { Text, View } from "react-native";
 import { FlatList } from "react-native";
 import TourGuideCard from "./TourGuideCard";
 
-const TourGuideSearchedList = ({ tourGuides }) => {
-  const renderTourGuide = ({ item }) => (
-    <TourGuideCard
+const TourGuideSearchedList = ({ tourGuides, hikingPointId, hikingPointName, mountainName, mountainId }) => {
+  const renderTourGuide = ({ item }) => {
+    return (<TourGuideCard
       image={item.image}
       name={item.name}
       description={item.description}
       rating={item.rating}
-      totalRating={item.totalRating}
-    />
-  );
+      totalRating={item.totalReview}
+      tourGuideId={item.id}
+      hikingPointId={hikingPointId}
+      hikingPointName={hikingPointName}
+      mountainName={mountainName}
+      mountainId={mountainId}
+    />)
+  ;}
+
 
   return (
     <View className="px-6">
-      <Text className="my-[15px] font-bold text-[14px]">
+      <Text className="mb-4 font-ibold text-soil text-base">
         Tour guide terbaik untuk kamu
       </Text>
       <FlatList

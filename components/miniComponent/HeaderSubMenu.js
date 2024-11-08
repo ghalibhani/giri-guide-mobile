@@ -15,7 +15,7 @@ const HeaderSubMenu = ({ title }) => {
             <Ionicons name={"chevron-back"} size={15} color={"#503A3A"} />
           </View>
         </TouchableOpacity>
-        <Text className='color-ivory absolute left-1/2 -translate-x-1/2 text-xl justify-center font-isemibold'>
+        <Text className='color-ivory absolute left-1/2 -translate-x-1/2 text-lg justify-center font-isemibold'>
           {title}
         </Text>
       </View>

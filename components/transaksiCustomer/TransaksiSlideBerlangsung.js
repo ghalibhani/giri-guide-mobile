@@ -24,9 +24,9 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
         <TouchableOpacity
           className={`py-[16.5] ml-4 rounded-xl items-center px-5 ${
             activeButton === "terdekat"
-              ? "bg-soil border-soil"
-              : "bg-transparent border-2 border-soil"
-          }`}
+              ? "bg-soil"
+              : "bg-transparent"
+          } border-[1.5px] border-soil`}
           onPress={() => handleButtonPress("terdekat")}
         >
           <Text
@@ -41,9 +41,9 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
         <TouchableOpacity
           className={`py-[16.5] ml-4 rounded-xl items-center px-5 ${
             activeButton === "pembayaran"
-              ? "bg-soil border-soil"
-              : "bg-transparent border-2 border-soil"
-          }`}
+              ? "bg-soil"
+              : "bg-transparent"
+          } border-[1.5px] border-soil`}
           onPress={() => handleButtonPress("pembayaran")}
         >
           <Text
@@ -51,18 +51,21 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
               activeButton === "pembayaran" ? "text-white" : "text-soil"
             }`}
           >
-            {userRole === "tourguide"
+            {/* {userRole === "tourguide"
               ? "Butuh Persetujuan"
-              : "Menunggu Pembayaran"}
+              : "Menunggu Pembayaran"} */}
+            {userRole === "tourguide"
+              ? "Menunggu Pembayaran"
+              : "Butuh Persetujuan"}
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           className={`py-[16.5] mx-4 rounded-xl items-center px-5 ${
             activeButton === "approve"
-              ? "bg-soil border-soil"
-              : "bg-transparent border-2 border-soil"
-          }`}
+              ? "bg-soil"
+              : "bg-transparent"
+          } border-[1.5px] border-soil`}
           onPress={() => handleButtonPress("approve")}
         >
           <Text

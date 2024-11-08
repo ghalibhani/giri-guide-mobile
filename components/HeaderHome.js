@@ -2,29 +2,20 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const HeaderHome = () => {
+const HeaderHome = ({fullName}) => {
   return (
-    <View className="w-screen rounded-br-[30px] rounded-bl-[30px] bg-soil pt-5 pb-[24px] px-[24px]">
-      <Text className="text-[20px] font-ibold text-ivory mb-5">
-        Hai, FULL NAME!
+    <View className="w-screen gap-5 rounded-b-verylarge bg-soil pt-5 pb-6 px-6">
+      <Text className="text-[20px] font-ibold text-ivory">
+        Hai, {fullName}!
       </Text>
-      <View className="relative">
-        <TouchableOpacity
-          className="text-[14px] text-ivory bg-white h-11 rounded-3xl py-3 px-4 pl-12 justify-center"
-          onPress={() => {
+      <TouchableOpacity onPress={() => {
             router.navigate("/search/search");
-          }}>
-          <Ionicons
-            name="search-outline"
-            size={24}
-            color="#000"
-            className="absolute top-2 left-3 z-50"
-          />
-          <Text className="text-evergreen font-iregular">
-            Cari tour guide di sini
-          </Text>
-        </TouchableOpacity>
-      </View>
+          }} className="">
+        <View className="px-4 py-3 bg-white flex-row gap-4 items-center rounded-verylarge">
+            <Ionicons name='search' color={"#45594E"} size={20} />
+            <Text className="text-thistle font-iregular text-base w-full flex-shrink">Cari tour guide di sini</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
