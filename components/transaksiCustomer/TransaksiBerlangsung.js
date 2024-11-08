@@ -14,6 +14,8 @@ const TransactionBerlangsung = ({
 
   const dataToDisplay = role === "ROLE_GUIDE" ? tourGuideData : customerData;
 
+  console.log("----------", dataToDisplay);
+
   const filteredData = dataToDisplay.filter((data) => {
     if (show === "terdekat") return data.transactionStatus === "UPCOMING";
     if (show === "pembayaran") return data.transactionStatus === "WAITING_PAY";

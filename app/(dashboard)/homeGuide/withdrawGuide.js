@@ -5,6 +5,7 @@ import {
   TextInput,
   ActivityIndicator,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +15,8 @@ import CustomButton from "../../../components/miniComponent/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { withdrawTransactionGuide } from "../../../redux/statsTransactionGuideSlice";
 import TextSuccessGreen from "../../../components/miniComponent/TextSuccessGreen";
+import CustomModalConfirmation from "../../../components/miniComponent/CustomModalConfirmation";
+import TextInvalidRed from "../../../components/miniComponent/TextInvalidRed";
 
 const WithdrawGuideScreen = () => {
   const dispatch = useDispatch();
@@ -26,6 +29,8 @@ const WithdrawGuideScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [succesWithdraw, setSuccesWithdraw] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [ifMessageOrNominalNull, setIfMessageOrNominalNull] = useState(false);
 
   const numericMaxAmount = parseInt(maxAmount) || 0;
 
@@ -65,7 +70,18 @@ const WithdrawGuideScreen = () => {
     setMessage(text);
   };
 
-  const withdrawButtonHandling = () => {
+  // const withdrawButtonHandling = () => {};
+
+  const openConfirmationModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  // Fungsi untuk menghandle konfirmasi
+  const handleConfirm = () => {
     dispatch(
       withdrawTransactionGuide({
         id: userId,
@@ -78,6 +94,8 @@ const WithdrawGuideScreen = () => {
     setDisplayAmount("Rp 0");
     setMessage("");
     setSuccesWithdraw("Penarikan berhasil dilakukan");
+    console.log("Tindakan dikonfirmasi!");
+    setIsModalVisible(false);
   };
 
   return (
@@ -144,12 +162,35 @@ const WithdrawGuideScreen = () => {
               successMessage={"penarikan berhasil dilakukan"}
             ></TextSuccessGreen>
           ) : null}
+          {ifMessageOrNominalNull ? (
+            <TextInvalidRed
+              errorMessage={"Nominal dan Pesan tidak boleh kosong"}
+              customStyle={"w-full"}
+            ></TextInvalidRed>
+          ) : null}
           <CustomButton
-            buttonHandling={withdrawButtonHandling}
+            buttonHandling={() => {
+              if (message === "" || amount === 0) {
+                setIfMessageOrNominalNull(true);
+              } else {
+                setIfMessageOrNominalNull(false);
+                openConfirmationModal();
+              }
+            }}
             customStyle='bg-soil min-w-full'
             title='Ajukan penarikan ke admin'
           />
         </View>
+
+        <CustomModalConfirmation
+          isModalVisible={isModalVisible}
+          handleCancel={handleCancel}
+          handleConfirm={handleConfirm}
+        >
+          <Text className='font-iregular text-base text-center text-evergreen mb-5'>
+            Apakah Anda yakin ingin melanjutkan?
+          </Text>
+        </CustomModalConfirmation>
       </View>
     </SafeAreaView>
   );
