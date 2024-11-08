@@ -5,10 +5,14 @@ import TransaksiSlideBerlangsung from "./TransaksiSlideBerlangsung";
 import { router } from "expo-router";
 import CustomNotFound from "../miniComponent/CustomNotFound";
 
-const TransactionBerlangsung = ({ tourGuideData = [], customerData = [], role }) => {
+const TransactionBerlangsung = ({
+  tourGuideData = [],
+  customerData = [],
+  role,
+}) => {
   const [show, setShow] = useState("terdekat");
 
-  const dataToDisplay = role === "tourguide" ? tourGuideData : customerData;
+  const dataToDisplay = role === "ROLE_GUIDE" ? tourGuideData : customerData;
 
   const filteredData = dataToDisplay.filter((data) => {
     if (show === "terdekat") return data.transactionStatus === "UPCOMING";
@@ -51,7 +55,9 @@ const TransactionBerlangsung = ({ tourGuideData = [], customerData = [], role })
               status={item.transactionStatus}
               onPressDetail={() => {
                 if (item.transactionStatus === "UPCOMING") {
-                  router.push(`/transaction/transOnGoingUpcoming?id=${item.id}`);
+                  router.push(
+                    `/transaction/transOnGoingUpcoming?id=${item.id}`
+                  );
                 } else if (item.transactionStatus === "WAITING_PAY") {
                   router.push(`/transaction/transOnGoingPayment?id=${item.id}`);
                 } else if (item.transactionStatus === "WAITING_APPROVE") {
@@ -63,7 +69,12 @@ const TransactionBerlangsung = ({ tourGuideData = [], customerData = [], role })
         </ScrollView>
       )}
 
-      {filteredData.length === 0 && <CustomNotFound title={`Belum ada transaksi untuk status ${show}`} customStyle={"mt-0"} />}
+      {filteredData.length === 0 && (
+        <CustomNotFound
+          title={`Belum ada transaksi untuk status ${show}`}
+          customStyle={"mt-0"}
+        />
+      )}
     </>
   );
 };

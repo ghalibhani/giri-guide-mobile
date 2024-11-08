@@ -1,170 +1,198 @@
-import { View, Text, StatusBar, Animated, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import HeaderSubMenu from '../../../components/miniComponent/HeaderSubMenu'
-import MinimizeCard from '../../../components/miniComponent/MinimizeCard'
-import DetailTourGuideGunungCard from '../../../components/transaksiCustomer/DetailTourGuideGunungCard'
-import DetailHikers from '../../../components/transaksiCustomer/DetailHikers'
-import FixedHarga from '../../../components/bookingTourGuide/FixedHarga'
-import CatatanUntukTourGuide from '../../../components/miniComponent/CatatanUntukTourGuide'
-import TipsMeetingWithGuide from '../../../components/transaksiCustomer/TipsMeetingWithGuide'
-import { ScrollView } from 'react-native';
-import moment from 'moment'
-import CustomToastWarning from '../../../components/miniComponent/CustomToastWarning'
-import { useLocalSearchParams } from 'expo-router'
-import { useDispatch, useSelector } from 'react-redux'
-import { getTransactionHistoryByTransactionId } from '../../../redux/transactionSlice'
+import { View, Text, StatusBar, Animated, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import HeaderSubMenu from "../../../components/miniComponent/HeaderSubMenu";
+import MinimizeCard from "../../../components/miniComponent/MinimizeCard";
+import DetailTourGuideGunungCard from "../../../components/transaksiCustomer/DetailTourGuideGunungCard";
+import DetailHikers from "../../../components/transaksiCustomer/DetailHikers";
+import FixedHarga from "../../../components/bookingTourGuide/FixedHarga";
+import CatatanUntukTourGuide from "../../../components/miniComponent/CatatanUntukTourGuide";
+import TipsMeetingWithGuide from "../../../components/transaksiCustomer/TipsMeetingWithGuide";
+import { ScrollView } from "react-native";
+import moment from "moment";
+import CustomToastWarning from "../../../components/miniComponent/CustomToastWarning";
+import { useLocalSearchParams } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getTransactionHistoryByTransactionId } from "../../../redux/transactionSlice";
 
 const TransactionOnGoingApproveScreen = () => {
-    const {id} = useLocalSearchParams()
-    const dispatch = useDispatch();
+  const { id } = useLocalSearchParams();
+  const dispatch = useDispatch();
 
-    const transactionHistoryDetail = useSelector((state) => state.transaction.transactionHistoryDetail)
-    const statusTransactionHistoryDetail = useSelector((state) => state.transaction.status)
-    const errorTransactionHistoryDetail = useSelector((state) => state.transaction.error)
+  const transactionHistoryDetail = useSelector(
+    (state) => state.transaction.transactionHistoryDetail
+  );
+  const statusTransactionHistoryDetail = useSelector(
+    (state) => state.transaction.status
+  );
+  const errorTransactionHistoryDetail = useSelector(
+    (state) => state.transaction.error
+  );
 
-    const [loading, setLoading] = useState(true);
-    const fadeAnim = useState(new Animated.Value(0))[0]; 
+  const [loading, setLoading] = useState(true);
+  const fadeAnim = useState(new Animated.Value(0))[0];
 
-    useEffect(() => {
-        if(id) {
-            dispatch(getTransactionHistoryByTransactionId(id))
-            // console.log(transactionHistoryDetail)
-        }
-        const loadingTimeout = setTimeout(() => setLoading(false), 1000)
-        return () => clearTimeout(loadingTimeout)
-    }, [dispatch, id])
-
-    useEffect(() => {
-        if (!loading && statusTransactionHistoryDetail === "succeed") {
-            Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true,
-          }).start();
-        }
-      }, [loading, statusTransactionHistoryDetail]);
-
-    const startDate = new Date();
-
-    const formattedDate = (date) => {
-        return moment(date).format('DD MMM YYYY')
+  useEffect(() => {
+    if (id) {
+      dispatch(getTransactionHistoryByTransactionId(id));
+      console.log(transactionHistoryDetail);
     }
+    const loadingTimeout = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(loadingTimeout);
+  }, [dispatch, id]);
 
-    if (loading || statusTransactionHistoryDetail === "loading") {
-        return (
-            <View className="flex-1 items-center justify-center bg-white">
-                <Image
-                    source={require("../../../assets/loading.gif")}
-                    style={{ width: 80, height: 80 }}
-                />
-            </View>
-        );
+  useEffect(() => {
+    if (!loading && statusTransactionHistoryDetail === "succeed") {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }).start();
     }
+  }, [loading, statusTransactionHistoryDetail]);
 
-    const calculateTimeDifference = (startDate, endDate) => {
-        const start = moment(startDate);
-        const end = moment(endDate);
-      
-        const diffMs = end - start;
+  const startDate = new Date();
 
-        const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-      
-        let result = '';
-        if (days > 0) result += `${days} hari `;
-        if (hours > 0) result += `${hours} jam `;
-        if (minutes > 0) result += `${minutes} menit`;
-      
-        return result.trim();
-    }
+  const formattedDate = (date) => {
+    return moment(date).format("DD MMM YYYY");
+  };
 
+  if (loading || statusTransactionHistoryDetail === "loading") {
     return (
-        <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
-        <SafeAreaView className="flex-1">
-            <StatusBar barStyle="light-content" backgroundColor="#503A3A" />
+      <View className='flex-1 items-center justify-center bg-white'>
+        <Image
+          source={require("../../../assets/loading.gif")}
+          style={{ width: 80, height: 80 }}
+        />
+      </View>
+    );
+  }
 
-            <View className="flex-1">
-                <View className="bg-soil pb-7 rounded-b-verylarge mb-5">
-                    <HeaderSubMenu title={"Detail Transaksi"} />
-                </View>
+  const calculateTimeDifference = (startDate, endDate) => {
+    const start = moment(startDate);
+    const end = moment(endDate);
 
-                <ScrollView showsVerticalScrollIndicator={false} className="gap-6" contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}>
-                    <View className="px-6">
-                        <CustomToastWarning 
-                            message={"Sedang menunggu konfirmasi dari tour guide"}
-                        />
-                    </View>
+    const diffMs = end - start;
 
-                    <View className="px-6 mt-6">
-                        <MinimizeCard 
-                            title={"Sisa Waktu Tunggu Approve"}
-                            data={calculateTimeDifference(startDate, transactionHistoryDetail.endOfApprove)}
-                            icon={'clock'}
-                        />
-                    </View>
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
 
-                    <View className="px-6 mt-6">
-                        <MinimizeCard 
-                            title={"Tanggal Pendakian"}
-                            data={`${formattedDate(transactionHistoryDetail.startDate)} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
-                            icon={'mountain-sun'}
-                        />
-                    </View>
+    let result = "";
+    if (days > 0) result += `${days} hari `;
+    if (hours > 0) result += `${hours} jam `;
+    if (minutes > 0) result += `${minutes} menit`;
 
-                    <View className="px-6 mt-6">
-                        <DetailTourGuideGunungCard
-                            tourGuideName={transactionHistoryDetail.tourGuideName}
-                            orderId={transactionHistoryDetail.id}
-                            mountainName={transactionHistoryDetail.mountainName}
-                            hikingPointName={transactionHistoryDetail.hikingPointName}
-                            tourGuideImage={transactionHistoryDetail.tourGuideImage}
-                        />
-                    </View>
+    return result.trim();
+  };
 
-                    <View className="px-6 mt-6">
-                        <DetailHikers data={transactionHistoryDetail.hikers} />
-                    </View>
+  return (
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <SafeAreaView className='flex-1'>
+        <StatusBar barStyle='light-content' backgroundColor='#503A3A' />
 
-                    <View className="mt-6 gap-5">
-                        <Text className="font-ibold text-soil ml-6">Detail Harga</Text>
-                        <FixedHarga
-                            days={transactionHistoryDetail.days}
-                            tourGuidePriceEachDay={transactionHistoryDetail.tourGuidePerDay}
-                            tourGuidePriceTotal={transactionHistoryDetail.totalPriceTourGuide}
-                            entranceFeeEachDay={transactionHistoryDetail.entryPerDay}
-                            entranceFeeTotal={transactionHistoryDetail.totalEntry}
-                            simaksiPriceEachPerson={transactionHistoryDetail.priceSimaksi}
-                            simaksiPriceTotal={transactionHistoryDetail.totalPriceSimaksi}
-                            additionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.additionalPerDay}
-                            totalAdditionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.totalPriceAdditional}
-                            porterPricePerDayPerPerson={transactionHistoryDetail.porterPerDay}
-                            porterCount={transactionHistoryDetail.porter}
-                            porterPriceTotal={transactionHistoryDetail.totalPricePorter}
-                            adminCost={transactionHistoryDetail.adminCost}
-                            totalPrice={transactionHistoryDetail.totalPrice}
-                            hikersCount={transactionHistoryDetail.hikers ? transactionHistoryDetail.hikers.length : 0}
-                         />
-                    </View>
+        <View className='flex-1'>
+          <View className='bg-soil pb-7 rounded-b-verylarge mb-5'>
+            <HeaderSubMenu title={"Detail Transaksi"} />
+          </View>
 
-                    <View className="mt-6">
-                        <CatatanUntukTourGuide 
-                            isEditable={false}
-                            title={"Catatan kepada tour guide"}
-                            catatan={transactionHistoryDetail.customerNote}
-                        />
-                    </View>
-
-                    <View className="mt-6">
-                        <TipsMeetingWithGuide />
-                    </View>
-                </ScrollView>
-                
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            className='gap-6'
+            contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}
+          >
+            <View className='px-6'>
+              <CustomToastWarning
+                message={"Sedang menunggu konfirmasi dari tour guide"}
+              />
             </View>
-        </SafeAreaView>
-        </Animated.View>
-    )
-}
 
-export default TransactionOnGoingApproveScreen 
+            <View className='px-6 mt-6'>
+              <MinimizeCard
+                title={"Sisa Waktu Tunggu Approve"}
+                data={calculateTimeDifference(
+                  startDate,
+                  transactionHistoryDetail.endOfApprove
+                )}
+                icon={"clock"}
+              />
+            </View>
+
+            <View className='px-6 mt-6'>
+              <MinimizeCard
+                title={"Tanggal Pendakian"}
+                data={`${formattedDate(
+                  transactionHistoryDetail.startDate
+                )} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
+                icon={"mountain-sun"}
+              />
+            </View>
+
+            <View className='px-6 mt-6'>
+              <DetailTourGuideGunungCard
+                tourGuideName={transactionHistoryDetail.tourGuideName}
+                orderId={transactionHistoryDetail.id}
+                mountainName={transactionHistoryDetail.mountainName}
+                hikingPointName={transactionHistoryDetail.hikingPointName}
+                tourGuideImage={transactionHistoryDetail.tourGuideImage}
+              />
+            </View>
+
+            <View className='px-6 mt-6'>
+              <DetailHikers data={transactionHistoryDetail.hikers} />
+            </View>
+
+            <View className='mt-6 gap-5'>
+              <Text className='font-ibold text-soil ml-6'>Detail Harga</Text>
+              <FixedHarga
+                days={transactionHistoryDetail.days}
+                tourGuidePriceEachDay={transactionHistoryDetail.tourGuidePerDay}
+                tourGuidePriceTotal={
+                  transactionHistoryDetail.totalPriceTourGuide
+                }
+                entranceFeeEachDay={transactionHistoryDetail.entryPerDay}
+                entranceFeeTotal={transactionHistoryDetail.totalEntry}
+                simaksiPriceEachPerson={transactionHistoryDetail.priceSimaksi}
+                simaksiPriceTotal={transactionHistoryDetail.totalPriceSimaksi}
+                additionalTourGuidePricePerDayPerPerson={
+                  transactionHistoryDetail.additionalPerDay
+                }
+                totalAdditionalTourGuidePricePerDayPerPerson={
+                  transactionHistoryDetail.totalPriceAdditional
+                }
+                porterPricePerDayPerPerson={
+                  transactionHistoryDetail.porterPerDay
+                }
+                porterCount={transactionHistoryDetail.porter}
+                porterPriceTotal={transactionHistoryDetail.totalPricePorter}
+                adminCost={transactionHistoryDetail.adminCost}
+                totalPrice={transactionHistoryDetail.totalPrice}
+                hikersCount={
+                  transactionHistoryDetail.hikers
+                    ? transactionHistoryDetail.hikers.length
+                    : 0
+                }
+              />
+            </View>
+
+            <View className='mt-6'>
+              <CatatanUntukTourGuide
+                isEditable={false}
+                title={"Catatan kepada tour guide"}
+                catatan={transactionHistoryDetail.customerNote}
+              />
+            </View>
+
+            <View className='mt-6'>
+              <TipsMeetingWithGuide />
+            </View>
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    </Animated.View>
+  );
+};
+
+export default TransactionOnGoingApproveScreen;

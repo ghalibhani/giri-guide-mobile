@@ -22,9 +22,9 @@ export default function ContainerProfile({ email, fullName, birthDate }) {
         source={require("./../assets/profile-image.jpg")}
         className='w-[150] h-[150] rounded-full mt-[-75]'
       />
-      {/* <TouchableOpacity className='w-[40] h-[40] rounded-full bg-daisy items-center justify-center border-[2px] border-white mt-[-40] mr-[-90]'>
+      <TouchableOpacity className='w-[40] h-[40] rounded-full bg-daisy items-center justify-center border-[2px] border-white mt-[-40] mr-[-90]'>
         <Feather name='edit-2' size={18} color='black' />
-      </TouchableOpacity> */}
+      </TouchableOpacity>
       <Text className='mt-[10px] text-thistle text-[12px] font-light'>
         {email}
       </Text>

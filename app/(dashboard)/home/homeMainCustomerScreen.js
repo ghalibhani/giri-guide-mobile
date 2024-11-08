@@ -9,12 +9,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginRefresh } from "../../../redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllMountains } from "../../../redux/mountainSlice";
+import { fetchProfileCustomer } from "../../../redux/profileSlice";
 
 const HomeMainCustomerScreen = () => {
   const dispatch = useDispatch();
   const mountains = useSelector((state) => state.mountain.mountains);
   const statusMountains = useSelector((state) => state.mountain.status);
   const errorMountains = useSelector((state) => state.mountain.error);
+
+  const userId = useSelector((state) => state.auth.userId);
+  const profile = useSelector((state) => state.profile);
+
+  useEffect(() => {
+    dispatch(fetchProfileCustomer(userId));
+    console.log(profile);
+  }, [dispatch, userId]);
 
   // useEffect(() => {
   //   const checkLoginStatus = async () => {
@@ -115,7 +124,7 @@ const HomeMainCustomerScreen = () => {
         />
         {/* <Link href={'/home/mountainDetail'}>loncat</Link> */}
         <ScrollView>
-          <HeaderHome />
+          <HeaderHome fullName={profile.fullName} />
           <SlideCarousel data={data} />
           <OverFlowCarousel
             data={mountains}
