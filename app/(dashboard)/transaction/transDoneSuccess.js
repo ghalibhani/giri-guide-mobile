@@ -133,6 +133,7 @@ const TransactionDoneSuccessScreen = () => {
             <CatatanUntukTourGuide
               isEditable={false}
               title={"Catatan kepada tour guide"}
+              catatan={transactionHistoryDetail.customerNote}
             />
           </View>
 

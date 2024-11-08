@@ -76,6 +76,7 @@ const TransactionDoneRejectedScreen = () => {
                         <CatatanUntukTourGuide 
                             isEditable={false}
                             title={"Alasan penolakan oleh tour guide"}
+                            catatan={transactionHistoryDetail.rejectedNote}
                         />
                     </View>
 
@@ -125,6 +126,7 @@ const TransactionDoneRejectedScreen = () => {
                         <CatatanUntukTourGuide 
                             isEditable={false}
                             title={"Catatan kepada tour guide"}
+                            catatan={transactionHistoryDetail.customerNote}
                         />
                     </View>
 

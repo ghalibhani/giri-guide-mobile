@@ -19,7 +19,7 @@ const SewaTourGuideTahapStart = () => {
 
   const initialDate = moment().add(7, 'days').toDate()
   const [startDate, setStartDate] = useState(initialDate);
-  const [endDate, setEndDate] = useState(initialDate);
+  const [endDate, setEndDate] = useState(moment(initialDate).add(1, 'days').toDate());
 
   const [isModalVisible, setIsModalVisible] = useState(false)
 

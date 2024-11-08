@@ -80,10 +80,7 @@ const SewaTourGuideTigaTahap = () => {
     }))
   )
 
-  const totalDays = Math.max(
-    1,
-    Math.ceil((new Date(endDateMoment) - new Date(startDateMoment)) / (1000 * 60 * 60 * 24)) + 1
-  );
+  const totalDays = Math.max(Math.ceil((new Date(endDateMoment) - new Date(startDateMoment)) / (1000 * 60 * 60 * 24)));
   
   useEffect(() => {
     if(tourGuide && tourGuide.price && tourGuide.additionalPrice) {

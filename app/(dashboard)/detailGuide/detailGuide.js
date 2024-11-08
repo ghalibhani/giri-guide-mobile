@@ -362,7 +362,7 @@ export default function DetailTourGuideScreen() {
         }}
         onPress={() => router.push(`/bookGuide/bookFirst?tourGuideId=${tourGuideId}&hikingPointId=${hikingPointId}&hikingPointName=${hikingPointName}&mountainName=${mountainName}&tourGuideName=${tourGuide.name}&totalPorter=${tourGuide.totalPorter}&maxHiker=${tourGuide.maxHiker}&mountainId=${mountainId}`)}
       >
-        <Text style={{ color: "#FFFFFF", fontSize: 16, fontWeight: "bold" }}>
+        <Text className="font-isemibold text-sm text-white">
           Sewa Tour Guide Ini
         </Text>
       </TouchableOpacity>

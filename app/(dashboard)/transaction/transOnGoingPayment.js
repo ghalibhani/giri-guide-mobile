@@ -214,6 +214,7 @@ console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
             <CatatanUntukTourGuide
               isEditable={false}
               title={"Catatan kepada tour guide"}
+              catatan={transactionHistoryDetail.customerNote}
             />
           </View>
 

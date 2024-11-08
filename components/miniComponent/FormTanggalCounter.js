@@ -9,8 +9,8 @@ const FormTanggalCounter = ({count, setCount, startDate, setStartDate, endDate, 
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
     const minStartDate = initialDate
-    const [minEndDate, setMinEndDate] = useState(initialDate);
-    const [maxEndDate, setMaxEndDate] = useState(moment(initialDate).add(2, 'days').toDate());
+    const [minEndDate, setMinEndDate] = useState(moment(initialDate).add(1, 'days').toDate());
+    const [maxEndDate, setMaxEndDate] = useState(moment(initialDate).add(3, 'days').toDate());
 
     const [maxHikerErrorMessage, setMaxHikerErrorMessage] = useState('');
 
@@ -23,12 +23,14 @@ const FormTanggalCounter = ({count, setCount, startDate, setStartDate, endDate, 
         setShowStartDatePicker(!showStartDatePicker);
         setStartDate(currentDate);
 
-        const newMaxEndDate = moment(currentDate).add(2, 'days').toDate();
-        setMaxEndDate(newMaxEndDate);
-        setMinEndDate(currentDate)
+        const newMinEndDate = moment(currentDate).add(1, 'days').toDate();
+        const newMaxEndDate = moment(currentDate).add(3, 'days').toDate();
 
-        if (endDate > newMaxEndDate || endDate < currentDate) {
-            setEndDate(currentDate);
+        setMaxEndDate(newMaxEndDate);
+        setMinEndDate(newMinEndDate)
+
+        if (endDate < newMinEndDate || endDate > newMaxEndDate) {
+            setEndDate(newMinEndDate);
         }
     };
 

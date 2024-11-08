@@ -45,13 +45,7 @@ const TransactionOnGoingApproveScreen = () => {
         }
       }, [loading, statusTransactionHistoryDetail]);
 
-    const startDate = "2024-10-01T08:00:00";
-    const endDate = "2024-10-02T09:12:14";
-
-    const dummy = moment(new Date()).format('DD MMM YYYY')
-
-    // const continueHandling = () => 
-
+    const startDate = new Date();
 
     const formattedDate = (date) => {
         return moment(date).format('DD MMM YYYY')
@@ -106,7 +100,7 @@ const TransactionOnGoingApproveScreen = () => {
                     <View className="px-6 mt-6">
                         <MinimizeCard 
                             title={"Sisa Waktu Tunggu Approve"}
-                            data={calculateTimeDifference(startDate, endDate)}
+                            data={calculateTimeDifference(startDate, transactionHistoryDetail.endOfApprove)}
                             icon={'clock'}
                         />
                     </View>
@@ -157,6 +151,7 @@ const TransactionOnGoingApproveScreen = () => {
                         <CatatanUntukTourGuide 
                             isEditable={false}
                             title={"Catatan kepada tour guide"}
+                            catatan={transactionHistoryDetail.customerNote}
                         />
                     </View>
 

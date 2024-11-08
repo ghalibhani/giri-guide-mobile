@@ -3,9 +3,9 @@ import axiosInstance from "../api/axiosInstance";
 
 export const getAllTransactionsByUserId = createAsyncThunk(
     "transactionHistory/getAllTransactionsByUserId",
-    async({userId, listStatus, page = 1, size = 40}, {rejectWithValue}) => {
+    async({userId, listStatus, userRole, page = 1, size = 40}, {rejectWithValue}) => {
         try{
-            const response = await axiosInstance.get(`/transactions/history?page=${page}&size=${size}&userId=${userId}&status=${listStatus}`);
+            const response = await axiosInstance.get(`/transactions/history?page=${page}&size=${size}&userId=${userId}&status=${listStatus}&role=${userRole}`);
             // console.log(response)
             return response.data;
         } catch(e) {
@@ -43,14 +43,14 @@ export const createNewTransaction = createAsyncThunk(
     "transaction/createNewTransaction",
     async(dataTransaction, {rejectWithValue}) => {
         try{
-            console.log("hiyttt")
-            console.log(`ini dari slice ${dataTransaction}`)
+            // console.log("hiyttt")
+            // console.log(`ini dari slice ${dataTransaction}`)
             const response = await axiosInstance.post('/transactions', dataTransaction, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-            console.log(response)
+            // console.log(response)
             return response.data.transactionStatus;
         } catch(e) {
             return rejectWithValue(e.response.data.message)
