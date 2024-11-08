@@ -10,10 +10,10 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderSubMenu from "../../../components/miniComponent/HeaderSubMenu";
 import { useLocalSearchParams } from "expo-router";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomButton from "../../../components/miniComponent/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { withdrawTransactionGuide } from "../../../redux/statsTransactionGuideSlice";
+import TextSuccessGreen from "../../../components/miniComponent/TextSuccessGreen";
 
 const WithdrawGuideScreen = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const WithdrawGuideScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [succesWithdraw, setSuccesWithdraw] = useState("");
 
   const numericMaxAmount = parseInt(maxAmount) || 0;
 
@@ -48,6 +49,10 @@ const WithdrawGuideScreen = () => {
       setErrorMessage(
         `Nominal yang mau ditarik melebihi ${formatCurrency(numericMaxAmount)}`
       );
+    } else if (numericValue < 20000) {
+      setErrorMessage(
+        "Nominal yang mau ditarik tidak boleh kurang dari Rp 20,000"
+      );
     } else {
       setErrorMessage("");
     }
@@ -68,6 +73,11 @@ const WithdrawGuideScreen = () => {
         message: message,
       })
     );
+
+    setAmount(0);
+    setDisplayAmount("Rp 0");
+    setMessage("");
+    setSuccesWithdraw("Penarikan berhasil dilakukan");
   };
 
   return (
@@ -122,16 +132,18 @@ const WithdrawGuideScreen = () => {
                   onChangeText={handleMessageChange}
                   className='font-iregular text-base text-evergreen'
                 />
-                {errorMessage && (
-                  <Text className='font-iregular text-errorHover text-sm'>
-                    {errorMessage}
-                  </Text>
-                )}
               </>
             )}
           </View>
         </View>
+
         <View className='items-center justify-center px-6'>
+          {succesWithdraw ? (
+            <TextSuccessGreen
+              customStyle={"w-full"}
+              successMessage={"penarikan berhasil dilakukan"}
+            ></TextSuccessGreen>
+          ) : null}
           <CustomButton
             buttonHandling={withdrawButtonHandling}
             customStyle='bg-soil min-w-full'

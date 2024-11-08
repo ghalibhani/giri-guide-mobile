@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchTourGuideProfileHikingPointsByUserId,
   toggleTourGuideHikingPoint,
+  toggleTourGuideOnOrOff,
 } from "../../../redux/tourGuideSlice";
 import { useEffect } from "react";
 
@@ -23,7 +24,6 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
   }, [userId, dispatch]);
 
   const { tourGuides } = useSelector((state) => state.tourGuide);
-
   const [isTourGuideActive, setIsTourGuideActive] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -37,6 +37,8 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
 
   const saveHandler = () => {
     setIsModalVisible(false);
+    setIsTourGuideActive(!isTourGuideActive);
+    dispatch(toggleTourGuideOnOrOff(userId));
   };
 
   const ToggleSwitch = ({ isActive, onToggle }) => {

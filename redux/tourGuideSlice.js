@@ -72,22 +72,23 @@ export const toggleTourGuideHikingPoint = createAsyncThunk(
     }
   }
 );
-// export const updateTourGuideProfile = createAsyncThunk(
-//   "tourGuide/updateTourGuideProfile",
-//   async ({ id, profileData }, { rejectWithValue }) => {
-//     try {
-//       const response = await axiosInstance.put(
-//         `tour-guide/profile/${id}`,
-//         profileData
-//       );
-//       console.log("data", response.data);
-//       return response.data;
-//     } catch (error) {
-//       console.log("salah woi ------->", error.response.data);
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
+
+// toggleTourGuideOnOrOff
+export const toggleTourGuideOnOrOff = createAsyncThunk(
+  "tourGuide/toggleTourGuideOnOrOff",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.patch(
+        `tour-guide/${id}/toggle-active`
+      );
+      console.log("---------", response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const tourGuideSlice = createSlice({
   name: "tourGuide",
@@ -163,7 +164,20 @@ const tourGuideSlice = createSlice({
         (state, action) => {
           state.error = action.payload;
         }
-      );
+      )
+
+      // TOGGLE TOUR GUIDE ON OR OFF
+      .addCase(toggleTourGuideOnOrOff.fulfilled, (state, action) => {
+        state.tourGuide = action.payload;
+        state.error = null;
+        state.status = "succeed";
+      })
+      .addCase(toggleTourGuideOnOrOff.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(toggleTourGuideOnOrOff.pending, (state) => {
+        state.error = null;
+      });
   },
 });
 

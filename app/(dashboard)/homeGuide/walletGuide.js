@@ -49,18 +49,28 @@ const WalletGuideScreen = () => {
           <View className='flex-row justify-between'>
             {item.status === "IN" ? (
               <>
-                <Text className='font-iregular text-sm text-soil max-w-3/5 flex-shrink'>
-                  Pendakian {formattedDate(new Date(item?.createdAt))}
-                </Text>
+                <View>
+                  <Text className='font-iregular text-sm text-soil max-w-3/5 flex-shrink'>
+                    Pemasukan {formattedDate(new Date(item?.createdAt))}
+                  </Text>
+                  <Text className='font-iregular text-sm text-soil w-5/6 flex-shrink'>
+                    Catatan : {item?.description}
+                  </Text>
+                </View>
                 <Text className='font-ibold text-sm text-successHover'>
                   + {formatCurrency(item?.nominal)}
                 </Text>
               </>
             ) : (
               <>
-                <Text className='font-iregular text-sm text-soil max-w-3/5 flex-shrink'>
-                  Penarikan {formattedDate(new Date(item?.createdAt))}
-                </Text>
+                <View>
+                  <Text className='font-iregular text-sm text-soil max-w-3/5 flex-shrink'>
+                    Penarikan {formattedDate(new Date(item?.createdAt))}
+                  </Text>
+                  <Text className='font-iregular text-sm text-soil w-4/6 flex-shrink'>
+                    Catatan : {item?.description}
+                  </Text>
+                </View>
                 <Text className='font-ibold text-sm text-errorHover'>
                   - {formatCurrency(item?.nominal)}
                 </Text>
@@ -71,9 +81,14 @@ const WalletGuideScreen = () => {
 
         {item.status === "REJECTED" && (
           <View className='flex-row justify-between'>
-            <Text className='font-iregular text-sm text-thistle  max-w-3/5 flex-shrink'>
-              {item?.description}
-            </Text>
+            <View>
+              <Text className='font-iregular text-sm text-thistle max-w-3/5 flex-shrink'>
+                Penolakan {formattedDate(new Date(item?.createdAt))}
+              </Text>
+              <Text className='font-iregular text-sm text-thistle  max-w-3/5 flex-shrink'>
+                Catatan : {item?.description}
+              </Text>
+            </View>
             <Text className='font-ibold text-sm text-thistle'>
               {formatCurrency(item?.nominal)}
             </Text>
