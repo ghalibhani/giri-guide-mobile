@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { TouchableOpacity } from "react-native";
 import CustomButton from "../../../components/miniComponent/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -88,7 +89,7 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
     return (
       <View className='border-borderCustom border-[1px] bg-white rounded-xl mx-6 px-5 py-5 flex-row justify-between items-center'>
         <View className='flex-row items-center gap-[15] '>
-          <Ionicons name='card' color={"#ECD768"} size={20} />
+          <FontAwesome6 name='mountain-sun' size={20} color={"#ECD768"} />
 
           <View className='gap-[5]'>
             <Text className='font-imedium text-base color-soil'>
