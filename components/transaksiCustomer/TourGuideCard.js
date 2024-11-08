@@ -5,7 +5,8 @@ import CustomButton from "../../components/miniComponent/CustomButton";
 import moment from "moment";
 
 const TourGuideCard = ({
-  guideName,
+  guideName = '',
+  customerName = '',
   mountainName,
   hikingPoint,
   numHikers,
@@ -18,6 +19,7 @@ const TourGuideCard = ({
   imageUrl,
   customElements,
   status,
+  role,
 }) => {
   const getImageSource = () => {
     if (imageUrl) {
@@ -25,6 +27,7 @@ const TourGuideCard = ({
     }
     return require("../../assets/profile-image.jpg");
   };
+  // console.log(`ini dari tourguidecard, tourGuideName: ${guideName}, customerName= ${customerName}, role=${role}`)
 
   const formattedDate = (date) => {
     return moment(date).format('DD-MM-YYYY')
@@ -36,7 +39,7 @@ const TourGuideCard = ({
         <Image className='w-[64] h-[64] rounded-xl' source={getImageSource()} />
         <View className='ml-4'>
           <Text className='font-isemibold mb-[10] text-soil text-base'>
-            {guideName}
+            {role === 'ROLE_GUIDE' ? customerName : guideName}
           </Text>
           <Text className='font-imedium mb-[5] text-thistle text-base'>
             {mountainName} - {hikingPoint}
@@ -57,9 +60,13 @@ const TourGuideCard = ({
           title={
             status === "UPCOMING"
               ? "Lihat Detail"
-              : status === "WAITING_PAY"
+              : status === "WAITING_PAY"  && role === 'ROLE_CUSTOMER'
               ? "Bayar"
-              : "Lihat Detail"
+              : status === "WAITING_PAY" && role === 'ROLE_GUIDE'
+              ? "Lihat Detail"
+              : status === "REJECTED" || status === "DONE"
+              ? "Lihat Detail"
+              : "Beri Persetujuan"
           }
           customStyle='bg-evergreen justify-center px-6'
           buttonHandling={onPressDetail}

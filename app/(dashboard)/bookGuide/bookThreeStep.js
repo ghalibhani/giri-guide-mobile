@@ -172,7 +172,7 @@ const SewaTourGuideTigaTahap = () => {
     return jsonString
   }
 
-  console.log(generateTransactionData())
+  // console.log(generateTransactionData())
 
   const resetForm = () => {
     setAdditionalHikerCount(0);

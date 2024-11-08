@@ -58,6 +58,23 @@ export const createNewTransaction = createAsyncThunk(
     }
 )
 
+export const updatingTransactionStatus = createAsyncThunk(
+    "transaction/updatingTransactionStatus",
+    async({dataBody, transactionId}, {rejectWithValue}) => {
+        try{
+            const response = await axiosInstance.put(`/transactions/${transactionId}`, dataBody, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log(response)
+            return response.data.transactionStatus;
+        } catch(e) {
+            return rejectWithValue(e.response.data.message)
+        }
+    }
+)
+
 const transactionSlice = createSlice({
     name: 'transaction',
     initialState: {
@@ -132,6 +149,20 @@ const transactionSlice = createSlice({
                 state.error = null;
             })
             .addCase(createNewTransaction.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+
+
+
+            .addCase(updatingTransactionStatus.pending, (state) => {
+                state.status = "loading"; // Set loading status while fetching
+            })
+            .addCase(updatingTransactionStatus.fulfilled, (state, action) => {
+                state.status = "succeed";
+                state.error = null;
+            })
+            .addCase(updatingTransactionStatus.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
             })

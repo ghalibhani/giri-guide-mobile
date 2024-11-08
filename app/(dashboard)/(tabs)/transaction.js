@@ -97,12 +97,15 @@ const TransactionCustomerScreen = () => {
                 <TransactionBerlangsung
                   key={`berlangsung-${Date.now()}`}
                   tourGuideData={transactionHistoryLists}
+                  customerData={transactionHistoryLists}
                   role={role}
                 />
               ) : (
                 <TransaksiSelesai
                   key={`selesai-${Date.now()}`}
                   tourGuideData={transactionHistoryLists}
+                  customerData={transactionHistoryLists}
+                  role={role}
                 />
               )}
             </>

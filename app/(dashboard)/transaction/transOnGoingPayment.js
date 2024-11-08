@@ -144,102 +144,104 @@ console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
   
 
   return (
-    <SafeAreaView className="flex-1">
-      <StatusBar barStyle="light-content" backgroundColor="#503A3A" />
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <SafeAreaView className="flex-1">
+        <StatusBar barStyle="light-content" backgroundColor="#503A3A" />
 
-      <View className="flex-1">
-        <View className="bg-soil pb-7 rounded-b-verylarge mb-5">
-          <HeaderSubMenu title={"Detail Transaksi"} />
+        <View className="flex-1">
+          <View className="bg-soil pb-7 rounded-b-verylarge mb-5">
+            <HeaderSubMenu title={"Detail Transaksi"} />
+          </View>
+
+          {isWebViewVisible ? (
+            renderWebView()
+          ) : (
+            <>
+            <ScrollView
+            showsVerticalScrollIndicator={false}
+            className="gap-6"
+            contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}>
+            <View className="px-6">
+              <MinimizeCard
+                title={"Sisa Waktu Pembayaran"}
+                data={calculateTimeDifference(startDate, endDate)}
+                icon={"clock"}
+              />
+            </View>
+
+            <View className="px-6 mt-6">
+              <MinimizeCard
+                title={"Tanggal Pendakian"}
+                data={`${formattedDate(transactionHistoryDetail.startDate)} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
+                icon={"mountain-sun"}
+              />
+            </View>
+
+            <View className="px-6 mt-6">
+              <DetailTourGuideGunungCard 
+                tourGuideName={transactionHistoryDetail.tourGuideName}
+                orderId={transactionHistoryDetail.id}
+                mountainName={transactionHistoryDetail.mountainName}
+                hikingPointName={transactionHistoryDetail.hikingPointName}
+                tourGuideImage={transactionHistoryDetail.tourGuideImage}
+              />
+            </View>
+
+            <View className="px-6 mt-6">
+              <DetailHikers data={transactionHistoryDetail.hikers} />
+            </View>
+
+            <View className="mt-6 gap-5">
+              <Text className="font-ibold text-soil ml-6">Detail Harga</Text>
+              <FixedHarga
+                days={transactionHistoryDetail.days}
+                tourGuidePriceEachDay={transactionHistoryDetail.tourGuidePerDay}
+                tourGuidePriceTotal={transactionHistoryDetail.totalPriceTourGuide}
+                entranceFeeEachDay={transactionHistoryDetail.entryPerDay}
+                entranceFeeTotal={transactionHistoryDetail.totalEntry}
+                simaksiPriceEachPerson={transactionHistoryDetail.priceSimaksi}
+                simaksiPriceTotal={transactionHistoryDetail.totalPriceSimaksi}
+                additionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.additionalPerDay}
+                totalAdditionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.totalPriceAdditional}
+                porterPricePerDayPerPerson={transactionHistoryDetail.porterPerDay}
+                porterCount={transactionHistoryDetail.porter}
+                porterPriceTotal={transactionHistoryDetail.totalPricePorter}
+                adminCost={transactionHistoryDetail.adminCost}
+                totalPrice={transactionHistoryDetail.totalPrice}
+                hikersCount={transactionHistoryDetail.hikers ? transactionHistoryDetail.hikers.length : 0}
+              />
+            </View>
+
+            <View className="mt-6">
+              <CatatanUntukTourGuide
+                isEditable={false}
+                title={"Catatan kepada tour guide"}
+                catatan={transactionHistoryDetail.customerNote}
+              />
+            </View>
+
+            <View className="mt-6">
+              <TipsMeetingWithGuide />
+            </View>
+          </ScrollView>
+          <View className="w-full flex-row justify-between bg-white px-6 py-3">
+            <View className="flex-col gap-1">
+              <Text className="font-iregular text-thistle text-sm">Total</Text>
+              <Text className="font-ibold text-soil text-lg">{formatCurrency(transactionHistoryDetail.totalPrice)}</Text>
+            </View>
+            <CustomButton
+              buttonHandling={continueHandling}
+              customStyle="bg-soil w-40"
+              title="Bayar Sekarang"
+            />
+          </View>
+          </>
+          )}
+
+          
         </View>
-
-        {isWebViewVisible ? (
-          renderWebView()
-        ) : (
-          <>
-          <ScrollView
-          showsVerticalScrollIndicator={false}
-          className="gap-6"
-          contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}>
-          <View className="px-6">
-            <MinimizeCard
-              title={"Sisa Waktu Pembayaran"}
-              data={calculateTimeDifference(startDate, endDate)}
-              icon={"clock"}
-            />
-          </View>
-
-          <View className="px-6 mt-6">
-            <MinimizeCard
-              title={"Tanggal Pendakian"}
-              data={`${formattedDate(transactionHistoryDetail.startDate)} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
-              icon={"mountain-sun"}
-            />
-          </View>
-
-          <View className="px-6 mt-6">
-            <DetailTourGuideGunungCard 
-              tourGuideName={transactionHistoryDetail.tourGuideName}
-              orderId={transactionHistoryDetail.id}
-              mountainName={transactionHistoryDetail.mountainName}
-              hikingPointName={transactionHistoryDetail.hikingPointName}
-              tourGuideImage={transactionHistoryDetail.tourGuideImage}
-            />
-          </View>
-
-          <View className="px-6 mt-6">
-            <DetailHikers data={transactionHistoryDetail.hikers} />
-          </View>
-
-          <View className="mt-6 gap-5">
-            <Text className="font-ibold text-soil ml-6">Detail Harga</Text>
-            <FixedHarga
-              days={transactionHistoryDetail.days}
-              tourGuidePriceEachDay={transactionHistoryDetail.tourGuidePerDay}
-              tourGuidePriceTotal={transactionHistoryDetail.totalPriceTourGuide}
-              entranceFeeEachDay={transactionHistoryDetail.entryPerDay}
-              entranceFeeTotal={transactionHistoryDetail.totalEntry}
-              simaksiPriceEachPerson={transactionHistoryDetail.priceSimaksi}
-              simaksiPriceTotal={transactionHistoryDetail.totalPriceSimaksi}
-              additionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.additionalPerDay}
-              totalAdditionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.totalPriceAdditional}
-              porterPricePerDayPerPerson={transactionHistoryDetail.porterPerDay}
-              porterCount={transactionHistoryDetail.porter}
-              porterPriceTotal={transactionHistoryDetail.totalPricePorter}
-              adminCost={transactionHistoryDetail.adminCost}
-              totalPrice={transactionHistoryDetail.totalPrice}
-              hikersCount={transactionHistoryDetail.hikers ? transactionHistoryDetail.hikers.length : 0}
-             />
-          </View>
-
-          <View className="mt-6">
-            <CatatanUntukTourGuide
-              isEditable={false}
-              title={"Catatan kepada tour guide"}
-              catatan={transactionHistoryDetail.customerNote}
-            />
-          </View>
-
-          <View className="mt-6">
-            <TipsMeetingWithGuide />
-          </View>
-        </ScrollView>
-        <View className="w-full flex-row justify-between bg-white px-6 py-3">
-          <View className="flex-col gap-1">
-            <Text className="font-iregular text-thistle text-sm">Total</Text>
-            <Text className="font-ibold text-soil text-lg">{formatCurrency(transactionHistoryDetail.totalPrice)}</Text>
-          </View>
-          <CustomButton
-            buttonHandling={continueHandling}
-            customStyle="bg-soil w-40"
-            title="Bayar Sekarang"
-          />
-        </View>
-        </>
-        )}
-
-        
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Animated.View>
   );
 };
 

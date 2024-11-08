@@ -43,6 +43,7 @@ const TransactionBerlangsung = ({
             <TourGuideCard
               key={item.id}
               guideName={item.tourGuideName}
+              customerName={item.customerName}
               mountainName={item.mountainName}
               hikingPoint={item.hikingPointName}
               numHikers={item.hikerQty}
@@ -51,17 +52,28 @@ const TransactionBerlangsung = ({
               startDate={item.startDate}
               endDate={item.endDate}
               price={formatRupiah(item.totalPrice)}
-              imageUrl={item.tourGuideImage}
+              imageUrl={role === 'ROLE_GUIDE' ? item.customerImage : item.tourGuideImage}
               status={item.transactionStatus}
+              role={role}
               onPressDetail={() => {
-                if (item.transactionStatus === "UPCOMING") {
+                if (item.transactionStatus === "UPCOMING" && role === "ROLE_CUSTOMER") {
                   router.push(
                     `/transaction/transOnGoingUpcoming?id=${item.id}`
                   );
-                } else if (item.transactionStatus === "WAITING_PAY") {
+                } else if (item.transactionStatus === "WAITING_PAY" && role === "ROLE_CUSTOMER") {
                   router.push(`/transaction/transOnGoingPayment?id=${item.id}`);
-                } else if (item.transactionStatus === "WAITING_APPROVE") {
+                } else if (item.transactionStatus === "WAITING_APPROVE" && role === "ROLE_CUSTOMER") {
                   router.push(`/transaction/transOnGoingApprove?id=${item.id}`);
+                } 
+                
+                else if (item.transactionStatus === "UPCOMING" && role === "ROLE_GUIDE") {
+                  router.push(
+                    `/transaction-tourguide/transOnGoingUpcoming?id=${item.id}`
+                  );
+                } else if (item.transactionStatus === "WAITING_PAY" && role === "ROLE_GUIDE") {
+                  router.push(`/transaction-tourguide/transOnGoingPayment?id=${item.id}`);
+                } else if (item.transactionStatus === "WAITING_APPROVE" && role === "ROLE_GUIDE") {
+                  router.push(`/transaction-tourguide/transOnGoingApprove?id=${item.id}`);
                 }
               }}
             />

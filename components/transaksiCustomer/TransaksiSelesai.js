@@ -7,8 +7,9 @@ import TransaksiSlideSelesai from "./TransaksiSlideSelesai";
 import { router } from "expo-router";
 import Star from "../Star";
 import CustomNotFound from "../miniComponent/CustomNotFound";
+import { remapProps } from "nativewind";
 
-const TransaksiSelesai = ({ tourGuideData }) => {
+const TransaksiSelesai = ({ tourGuideData = [], customerData = [], role }) => {
   console.log("ini dari transaksi selesai: ", tourGuideData)
   const [show, setShow] = useState("selesai");
 
@@ -38,6 +39,7 @@ const TransaksiSelesai = ({ tourGuideData }) => {
             <TourGuideCard
               key={tourGuide.id}
               guideName={tourGuide.tourGuideName}
+              customerName={tourGuide.customerName}
               mountainName={tourGuide.mountainName}
               hikingPoint={tourGuide.hikingPointName}
               numHikers={tourGuide.hikerQty}
@@ -46,13 +48,20 @@ const TransaksiSelesai = ({ tourGuideData }) => {
               startDate={tourGuide.startDate}
               endDate={tourGuide.endDate}
               price={formatRupiah(tourGuide.totalPrice)}
-              imageUrl={tourGuide.tourGuideImage}
+              imageUrl={role === 'ROLE_GUIDE' ? tourGuide.customerImage : tourGuide.tourGuideImage}
               status={tourGuide.transactionStatus}
+              role={role}
               onPressDetail={() => {
-                if (tourGuide.transactionStatus === "DONE") {
+                if (tourGuide.transactionStatus === "DONE" && role === "ROLE_CUSTOMER") {
                   router.push(`/transaction/transDoneSuccess?id=${tourGuide.id}`);
-                } else if (tourGuide.transactionStatus === "REJECTED") {
+                } else if (tourGuide.transactionStatus === "REJECTED" && role === "ROLE_CUSTOMER") {
                   router.push(`/transaction/transDoneRejected?id=${tourGuide.id}`);
+                } 
+
+                else if (tourGuide.transactionStatus === "DONE" && role === "ROLE_GUIDE") {
+                  router.push(`/transaction-tourguide/transDoneSuccess?id=${tourGuide.id}`);
+                } else if (tourGuide.transactionStatus === "REJECTED" && role === "ROLE_GUIDE") {
+                  router.push(`/transaction-tourguide/transDoneRejected?id=${tourGuide.id}`);
                 } 
               }}
               customElements={
@@ -63,7 +72,8 @@ const TransaksiSelesai = ({ tourGuideData }) => {
                       <View className='flex-row items-center justify-center gap-4'>
                         <Star star={tourGuide.rating} />
                       </View>
-                    ) : (
+                    ) : role === "ROLE_CUSTOMER"
+                    ? (
                       <CustomButton
                         customStyle={"bg-soil min-w-full"}
                         title={"Berikan Rating"}
@@ -71,6 +81,8 @@ const TransaksiSelesai = ({ tourGuideData }) => {
                           router.push("/transaction/beriRating" + tourGuide.id)
                         }
                       />
+                    ) : (
+                      <Text className="text-center text-base font-isemibold text-soil">Belum ada rating dari customer</Text>
                     )}
                   </View>
                 ) : null

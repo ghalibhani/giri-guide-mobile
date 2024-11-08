@@ -61,86 +61,88 @@ const TransactionDoneRejectedScreen = () => {
       }
 
     return (
-        <SafeAreaView>
-            <StatusBar barStyle="light-content" backgroundColor="#503A3A" />
-            {/* <Link href='/bookGuide/bookThreeStep'>
-                <Text className='text-3xl font-bold'>loncat</Text>
-                </Link> */}
-            <View className="gap-5">
-                <View className="bg-soil pb-7 rounded-b-verylarge">
-                    <HeaderSubMenu title={"Detail Transaksi"} />
+        <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+            <SafeAreaView>
+                <StatusBar barStyle="light-content" backgroundColor="#503A3A" />
+                {/* <Link href='/bookGuide/bookThreeStep'>
+                    <Text className='text-3xl font-bold'>loncat</Text>
+                    </Link> */}
+                <View className="gap-5">
+                    <View className="bg-soil pb-7 rounded-b-verylarge">
+                        <HeaderSubMenu title={"Detail Transaksi"} />
+                    </View>
+
+                    <ScrollView showsVerticalScrollIndicator={false}  className="gap-6" contentContainerStyle={{ paddingBottom: 200 }}>
+                        <View>
+                            <CatatanUntukTourGuide 
+                                isEditable={false}
+                                title={"Alasan penolakan oleh tour guide"}
+                                catatan={transactionHistoryDetail.rejectedNote}
+                            />
+                        </View>
+
+                        <View className="px-6 mt-6">
+                            <MinimizeCard 
+                                title={"Tanggal Pendakian"}
+                                data={`${formattedDate(transactionHistoryDetail.startDate)} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
+                                icon={'mountain-sun'}
+                            />
+                        </View>
+
+                        <View className="px-6 mt-6">
+                            <DetailTourGuideGunungCard
+                                tourGuideName={transactionHistoryDetail.tourGuideName}
+                                orderId={transactionHistoryDetail.id}
+                                mountainName={transactionHistoryDetail.mountainName}
+                                hikingPointName={transactionHistoryDetail.hikingPointName}
+                                tourGuideImage={transactionHistoryDetail.tourGuideImage}
+                            />
+                        </View>
+
+                        <View className="px-6 mt-6">
+                            <DetailHikers data={transactionHistoryDetail.hikers} />
+                        </View>
+
+                        <View className="mt-6 gap-5">
+                            <Text className="font-ibold text-soil ml-6">Detail Harga</Text>
+                            <FixedHarga 
+                                days={transactionHistoryDetail.days}
+                                tourGuidePriceEachDay={transactionHistoryDetail.tourGuidePerDay}
+                                tourGuidePriceTotal={transactionHistoryDetail.totalPriceTourGuide}
+                                entranceFeeEachDay={transactionHistoryDetail.entryPerDay}
+                                entranceFeeTotal={transactionHistoryDetail.totalEntry}
+                                simaksiPriceEachPerson={transactionHistoryDetail.priceSimaksi}
+                                simaksiPriceTotal={transactionHistoryDetail.totalPriceSimaksi}
+                                additionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.additionalPerDay}
+                                totalAdditionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.totalPriceAdditional}
+                                porterPricePerDayPerPerson={transactionHistoryDetail.porterPerDay}
+                                porterCount={transactionHistoryDetail.porter}
+                                porterPriceTotal={transactionHistoryDetail.totalPricePorter}
+                                adminCost={transactionHistoryDetail.adminCost}
+                                totalPrice={transactionHistoryDetail.totalPrice}
+                                hikersCount={transactionHistoryDetail.hikers ? transactionHistoryDetail.hikers.length : 0}
+                            />
+                        </View>
+
+                        <View className="mt-6">
+                            <CatatanUntukTourGuide 
+                                isEditable={false}
+                                title={"Catatan kepada tour guide"}
+                                catatan={transactionHistoryDetail.customerNote}
+                            />
+                        </View>
+
+                        <View className="mt-6">
+                            <TipsMeetingWithGuide />
+                        </View>
+                    </ScrollView>
+                    
                 </View>
 
-                <ScrollView showsVerticalScrollIndicator={false}  className="gap-6" contentContainerStyle={{ paddingBottom: 200 }}>
-                    <View>
-                        <CatatanUntukTourGuide 
-                            isEditable={false}
-                            title={"Alasan penolakan oleh tour guide"}
-                            catatan={transactionHistoryDetail.rejectedNote}
-                        />
-                    </View>
-
-                    <View className="px-6 mt-6">
-                        <MinimizeCard 
-                            title={"Tanggal Pendakian"}
-                            data={`${formattedDate(transactionHistoryDetail.startDate)} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
-                            icon={'mountain-sun'}
-                        />
-                    </View>
-
-                    <View className="px-6 mt-6">
-                        <DetailTourGuideGunungCard
-                            tourGuideName={transactionHistoryDetail.tourGuideName}
-                            orderId={transactionHistoryDetail.id}
-                            mountainName={transactionHistoryDetail.mountainName}
-                            hikingPointName={transactionHistoryDetail.hikingPointName}
-                            tourGuideImage={transactionHistoryDetail.tourGuideImage}
-                         />
-                    </View>
-
-                    <View className="px-6 mt-6">
-                        <DetailHikers data={transactionHistoryDetail.hikers} />
-                    </View>
-
-                    <View className="mt-6 gap-5">
-                        <Text className="font-ibold text-soil ml-6">Detail Harga</Text>
-                        <FixedHarga 
-                            days={transactionHistoryDetail.days}
-                            tourGuidePriceEachDay={transactionHistoryDetail.tourGuidePerDay}
-                            tourGuidePriceTotal={transactionHistoryDetail.totalPriceTourGuide}
-                            entranceFeeEachDay={transactionHistoryDetail.entryPerDay}
-                            entranceFeeTotal={transactionHistoryDetail.totalEntry}
-                            simaksiPriceEachPerson={transactionHistoryDetail.priceSimaksi}
-                            simaksiPriceTotal={transactionHistoryDetail.totalPriceSimaksi}
-                            additionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.additionalPerDay}
-                            totalAdditionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.totalPriceAdditional}
-                            porterPricePerDayPerPerson={transactionHistoryDetail.porterPerDay}
-                            porterCount={transactionHistoryDetail.porter}
-                            porterPriceTotal={transactionHistoryDetail.totalPricePorter}
-                            adminCost={transactionHistoryDetail.adminCost}
-                            totalPrice={transactionHistoryDetail.totalPrice}
-                            hikersCount={transactionHistoryDetail.hikers ? transactionHistoryDetail.hikers.length : 0}
-                        />
-                    </View>
-
-                    <View className="mt-6">
-                        <CatatanUntukTourGuide 
-                            isEditable={false}
-                            title={"Catatan kepada tour guide"}
-                            catatan={transactionHistoryDetail.customerNote}
-                        />
-                    </View>
-
-                    <View className="mt-6">
-                        <TipsMeetingWithGuide />
-                    </View>
-                </ScrollView>
-                
-            </View>
 
 
-
-        </SafeAreaView>
+            </SafeAreaView>
+        </Animated.View>
     )
 }
 
