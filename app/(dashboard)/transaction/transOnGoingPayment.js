@@ -182,6 +182,7 @@ console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
               orderId={transactionHistoryDetail.id}
               mountainName={transactionHistoryDetail.mountainName}
               hikingPointName={transactionHistoryDetail.hikingPointName}
+              tourGuideImage={transactionHistoryDetail.tourGuideImage}
             />
           </View>
 

@@ -94,6 +94,7 @@ const TransactionDoneRejectedScreen = () => {
                             orderId={transactionHistoryDetail.id}
                             mountainName={transactionHistoryDetail.mountainName}
                             hikingPointName={transactionHistoryDetail.hikingPointName}
+                            tourGuideImage={transactionHistoryDetail.tourGuideImage}
                          />
                     </View>
 

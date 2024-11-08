@@ -9,7 +9,7 @@ const DetailTourGuideGunungCard = ({tourGuideName, orderId, mountainName, hiking
 
             <View className="flex-row gap-5 items-center">
                 <Image 
-                    source={require("../../assets/profile-image.jpg")}
+                    source={{ uri: tourGuideImage}}
                     className="w-16 rounded-xl h-16"
                 />
                 <View className="gap-2">
