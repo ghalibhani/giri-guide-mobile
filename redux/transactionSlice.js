@@ -39,6 +39,25 @@ export const getSnapTokenByTransactionId = createAsyncThunk(
     }
 )
 
+export const createNewTransaction = createAsyncThunk(
+    "transaction/createNewTransaction",
+    async(dataTransaction, {rejectWithValue}) => {
+        try{
+            console.log("hiyttt")
+            console.log(`ini dari slice ${dataTransaction}`)
+            const response = await axiosInstance.post('/transactions', dataTransaction, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log(response)
+            return response.data.transactionStatus;
+        } catch(e) {
+            return rejectWithValue(e.response.data.message)
+        }
+    }
+)
+
 const transactionSlice = createSlice({
     name: 'transaction',
     initialState: {
@@ -100,6 +119,19 @@ const transactionSlice = createSlice({
                 state.error = null;
             })
             .addCase(getSnapTokenByTransactionId.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+
+
+            .addCase(createNewTransaction.pending, (state) => {
+                state.status = "loading"; // Set loading status while fetching
+            })
+            .addCase(createNewTransaction.fulfilled, (state, action) => {
+                state.status = "succeed";
+                state.error = null;
+            })
+            .addCase(createNewTransaction.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
             })

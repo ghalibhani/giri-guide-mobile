@@ -1,5 +1,5 @@
 import { View, Text, TextInput } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import FixedDetailCalonPendaki from './FixedDetailCalonPendaki'
 import FixedHarga from './FixedHarga'
@@ -30,6 +30,11 @@ const ReviewPembayaran = ({
     hikersCount,
 }) => {
     const isNoteValid = catatan.length >= 20 && catatan.length <= 150;
+
+    useEffect(() => {
+        console.log('Catatan Tour Guide:', catatan);
+        console.log('Ini tombol kok ga terklik, status', isNoteValid)
+      }, [catatan]);
 
     return (
         <View className="gap-6 py-5">
@@ -75,7 +80,7 @@ const ReviewPembayaran = ({
                     buttonHandling={continueHandling}
                     customStyle={`min-w-full ${isNoteValid ? "bg-soil" : "bg-gray-300"}`}
                     title="Ajukan Pendakian ke Tour Guide"
-                    isDisabled={isNoteValid}
+                    isDisabled={!isNoteValid}
                 />
             </View>
 

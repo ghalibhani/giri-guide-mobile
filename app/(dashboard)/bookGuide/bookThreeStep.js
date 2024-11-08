@@ -12,6 +12,10 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTourGuideById } from "../../../redux/tourGuideSlice";
 import moment from "moment";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchProfileCustomer } from "../../../redux/profileSlice";
+import { createNewTransaction } from "../../../redux/transactionSlice";
+import CustomModalSuccess from "../../../components/miniComponent/CustomModalSuccess";
 
 const SewaTourGuideTigaTahap = () => {
   const {tourGuideId, hikingPointId, hikingPointName, mountainName, tourGuideName, totalPorter, fixedHikerCount, startDate, endDate, mountainId} = useLocalSearchParams();
@@ -20,19 +24,26 @@ const SewaTourGuideTigaTahap = () => {
   const startDateMoment = moment(startDate, "ddd MMM DD YYYY HH:mm:ss ZZ").toDate();
   const endDateMoment = moment(endDate, "ddd MMM DD YYYY HH:mm:ss ZZ").toDate();
 
-  console.log(startDateMoment);
-  console.log(endDateMoment);
+  const formattedStartDate = moment(startDateMoment).format("DD MMM YYYY");
+  const formattedEndDate = moment(endDateMoment).format("DD MMM YYYY");
+
+  // console.log(startDateMoment);
+  // console.log(endDateMoment);
 
   const dispatch = useDispatch()
   const tourGuide = useSelector((state) => state.tourGuide.tourGuide)
   const statusTourGuide = useSelector((state) => state.tourGuide.status)
   const errorTourGuide = useSelector((state) => state.tourGuide.error)
 
+  const profile = useSelector((state) => state.profile);
+  const [userId, setUserId] = useState('')
+
   const [catatanTourGuide, setCatatanTourGuide] = useState("");
   const [currentStage, setCurrentStage] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0)
 
   const [isModalConfirmationDataHikerVisible, setIsModalConfirmationDataHikerVisible] = useState(false)
+  const [isModalSuccess, setIsModalSuccess] = useState(false)
 
   const [tourGuidePriceIncludeDays, setTourGuidePriceIncludeDays] = useState(0)
   const [additionalHikerCount, setAdditionalHikerCount] = useState(0)
@@ -46,6 +57,20 @@ const SewaTourGuideTigaTahap = () => {
   useEffect(() => {
     dispatch(fetchTourGuideById(tourGuideId))
   }, [dispatch, tourGuideId])
+
+  useEffect(() => {
+    console.log('ini ketrigger');
+    const initializeUserId = async () => {
+      const userIdFromStorage = await AsyncStorage.getItem('userId');
+      console.log(`ini user id ${userIdFromStorage}`);
+      if (userIdFromStorage) {
+        setUserId(userIdFromStorage);
+        dispatch(fetchProfileCustomer(userIdFromStorage));
+      }
+    };
+    initializeUserId();
+  }, []);
+  console.log(profile.id)
 
   const [hikerDetails, setHikerDetails] = useState(
     Array.from({ length: fixedHikerCount }, () => ({
@@ -64,20 +89,20 @@ const SewaTourGuideTigaTahap = () => {
     if(tourGuide && tourGuide.price && tourGuide.additionalPrice) {
       const tourGuidePriceIncludeDays = tourGuide.price * totalDays
       setTourGuidePriceIncludeDays(tourGuidePriceIncludeDays)
-      console.log(`totalDays ${totalDays}`)
-      console.log(`tourGuidePriceIncludeDays, ${tourGuidePriceIncludeDays}`)
+      // console.log(`totalDays ${totalDays}`)
+      // console.log(`tourGuidePriceIncludeDays, ${tourGuidePriceIncludeDays}`)
 
       const additionalHikerCount = fixedHikerCount > 5 ? fixedHikerCount - 5 : 0;
       setAdditionalHikerCount(additionalHikerCount)
-      console.log( `additionalHikerCount ${additionalHikerCount}`)
+      // console.log( `additionalHikerCount ${additionalHikerCount}`)
 
       const additionalPriceOnlyOneDay = additionalHikerCount * tourGuide.additionalPrice;
       setAdditionalPriceOnlyOneDay(additionalPriceOnlyOneDay)
-      console.log(`additionalHikerCount ${additionalHikerCount}`)
+      // console.log(`additionalHikerCount ${additionalHikerCount}`)
 
       const additionalPriceTotal = additionalHikerCount * tourGuide.additionalPrice * totalDays;
       setAdditionalPriceTotal(additionalPriceTotal)
-      console.log(`additionalPriceTotal ${additionalPriceTotal}`)
+      // console.log(`additionalPriceTotal ${additionalPriceTotal}`)
 
       const entranceFeeSingle = tourGuide.mountains.find(
         (mountain) => mountain.mountainId === mountainId
@@ -85,25 +110,25 @@ const SewaTourGuideTigaTahap = () => {
         (hikingPoint) => hikingPoint.id === hikingPointId
       ).price;
       setEntranceFeeSingle(entranceFeeSingle)
-      console.log(`entranceFeeSingle ${entranceFeeSingle}`)
+      // console.log(`entranceFeeSingle ${entranceFeeSingle}`)
 
       const simaksiFeeSingle = tourGuide.mountains.find(
         (mountain) => mountain.mountainId === mountainId
       ).priceSimaksi
       setSimaksiFeeSingle(simaksiFeeSingle)
-      console.log(`simaksiFeeSingle ${simaksiFeeSingle}`)
+      // console.log(`simaksiFeeSingle ${simaksiFeeSingle}`)
 
       const entranceFeeTotal = entranceFeeSingle * totalDays * fixedHikerCount
       setEntranceFeeTotal(entranceFeeTotal)
-      console.log(`entranceFeeTotal ${entranceFeeTotal}`)
+      // console.log(`entranceFeeTotal ${entranceFeeTotal}`)
 
       const simaksiFeeTotal = simaksiFeeSingle * fixedHikerCount
       setSimaksiFeeTotal(simaksiFeeTotal)
-      console.log(`simaksiFeeTotal ${simaksiFeeTotal}`)
+      // console.log(`simaksiFeeTotal ${simaksiFeeTotal}`)
 
       const total = tourGuidePriceIncludeDays + additionalPriceTotal + entranceFeeTotal + simaksiFeeTotal + otherFees + countPorter * tourGuide.pricePorter * totalDays;
       setTotalPrice(total);
-      console.log(total)
+      // console.log(total)
     }
   }, [tourGuide, totalDays, fixedHikerCount, mountainId, hikingPointId])
 
@@ -136,13 +161,55 @@ const SewaTourGuideTigaTahap = () => {
     }
   };
 
-  const tahapAjukanHandler = () => {
+  const generateTransactionData = () => {
+    const jsonString = JSON.stringify({
+      customerId: profile.id,
+      guideId: tourGuideId,
+      porterQty: countPorter,
+      hikingPointId: hikingPointId,
+      startDate: startDateMoment,
+      endDate: endDateMoment,
+      hikerDetails: hikerDetails,
+      customerNote: catatanTourGuide,
+    })
+    return jsonString
+  }
+
+  console.log(generateTransactionData())
+
+  const resetForm = () => {
+    setAdditionalHikerCount(0);
+    setAdditionalPriceOnlyOneDay(0);
+    setAdditionalPriceTotal(0);
+    setCatatanTourGuide("");
+    setCountPorter(0);
+    setEntranceFeeSingle(0);
+    setEntranceFeeTotal(0);
+    setHikerDetails(Array(fixedHikerCount).fill({ nik: "", fullName: "", birthDate: "" }));
+    setSimaksiFeeSingle(0);
+    setSimaksiFeeTotal(0);
+    setTotalPrice(0);
+    setTourGuidePriceIncludeDays(0);
+    setUserId("");
+  };
+
+  const tahapAjukanHandler = async() => {
     try {
-      router.replace("/detailGuide/detailGuide");
+      console.log(`ini customer id: ${profile.id}`)
+      const jsonString = generateTransactionData()
+      console.log(jsonString)
+      await dispatch(createNewTransaction(jsonString)).unwrap()
+      setIsModalSuccess(true)
+      resetForm()
     } catch (error) {
       console.error("Error in tahapAjukanHandler:", error);
     }
   };
+
+  const handleDone = () => {
+    setIsModalSuccess(false)
+    router.replace('/transaction')
+  }
 
   const screenHeight = Dimensions.get('window').height
   const minHeightPercentage = 90
@@ -274,32 +341,50 @@ const SewaTourGuideTigaTahap = () => {
           )}
 
           {currentStage === 3 && (
-            <View className=' flex-col bg-grayCustom flex-1 rounded-t-verylarge'>
-              <ReviewPembayaran
-                days={totalDays}
-                tourGuidePriceEachDay={tourGuide.price}
-                tourGuidePriceTotal={tourGuidePriceIncludeDays}
-                entranceFeeEachDay={entranceFeeSingle}
-                entranceFeeTotal={entranceFeeTotal}
-                simaksiPriceEachPerson={simaksiFeeSingle}
-                simaksiPriceTotal={simaksiFeeTotal}
-                additionalTourGuidePricePerDayPerPerson={tourGuide.additionalPrice}
-                totalAdditionalTourGuidePricePerDayPerPerson={additionalPriceTotal}
-                porterPricePerDayPerPerson={tourGuide.pricePorter}
-                porterCount={countPorter}
-                porterPriceTotal={tourGuide.pricePorter * countPorter * totalDays}
-                totalPrice={totalPrice}
-                adminCost={20000}
-                isTourGuide={false}
-                hikersCount={fixedHikerCount}
-                hikerDetails={hikerDetails}
-                isEditable={true}
-                catatan={catatanTourGuide}
-                setCatatan={setCatatanTourGuide}
-              />
-            </View>
+            <>
+              <View className="mb-6 mx-6">
+                <View className="bg-white rounded-[12px] px-6 py-6 gap-6">
+                  <View className="gap-2">
+                    <Text className="color-thistle text-xs font-iregular">Tanggal pendakian</Text>
+                    <Text className="color-soil text-sm font-ibold">{formattedStartDate} s/d {formattedEndDate}</Text>
+                  </View>
+                </View>
+              </View>
+
+              <View className=' flex-col bg-grayCustom flex-1 rounded-t-verylarge'>
+                <ReviewPembayaran
+                  days={totalDays}
+                  tourGuidePriceEachDay={tourGuide.price}
+                  tourGuidePriceTotal={tourGuidePriceIncludeDays}
+                  entranceFeeEachDay={entranceFeeSingle}
+                  entranceFeeTotal={entranceFeeTotal}
+                  simaksiPriceEachPerson={simaksiFeeSingle}
+                  simaksiPriceTotal={simaksiFeeTotal}
+                  additionalTourGuidePricePerDayPerPerson={tourGuide.additionalPrice}
+                  totalAdditionalTourGuidePricePerDayPerPerson={additionalPriceTotal}
+                  porterPricePerDayPerPerson={tourGuide.pricePorter}
+                  porterCount={countPorter}
+                  porterPriceTotal={tourGuide.pricePorter * countPorter * totalDays}
+                  totalPrice={totalPrice}
+                  adminCost={20000}
+                  isTourGuide={false}
+                  hikersCount={fixedHikerCount}
+                  hikerDetails={hikerDetails}
+                  isEditable={true}
+                  catatan={catatanTourGuide}
+                  setCatatan={setCatatanTourGuide}
+                  continueHandling={tahapAjukanHandler}
+                />
+              </View>
+            </>
+            
           )}
         </ScrollView>
+        <CustomModalSuccess isModalVisible={isModalSuccess} handleDone={handleDone}>
+          <Text className="text-base mb-4 font-iregular text-evergreen text-center">
+            Yeay! Berhasil mengajukan pendakian ke tour guide. Tour guide akan approve maksimal dalam 24 jam ke depan. Segera setelah diapprove, kamu perlu membayarnya maksimal dalam 24 jam ya!
+          </Text>
+        </CustomModalSuccess>
     </SafeAreaView>
   );
 };

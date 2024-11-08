@@ -290,9 +290,11 @@ export default function DetailTourGuideScreen() {
               </Text>
             </View>
 
-            <View className='bg-ivory py-4 px-6 rounded-verylarge'>
+            <View className='bg-ivory py-4 my-6 px-6 rounded-verylarge'>
               <Text className='text-soil text-sm font-iregular'>
-                Tour guide ini mampu memandu maksimal {tourGuide.maxHiker}. Tiap tour guide mampu memandu 5 pendaki dalam satu waktu. Jika melebihi, akan dikenakan biaya tambahan.
+                Tour guide ini mampu memandu maksimal 
+                <Text className="font-ibold">{' '}{tourGuide.maxHiker} pendaki</Text>. 
+                Harga jasa tour guide {formatRupiah(tourGuide.price)} berlaku untuk memandu maksimal 5 pendaki. Jika melebihi, akan dikenakan biaya tambahan.
               </Text>
             </View>
 
@@ -310,11 +312,7 @@ export default function DetailTourGuideScreen() {
               amount={formatRupiah(tourGuide.price)}
             />
             <CostDetailItem
-              label={"Jasa tour guide untuk penambahan per 1 pendaki (diluar 5 pendaki)"}
-              amount={formatRupiah(tourGuide.additionalPrice)}
-            />
-            <CostDetailItem
-              label={"Uang masuk titik pendakian / orang"}
+              label={"Uang masuk titik pendakian / orang / hari"}
               amount={formatRupiah(entranceFee || 0)}
             />
             <CostDetailItem
@@ -340,7 +338,7 @@ export default function DetailTourGuideScreen() {
               mengangkat beban maksimal 25 kg.
             </Text>
             <CostDetailItem
-              label={"Jasa tour guide per penambahan satu orang calon pendaki"}
+              label={"Jasa tour guide untuk penambahan / pendaki / hari (diluar 5 pendaki)"}
               amount={formatRupiah(tourGuide.additionalPrice)}
               customLabelStyle={"w-2/3"}
             />

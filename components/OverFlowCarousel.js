@@ -24,7 +24,7 @@ const OverFlowCarousel = ({
             
             <View className="absolute top-0 left-0 w-full h-full bg-black opacity-50 rounded-xl" />
 
-            <Text className="absolute bottom-2 left-4 text-white font-ibold text-lg">
+            <Text className="absolute bottom-2 left-4 text-white font-ibold text-base flex-shrink">
               {item.name}
             </Text>
           </View>

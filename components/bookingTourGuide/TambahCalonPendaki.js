@@ -7,15 +7,25 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const TambahCalonPendaki = ({isVisible, onClose, onSave, dataPendaki}) => {
     const [nik, setNik] = useState('')
     const [name, setName] = useState('')
-    const [birthDate, setBirthDate] = useState(new Date());
+
+    const initialBirthDate = new Date(new Date().setFullYear(new Date().getFullYear() - 17));
+    const [birthDate, setBirthDate] = useState(initialBirthDate);
+
     const [showBirthDatePicker, setShowBirthDatePicker] = useState(false);
     const [formErrors, setFormErrors] = useState('');
+
+    const minAge = 17
+    const maxAge = 50
+
+    const maximumDate = new Date();
+    const minimumDate = new Date(new Date().setFullYear(new Date().getFullYear() - maxAge));
+    const maxBirthDate = new Date(new Date().setFullYear(new Date().getFullYear() - minAge));
 
     useEffect(() => {
         if(dataPendaki) {
             setNik(dataPendaki.nik || '')
             setName(dataPendaki.fullName || '')
-            setBirthDate(dataPendaki.birthDate ? new Date(dataPendaki.birthDate) : new Date())
+            setBirthDate(dataPendaki.birthDate ? new Date(dataPendaki.birthDate) : initialBirthDate)
         }
     }, [dataPendaki])
 
@@ -123,6 +133,8 @@ const TambahCalonPendaki = ({isVisible, onClose, onSave, dataPendaki}) => {
                                             mode='date'
                                             display='default'
                                             onChange={onChangeBirthDate}
+                                            maximumDate={maxBirthDate}
+                                            minimumDate={minimumDate}
                                         />
                                     )}
                                 </View>
