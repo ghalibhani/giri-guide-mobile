@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    userRole: "tourguide",
+    userRole: "TOUR_GUIDE",
   },
   reducers: {
     setUserRole(state, action) {

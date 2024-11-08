@@ -6,7 +6,7 @@ export const fetchTourGuideReview = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`guide/${id}/reviews`);
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -38,9 +38,11 @@ const guideReviewSlice = createSlice({
       })
       .addCase(fetchTourGuideReview.fulfilled, (state, action) => {
         state.isLoading = false;
+        // console.log("bawahhh -----", action.payload.data);
         state.reviews = action.payload;
       })
       .addCase(fetchTourGuideReview.rejected, (state, action) => {
+        console.log(action.payload);
         state.isLoading = false;
         state.error = action.payload
           ? action.payload.message

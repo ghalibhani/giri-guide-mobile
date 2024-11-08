@@ -4,60 +4,72 @@ import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import Star from "../Star";
 
-const CardRatingReview = ({
-  data,
-  totalReview,
-  star,
-  customerName,
-  dateReview,
-  reviewText,
-  averageReview,
-}) => {
+const CardRatingReview = ({ averageData, data, show }) => {
+  const formattedDate = (date) => {
+    return new Intl.DateTimeFormat("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(date);
+  };
+
+  function formatDecimal(value) {
+    return value % 1 === 0 ? `${value.toFixed(1)}` : `${value.toFixed(1)}`;
+  }
+
   return (
     <View className='bg-white rounded-verylarge my-4 p-6'>
       <Text className='text-lg text-soil font-ibold'>Rating dan Ulasan</Text>
 
       <View className='flex flex-row gap-6 items-center mt-4'>
         <Text className='text-5xl font-isemibold text-evergreen'>
-          {averageReview}
+          {averageData?.rating ? formatDecimal(averageData?.rating) : 0}
         </Text>
 
         <View>
           <View className='flex flex-row gap-2 mb-2'>
-            <Star star={star} />
+            <Star star={averageData?.rating} />
           </View>
 
           <Text className='text-evergreen text-sm font-iregular'>
-            {totalReview} Ulasan
+            {averageData?.totalReview} Ulasan
           </Text>
         </View>
       </View>
 
-      <View className='flex flex-row items-center gap-5 mt-6'>
-        <Image
-          className='w-10 h-10 rounded-full'
-          source={require("../../assets/profile-image.jpg")}
-        />
+      {show === true ? (
+        <>
+          <View className='flex flex-row items-center gap-5 mt-6'>
+            <Image
+              className='w-10 h-10 rounded-full'
+              source={require("../../assets/profile-image.jpg")}
+            />
 
-        <View>
-          <Text className='text-soil text-sm font-ibold mb-1'>
-            {customerName}
-          </Text>
-          <Text className='text-evergreen opacity-80 text-sm font-isemibold'>
-            {dateReview}
-          </Text>
-        </View>
-      </View>
+            <View>
+              <Text className='text-soil text-sm font-ibold mb-1'>
+                {data?.customerName}
+              </Text>
+              <Text className='text-evergreen opacity-80 text-sm font-isemibold'>
+                {data?.createdAt
+                  ? formattedDate(new Date(data.createdAt))
+                  : "Tanggal review"}
+              </Text>
+            </View>
+          </View>
 
-      <Text className='text-evergreen font-iregular text-sm mt-5'>
-        {reviewText}
-      </Text>
+          <Text className='text-evergreen font-iregular text-sm mt-5'>
+            {data?.review}
+          </Text>
+        </>
+      ) : null}
 
       <View className='bg-borderCustom h-[1] my-5'></View>
 
       <TouchableOpacity
         onPress={() => {
-          router.navigate("/detailGuide/listReview");
+          router.navigate(
+            `/detailGuide/listReview?tourGuideId=${data?.tourGuideId}`
+          );
         }}
       >
         <Text className='text-evergreen font-isemibold text-sm text-right'>

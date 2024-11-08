@@ -5,7 +5,9 @@ import { TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 
 const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
-  const userRole = useSelector((state) => state.user.userRole);
+  const userRole = useSelector((state) => state.auth.role);
+
+  console.log("--------user role: ", userRole);
 
   const [activeButton, setActiveButton] = useState("terdekat");
 
@@ -23,9 +25,7 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
       >
         <TouchableOpacity
           className={`py-[16.5] ml-4 rounded-xl items-center px-5 ${
-            activeButton === "terdekat"
-              ? "bg-soil"
-              : "bg-transparent"
+            activeButton === "terdekat" ? "bg-soil" : "bg-transparent"
           } border-[1.5px] border-soil`}
           onPress={() => handleButtonPress("terdekat")}
         >
@@ -40,9 +40,7 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
 
         <TouchableOpacity
           className={`py-[16.5] ml-4 rounded-xl items-center px-5 ${
-            activeButton === "pembayaran"
-              ? "bg-soil"
-              : "bg-transparent"
+            activeButton === "pembayaran" ? "bg-soil" : "bg-transparent"
           } border-[1.5px] border-soil`}
           onPress={() => handleButtonPress("pembayaran")}
         >
@@ -51,20 +49,15 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
               activeButton === "pembayaran" ? "text-white" : "text-soil"
             }`}
           >
-            {/* {userRole === "tourguide"
+            {userRole === "ROLE_GUIDE"
               ? "Butuh Persetujuan"
-              : "Menunggu Pembayaran"} */}
-            {userRole === "tourguide"
-              ? "Menunggu Pembayaran"
-              : "Butuh Persetujuan"}
+              : "Menunggu Pembayaran"}
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           className={`py-[16.5] mx-4 rounded-xl items-center px-5 ${
-            activeButton === "approve"
-              ? "bg-soil"
-              : "bg-transparent"
+            activeButton === "approve" ? "bg-soil" : "bg-transparent"
           } border-[1.5px] border-soil`}
           onPress={() => handleButtonPress("approve")}
         >

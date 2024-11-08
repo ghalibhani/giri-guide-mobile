@@ -1,12 +1,13 @@
 import HomeProfileGuideScreen from "../profile/homeProfileGuide";
 import HomeProfileScreen from "../profile/homeProfile";
-import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { useState } from "react";
+import { View, Image } from "react-native";
 
 export default function ProfileScreen() {
   const [isCustomer, setIsCustomer] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkRole = async () => {
@@ -18,24 +19,24 @@ export default function ProfileScreen() {
           setIsCustomer(false);
         }
       } catch (error) {
-        console.log("Error checking login status:", error);
+        // console.log("Error checking login status:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     checkRole();
   }, []);
 
-  // DATA ASLI
-  if (isCustomer) {
-    return <HomeProfileScreen />;
-  } else {
-    return <HomeProfileGuideScreen />;
+  if (isLoading) {
+    return (
+      <View className='flex-1 items-center justify-center bg-white'>
+        <Image
+          source={require("../../../assets/loading.gif")}
+          style={{ width: 80, height: 80 }}
+        />
+      </View>
+    );
   }
-
-  // SEMENTARA PAKE INI BUAT DEVELOPMENT PROFILE TOURGUIDE SCREEN
-  // if (!isCustomer) {
-  //   return <HomeProfileScreen />;
-  // } else {
-  //   return <HomeProfileGuideScreen />;
-  // }
+  return isCustomer ? <HomeProfileScreen /> : <HomeProfileGuideScreen />;
 }

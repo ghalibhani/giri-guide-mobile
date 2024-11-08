@@ -2,9 +2,11 @@ import { ScrollView, Text, View } from "react-native";
 import React from "react";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 
 const TransaksiSlideSelesai = ({ onFilterChange }) => {
   const [activeButton, setActiveButton] = useState("selesai");
+  const userRole = useSelector((state) => state.auth.role);
 
   const handleButtonPress = (filter) => {
     setActiveButton(filter);
@@ -40,7 +42,9 @@ const TransaksiSlideSelesai = ({ onFilterChange }) => {
               activeButton === "ditolak" ? "text-white" : "text-soil"
             }`}
           >
-            Ditolak oleh tour guide
+            {userRole === "ROLE_GUIDE"
+              ? "Ditolak oleh kamu"
+              : "Ditolak oleh tour guide"}
           </Text>
         </TouchableOpacity>
       </ScrollView>

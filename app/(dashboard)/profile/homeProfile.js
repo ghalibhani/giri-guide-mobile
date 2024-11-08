@@ -13,16 +13,29 @@ export default function HomeProfileScreen() {
   const userId = useSelector((state) => state.auth.userId);
   const profile = useSelector((state) => state.profile);
 
+  const formattedDate = (date) => {
+    return new Intl.DateTimeFormat("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(date);
+  };
+
   useEffect(() => {
     dispatch(fetchProfileCustomer(userId));
   }, [dispatch, userId]);
+
 
   return (
     <View className='flex-1 items-center bg-hex-#F8F8F8'>
       <ContainerProfile
         email={profile?.email}
         fullName={profile?.fullName}
-        birthDate={"created add"}
+        birthDate={
+          profile?.createdAt
+            ? formattedDate(new Date(profile.createdAt))
+            : "Tanggal tidak tersedia"
+        }
       />
       <View className='mt-4 mb-3 px-6 py-6 w-full flex-1 bg-white rounded-[30px] items-center'>
         <ButtonProfile

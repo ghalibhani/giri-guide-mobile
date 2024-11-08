@@ -20,8 +20,8 @@ const TourGuideSearchedList = ({ tourGuides, hikingPointId, hikingPointName, mou
 
 
   return (
-    <View className="px-6">
-      <Text className="mb-4 font-ibold text-soil text-base">
+    <View className='px-6'>
+      <Text className='mb-4 font-ibold text-soil text-base'>
         Tour guide terbaik untuk kamu
       </Text>
       <FlatList

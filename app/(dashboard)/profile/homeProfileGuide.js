@@ -8,20 +8,35 @@ import SubMenuProfileTourGuide from "../../../components/profileTourGuide/SubMen
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchTourGuideProfileByUserId } from "../../../redux/tourGuideSlice";
+import { fetchTourGuideReview } from "../../../redux/guideReviewSlice";
 
 const HomeProfileGuideScreen = () => {
-  const userId = useSelector((state) => state.auth.userId);
-  const tourGuideProfileData = useSelector((state) => state.tourGuide);
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.auth.userId);
+
+  const tourGuideProfileData = useSelector(
+    (state) => state.tourGuide.tourGuide
+  );
+  const reviews = useSelector((state) => state.tourGuideReview.reviews.data);
 
   useEffect(() => {
-    const credentials = { userId };
-    dispatch(fetchTourGuideProfileByUserId(credentials));
-  }, [dispatch]);
+    if (userId) {
+      dispatch(fetchTourGuideProfileByUserId(userId));
+    }
+  }, [userId, dispatch]);
 
-  console.log(tourGuideProfileData);
-  // console.log(userId);
+  useEffect(() => {
+    if (tourGuideProfileData && tourGuideProfileData.tourGuideId) {
+      dispatch(fetchTourGuideReview(tourGuideProfileData.tourGuideId));
+    }
+  }, [tourGuideProfileData, dispatch]);
 
+  const highestRatedReview =
+    reviews && reviews.length > 0
+      ? reviews.reduce((prev, current) => {
+          return prev.rating > current.rating ? prev : current;
+        }, reviews[0])
+      : null;
 
   return (
     <SafeAreaView className='flex-1'>
@@ -35,11 +50,16 @@ const HomeProfileGuideScreen = () => {
         >
           <View className='gap-1'>
             <View className='gap-5'>
-              <CardProfile />
-              <ShortDescription />
+              <CardProfile data={tourGuideProfileData} />
+              <ShortDescription data={tourGuideProfileData} />
             </View>
 
-            <CardRatingReview />
+            <CardRatingReview
+              data={highestRatedReview}
+              averageData={tourGuideProfileData}
+              show={false}
+            />
+
             <SubMenuProfileTourGuide />
           </View>
         </ScrollView>

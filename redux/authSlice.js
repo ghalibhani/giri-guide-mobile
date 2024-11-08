@@ -14,6 +14,7 @@ export const login = createAsyncThunk(
       await AsyncStorage.setItem("userRole", data.role);
       await AsyncStorage.setItem("userId", data.userId);
       await AsyncStorage.setItem("email", data.email);
+      await AsyncStorage.setItem("guideName", data.name);
 
       return data;
     } catch (error) {
@@ -52,6 +53,7 @@ const authSlice = createSlice({
     role: null,
     userId: null,
     email: null,
+    name: null,
     loading: false,
     error: null,
     isLoggedIn: false,
@@ -65,12 +67,14 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.email = null;
+      state.name = null;
       state.isLoggedIn = false;
 
       AsyncStorage.removeItem("token");
       AsyncStorage.removeItem("userRole");
       AsyncStorage.removeItem("userId");
       AsyncStorage.removeItem("email");
+      AsyncStorage.removeItem("guideName");
     },
 
     loginRefresh: (state, action) => {
@@ -78,6 +82,7 @@ const authSlice = createSlice({
       state.role = action.payload.role;
       state.userId = action.payload.userId;
       state.email = action.payload.email;
+      state.name = action.payload.name;
       state.isLoggedIn = true;
     },
   },
@@ -94,6 +99,7 @@ const authSlice = createSlice({
         state.role = action.payload.role;
         state.userId = action.payload.userId;
         state.email = action.payload.email;
+        state.guideName = action.payload.name;
         state.isLoggedIn = true;
         state.error = false;
       })

@@ -15,7 +15,7 @@ const SearchScreen = () => {
 
   useEffect(() => {
     dispatch(fetchAllMountains({page: 1, size: 40}))
-    console.log(statusMountains)
+    // console.log(statusMountains)
   }, [dispatch])
 
   const [hidden, setHidden] = useState(false);

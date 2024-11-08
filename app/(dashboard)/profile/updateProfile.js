@@ -5,21 +5,24 @@ import HeaderBackProfile from "../../../components/HeaderBackProfile";
 import CustomInputOrPickerWithIcon from "../../../components/miniComponent/CustomInputOrPickerWithIcon";
 import CustomButton from "../../../components/miniComponent/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProfile, updateProfile } from "../../../redux/profileSlice";
+import {
+  fetchProfileCustomer,
+  updateProfile,
+} from "../../../redux/profileSlice";
 
 const UpdateProfileScreen = () => {
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile);
+  const profileCustomer = useSelector((state) => state.profile);
+  const role = useSelector((state) => state.auth.role);
   const userId = useSelector((state) => state.auth.userId);
-
-  const [fullName, setFullName] = useState(profile.fullName);
-  const [address, setAddress] = useState(profile.address);
-  const [gender, setGender] = useState(profile.gender);
-  const [email] = useState(profile.email);
-  const [nik] = useState(profile.nik);
+  const [fullName, setFullName] = useState(profileCustomer.fullName);
+  const [address, setAddress] = useState(profileCustomer.address);
+  const [gender, setGender] = useState(profileCustomer.gender);
 
   useEffect(() => {
-    dispatch(fetchProfile(userId));
+    if (role === "ROLE_CUSTOMER") {
+      dispatch(fetchProfileCustomer(userId));
+    }
   }, [dispatch, userId]);
 
   const updateProfileHandler = () => {
@@ -28,7 +31,14 @@ const UpdateProfileScreen = () => {
       address,
       gender,
     };
-    dispatch(updateProfile({ id: profile.id, profileData }));
+
+    dispatch(
+      updateProfile({
+        id: profileCustomer.id,
+        profileData,
+      })
+    );
+
     Alert.alert("Success", "Profile has been updated");
   };
 
@@ -40,34 +50,33 @@ const UpdateProfileScreen = () => {
     }).format(date);
   };
 
-  const tanggalLahir = () => {
-    const birthDate = new Date(profile?.birthDate);
-    return formattedDate(birthDate);
-  };
-
   return (
     <SafeAreaView className='flex-1 px-6'>
       <HeaderBackProfile text={"Update Profil"} />
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className='gap-4'>
+        <View className='gap-4 mb-7'>
           <CustomInputOrPickerWithIcon
             title={"NIK"}
-            value={nik}
+            value={profileCustomer?.nik}
             isEditable={false}
             nameIcon={"card-outline"}
           />
 
           <CustomInputOrPickerWithIcon
             title={"Tanggal Lahir"}
-            value={tanggalLahir()}
+            value={
+              profileCustomer?.birthDate
+                ? formattedDate(new Date(profileCustomer.birthDate))
+                : "-"
+            }
             isEditable={false}
             nameIcon={"calendar-outline"}
           />
 
           <CustomInputOrPickerWithIcon
             title={"Email"}
-            value={email}
+            value={profileCustomer?.email}
             isEditable={false}
             nameIcon={"mail-outline"}
           />
@@ -95,8 +104,6 @@ const UpdateProfileScreen = () => {
             isEditable={true}
             nameIcon={"home-outline"}
           />
-
-          <CustomInputOrPickerWithIcon title={"Foto Profil"} val />
 
           <CustomButton
             buttonHandling={updateProfileHandler}

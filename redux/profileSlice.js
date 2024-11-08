@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../api/axiosInstance";
 
+// CUSTOMER SLICER
+
 export const fetchProfileCustomer = createAsyncThunk(
   "profile/fetchProfile",
   async (id, { rejectWithValue }) => {
@@ -33,6 +35,7 @@ const initialState = {
   address: "",
   gender: "",
   email: "",
+  createdAt: "",
   imageId: null,
   loading: false,
   error: null,
@@ -62,6 +65,7 @@ const profileSlice = createSlice({
         state.gender = action.payload.gender;
         state.email = action.payload.email;
         state.imageId = action.payload.imageId;
+        state.createdAt = action.payload.createdAt;
       })
       .addCase(fetchProfileCustomer.rejected, (state, action) => {
         state.loading = false;

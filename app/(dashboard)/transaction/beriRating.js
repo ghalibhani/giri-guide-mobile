@@ -6,7 +6,7 @@ import RatingTourGuideCard from "../../../components/transaksiCustomer/RatingTou
 import CatatanUntukTourGuide from "../../../components/miniComponent/CatatanUntukTourGuide";
 import CustomButton from "../../../components/miniComponent/CustomButton";
 
-export default function beriRating() {
+export default function beriRating({ data }) {
   return (
     <SafeAreaView className='flex-1 bg-grayCustom'>
       <StatusBar barStyle='light-content' backgroundColor='#503A3A' />

@@ -30,10 +30,12 @@ export default function DetailTourGuideScreen() {
   const dispatch = useDispatch();
   const tourGuide = useSelector((state) => state.tourGuide.tourGuide);
   const statusTourGuide = useSelector((state) => state.tourGuide.status);
-  const errorTourGuide = useSelector((state) => state.tourGuide.error);
-
-  const tourGuideReview = useSelector((state) => state.tourGuideReview);
-  const statusTourGuideReview = useSelector((state) => state.tourGuideReview.isLoading)
+  const tourGuideReview = useSelector(
+    (state) => state.tourGuideReview.reviews.data
+  );
+  const statusTourGuideReview = useSelector(
+    (state) => state.tourGuideReview.isLoading
+  );
   const [showHikingPoints, setShowHikingPoints] = useState([]);
   const [selectedMountain, setSelectedMountain] = useState(null);
   const [selectedClimbingPoint, setSelectedClimbingPoint] = useState(null);
@@ -44,7 +46,6 @@ export default function DetailTourGuideScreen() {
   const [totalPriceFirst, setTotalPriceFirst] = useState(0)
 
   useEffect(() => {
-    console.log("ini tour guide id: ", tourGuideId);
     dispatch(fetchTourGuideById(tourGuideId));
     console.log(`tourGuide: ${tourGuide}`)
     dispatch(fetchTourGuideReview(tourGuideId));
@@ -73,34 +74,11 @@ export default function DetailTourGuideScreen() {
  
 
   const highestRatedReview =
-    tourGuideReview.reviews && tourGuideReview.reviews.length > 0
-      ? tourGuideReview.reviews.reduce((prev, current) => {
+    tourGuideReview && tourGuideReview.length > 0
+      ? tourGuideReview.reduce((prev, current) => {
           return prev.rating > current.rating ? prev : current;
-        }, tourGuideReview.reviews[0])
+        }, tourGuideReview[0])
       : null;
-
-  const formattedDate = (date) => {
-    return new Intl.DateTimeFormat("id-ID", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }).format(date);
-  };
-
-  const averageRating = () => {
-    if (tourGuideReview.reviews && tourGuideReview.reviews.length > 0) {
-      const totalRating = tourGuideReview.reviews.reduce(
-        (total, review) => total + review.rating,
-        0
-      );
-      return totalRating / tourGuideReview.reviews.length;
-    } else {
-      return 0;
-    }
-  };
-
-  const number = averageRating();
-  const roundedNumber = parseFloat(number.toFixed(1));
 
   const mountainHandler = (mountainId) => {
     const selectedMountain = tourGuide.mountains.find(
@@ -139,6 +117,10 @@ export default function DetailTourGuideScreen() {
     }).format(amount);
   };
 
+  function formatDecimal(value) {
+    return value % 1 === 0 ? `${value.toFixed(1)}` : `${value.toFixed(1)}`;
+  }
+
   if (statusTourGuide === "loading" && statusTourGuideReview) {
     return (
       <View className="flex-1 items-center justify-center bg-white">
@@ -150,18 +132,36 @@ export default function DetailTourGuideScreen() {
     );
   }
 
+  const getImageSource = (imageUser) => {
+    if (!imageUser) {
+      return require("../../../assets/profile-image.jpg");
+    }
+
+    if (
+      typeof imageUser === "string" &&
+      (imageUser.startsWith("http") || imageUser.startsWith("https"))
+    ) {
+      return { uri: imageUser };
+    }
+
+    return require("../../../assets/profile-image.jpg");
+  };
+
   return (
     <SafeAreaView>
       <ScrollView>
         <StatusBar translucent style='auto' />
         <View className='flex-1 pb-24' style={{ backgroundColor: "#f8f8f8" }}>
-          <TouchableOpacity className='bg-ivory w-[30] h-[30] absolute top-5 left-6 z-10 items-center justify-center rounded-full'>
+          <TouchableOpacity
+            className='bg-ivory w-[30] h-[30] absolute top-5 left-6 z-10 items-center justify-center rounded-full'
+            onPress={() => router.back()}
+          >
             <View className='justify-center items-center'>
               <Ionicons
                 name={"chevron-back"}
                 size={15}
                 color={"#503A3A"}
-                onPress={() => router.back()}
+                // onPress={() => router.back()}
               />
             </View>
           </TouchableOpacity>
@@ -169,18 +169,20 @@ export default function DetailTourGuideScreen() {
             className='h-[180] w-screen rounded-b-3xl'
             source={require("../../../assets/gunung-tour-guide.jpg")}
           />
+
           <Image
             className='w-24 h-24 absolute top-36 left-10 z-10 rounded-full'
-            source={require("../../../assets/profile-image.jpg")}
+            source={getImageSource(tourGuide.image)}
           />
 
           <View className='p-6 rounded-b-3xl bg-white'>
             <View className='flex justify-end items-center gap-2 flex-row'>
               <View className='flex flex-row gap-2'>
-                <Star star={roundedNumber} />
+                <Star star={tourGuide.rating} />
               </View>
               <Text className='text-plum text-base'>
-                {roundedNumber} ({tourGuide.totalReview})
+                {tourGuide.rating ? formatDecimal(tourGuide.rating) : 0} (
+                {tourGuide.totalReview})
               </Text>
             </View>
 
@@ -266,16 +268,9 @@ export default function DetailTourGuideScreen() {
 
           {/* rating ulasan */}
           <CardRatingReview
-            totalReview={tourGuide.totalReview}
-            averageReview={roundedNumber}
-            star={roundedNumber}
-            customerName={highestRatedReview?.customerName || "Nama Customer"}
-            dateReview={
-              highestRatedReview
-                ? formattedDate(new Date(highestRatedReview.createdAt))
-                : "Tanggal review"
-            }
-            reviewText={highestRatedReview?.review || "Ulasan"}
+            show={true}
+            data={highestRatedReview}
+            averageData={tourGuide}
           />
 
           {/* rincian biaya */}
