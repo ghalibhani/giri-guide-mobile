@@ -69,7 +69,7 @@ const TransactionCustomerScreen = () => {
       }
     };
     console.log(show);
-    console.log(transactionHistoryLists);
+    console.log(">>>>>>>>", transactionHistoryLists);
     fetchTransactions();
   }, [dispatch, show]);
 
@@ -97,6 +97,7 @@ const TransactionCustomerScreen = () => {
                 <TransactionBerlangsung
                   key={`berlangsung-${Date.now()}`}
                   tourGuideData={transactionHistoryLists}
+                  customerData={transactionHistoryLists}
                   role={role}
                 />
               ) : (
