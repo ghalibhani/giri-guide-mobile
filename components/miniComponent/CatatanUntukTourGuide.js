@@ -8,7 +8,7 @@ const CatatanUntukTourGuide = ({ isEditable, catatan, setCatatan, title }) => {
       <View className='border-borderCustom border-[1px] bg-white rounded-xl px-6 py-5 gap-[5]'>
         <TextInput
           editable={isEditable}
-          placeholder='Catatan maksimal 150 karakter'
+          placeholder='Catatan minimal 20 karakter dan maksimal 150 karakter. Kamu harus memberi catatan'
           placeholderTextColor={"#D6D6D6"}
           value={catatan}
           onChangeText={setCatatan}

@@ -8,10 +8,14 @@ const TourGuideCard = ({
   rating,
   totalRating,
   tourGuideId,
+  hikingPointId,
+  hikingPointName, 
+  mountainName,
+  mountainId,
 }) => {
   return (
     <TouchableOpacity
-      onPress={() => router.push(`/detailGuide/detailGuide?tourGuideId=${tourGuideId}`)}
+      onPress={() => router.push(`/detailGuide/detailGuide?tourGuideId=${tourGuideId}&hikingPointId=${hikingPointId}&mountainName=${mountainName}&hikingPointName=${hikingPointName}&mountainId=${mountainId}`)}
     >
       <View className='bg-white shadow-md rounded-2xl p-4 flex flex-row items-center mb-4'>
         <Image source={{ uri: image }} className='w-16 h-16 rounded-lg' />

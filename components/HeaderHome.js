@@ -2,11 +2,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const HeaderHome = () => {
+const HeaderHome = ({fullName}) => {
   return (
     <View className="w-screen gap-5 rounded-b-verylarge bg-soil pt-5 pb-6 px-6">
       <Text className="text-[20px] font-ibold text-ivory">
-        Hai, FULL NAME!
+        Hai, {fullName}!
       </Text>
       <TouchableOpacity onPress={() => {
             router.navigate("/search/search");

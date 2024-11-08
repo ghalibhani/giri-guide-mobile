@@ -152,12 +152,21 @@ import { useDispatch } from "react-redux";
 import { loginRefresh } from "../../../redux/authSlice";
 import { useRouter } from "expo-router";
 import { View, Image } from "react-native";
+import { fetchProfileCustomer } from "../../../redux/profileSlice";
 
 export default function Index() {
   const [isCustomer, setIsCustomer] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const userId = useSelector((state) => state.auth.userId);
+  const profile = useSelector((state) => state.profile);
+
+  useEffect(() => {
+    dispatch(fetchProfileCustomer(userId));
+    console.log(profile)
+  }, [dispatch, userId]);
 
   useEffect(() => {
     const checkLoginAndRole = async () => {

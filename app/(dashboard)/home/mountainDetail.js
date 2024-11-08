@@ -72,7 +72,7 @@ const mountainDetail = () => {
   const findTourGuideHandler = () => {
     if (hikingPointIdForSearching) {
       // console.log("Navigating to:", `/search/searchList?hikingPointId=${hikingPointIdForSearching}&hikingPointName=${hikingPointNameForSearching}&mountainName=${mountainData.name}`);
-      router.push(`/search/searchList?hikingPointId=${hikingPointIdForSearching}&hikingPointName=${hikingPointNameForSearching}&mountainName=${mountainData.name}`);
+      router.push(`/search/searchList?hikingPointId=${hikingPointIdForSearching}&hikingPointName=${hikingPointNameForSearching}&mountainName=${mountainData.name}&mountainId=${id}`);
     } else if(id){
       // console.log("Hiking point ID not set");
       router.push(`/search/search?mountainId=${id}`)

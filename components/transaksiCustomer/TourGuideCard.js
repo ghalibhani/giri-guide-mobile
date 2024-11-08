@@ -2,6 +2,7 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import CustomButton from "../../components/miniComponent/CustomButton";
+import moment from "moment";
 
 const TourGuideCard = ({
   guideName,
@@ -10,7 +11,8 @@ const TourGuideCard = ({
   numHikers,
   numPorters,
   numDays,
-  dateRange,
+  startDate,
+  endDate,
   price,
   onPressDetail,
   imageUrl,
@@ -23,6 +25,10 @@ const TourGuideCard = ({
     }
     return require("../../assets/profile-image.jpg");
   };
+
+  const formattedDate = (date) => {
+    return moment(date).format('DD-MM-YYYY')
+  }
 
   return (
     <View className='bg-white p-6 rounded-xl mb-4'>
@@ -43,9 +49,9 @@ const TourGuideCard = ({
       <View className='flex-row justify-between mt-[10]'>
         <View>
           <Text className='font-iregular mb-[10] text-thistle text-sm'>
-            {dateRange}
+            {formattedDate(startDate)} s/d {formattedDate(endDate)}
           </Text>
-          <Text className='font-ibold text-soil text-base'>Rp. {price}</Text>
+          <Text className='font-ibold text-soil text-base'>{price}</Text>
         </View>
         <CustomButton
           title={

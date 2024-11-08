@@ -4,13 +4,15 @@ import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
-const FormTanggalCounter = () => {
-    const [startDate, setStartDate] = useState(new Date());
+const FormTanggalCounter = ({count, setCount, startDate, setStartDate, endDate, setEndDate, initialDate, maxHiker}) => {
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
-    const [endDate, setEndDate] = useState(new Date());
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
-    const [count, setCount] = useState(0);
+    const minStartDate = initialDate
+    const [minEndDate, setMinEndDate] = useState(moment(initialDate).add(1, 'days').toDate());
+    const [maxEndDate, setMaxEndDate] = useState(moment(initialDate).add(3, 'days').toDate());
+
+    const [maxHikerErrorMessage, setMaxHikerErrorMessage] = useState('');
 
     const showStartDatePickerHandler = () => {
         setShowStartDatePicker(true);
@@ -20,6 +22,16 @@ const FormTanggalCounter = () => {
         const currentDate = selectedDate || startDate;
         setShowStartDatePicker(!showStartDatePicker);
         setStartDate(currentDate);
+
+        const newMinEndDate = moment(currentDate).add(1, 'days').toDate();
+        const newMaxEndDate = moment(currentDate).add(3, 'days').toDate();
+
+        setMaxEndDate(newMaxEndDate);
+        setMinEndDate(newMinEndDate)
+
+        if (endDate < newMinEndDate || endDate > newMaxEndDate) {
+            setEndDate(newMinEndDate);
+        }
     };
 
     const showEndDatePickerHandler = () => {
@@ -33,11 +45,19 @@ const FormTanggalCounter = () => {
     };
 
     const increment = () => {
-        setCount(count + 1);
+        if(count < maxHiker) {
+            setCount(count + 1);
+            setMaxHikerErrorMessage('')
+        } else{
+            setMaxHikerErrorMessage(`Tour guide ini hanya bisa memandu maksimal ${maxHiker} pendaki`)
+        }
     }
 
     const decrement = () => {
-        setCount(count - 1);
+        if (count > 1) {
+            setCount(count - 1);
+            setMaxHikerErrorMessage('');
+        }
     }
 
     return (
@@ -56,6 +76,7 @@ const FormTanggalCounter = () => {
                                 mode='date'
                                 display='default'
                                 onChange={onChangeStartDate}
+                                minimumDate={minStartDate}
                             />
                         )}
                     </View>
@@ -76,6 +97,8 @@ const FormTanggalCounter = () => {
                                 mode='date'
                                 display='default'
                                 onChange={onChangeEndDate}
+                                minimumDate={minEndDate}
+                                maximumDate={maxEndDate}
                             />
                         )}
                     </View>
@@ -103,7 +126,14 @@ const FormTanggalCounter = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
+                {maxHikerErrorMessage && (
+                    <View className="px-5">
+                        <Text className="text-errorHover text-sm font-iregular">{maxHikerErrorMessage}</Text>
+                    </View>
+                )}
             </View>
+
+            
         </View>
     );
 };

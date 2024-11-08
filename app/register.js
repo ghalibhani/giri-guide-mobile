@@ -152,7 +152,7 @@ export default function RegisterScreen() {
       setKonfirmasiPassword('')
     } catch(e) {
       setSuccessMessage('')
-      setErrorMessage(error || "Email atau NIK sudah terdaftar");
+      setErrorMessage("Email atau NIK sudah terdaftar");
     }
   };
 

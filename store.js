@@ -7,6 +7,8 @@ import tourGuideReviewReducer from "./redux/guideReviewSlice";
 import registerReducer from "./redux/registerSlice";
 import mountainReducer from "./redux/mountainSlice";
 import statsTransactionGuideReducer from "./redux/statsTransactionGuideSlice";
+import transactionReducer from "./redux/transactionSlice";
+
 
 const store = configureStore({
   reducer: {
@@ -18,6 +20,7 @@ const store = configureStore({
     register: registerReducer,
     mountain: mountainReducer,
     statsTransactionGuide: statsTransactionGuideReducer,
+    transaction: transactionReducer,
   },
 });
 

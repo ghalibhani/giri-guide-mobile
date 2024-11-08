@@ -19,7 +19,7 @@ const TransactionStatusBar = ({ onStatusChange }) => {
           >
             <Text
               className={` text-sm text-center ${
-                activeStatus === "berlangsung" ? "font-ibold" : "text-soil"
+                activeStatus === "berlangsung" ? "font-ibold text-soil" : "text-soil"
               }`}
             >
               Berlangsung
@@ -31,7 +31,7 @@ const TransactionStatusBar = ({ onStatusChange }) => {
           >
             <Text
               className={` text-sm text-center ${
-                activeStatus === "selesai" ? "font-ibold" : "text-soil"
+                activeStatus === "selesai" ? "font-ibold text-soil" : "text-soil"
               }`}
             >
               Selesai

@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTourGuideListsByHikingPointId } from "../../../redux/tourGuideSlice";
 import CustomNotFound from "../../../components/miniComponent/CustomNotFound";
 const SearchListScreen = () => {
-  const {hikingPointId, hikingPointName, mountainName} = useLocalSearchParams()
+  const {hikingPointId, hikingPointName, mountainName, mountainId} = useLocalSearchParams()
   
+  console.log(`ini dari search list: ${hikingPointId} ${hikingPointName} ${mountainName} ${mountainId}`)
   const dispatch = useDispatch()
   const tourGuideLists = useSelector((state) => state.tourGuide.tourGuides)
   const statusTourGuideLists = useSelector((state) => state.tourGuide.status)
@@ -79,8 +80,8 @@ const SearchListScreen = () => {
         choosenHikingPoint={hikingPointName}
         choosenMountain={mountainName}
       />
-      {tourGuideLists.length !== 0 && <TourGuideSearchedList tourGuides={tourGuideLists} />}
-      {tourGuideLists.length === 0 && <CustomNotFound title={"Belum ada tour guide yang tersedia"}/>}
+      {tourGuideLists.length !== 0 && <TourGuideSearchedList tourGuides={tourGuideLists} hikingPointId={hikingPointId} hikingPointName={hikingPointName} mountainName={mountainName} mountainId={mountainId} />}
+      {tourGuideLists.length === 0 && <CustomNotFound title={"Belum ada tour guide yang tersedia"} customStyle={"mt-10"}/>}
     </SafeAreaView>
     </Animated.View>
   );
