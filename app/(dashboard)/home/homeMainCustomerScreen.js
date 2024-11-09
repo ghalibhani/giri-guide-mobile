@@ -123,7 +123,7 @@ const HomeMainCustomerScreen = () => {
           style='light'
         />
         {/* <Link href={'/home/mountainDetail'}>loncat</Link> */}
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
           <HeaderHome fullName={profile.fullName} />
           <SlideCarousel data={data} />
           <OverFlowCarousel

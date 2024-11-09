@@ -66,6 +66,8 @@ const TourGuideCard = ({
               ? "Lihat Detail"
               : status === "REJECTED" || status === "DONE"
               ? "Lihat Detail"
+              : status === "WAITING_APPROVE" && role === 'ROLE_CUSTOMER'
+              ? "Lihat Detail"
               : "Beri Persetujuan"
           }
           customStyle='bg-evergreen justify-center px-6'

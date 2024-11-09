@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
+import TabBar from "../../../components/miniComponent/TabBar";
 
 export default function RootLayout() {
   return (
@@ -10,17 +11,8 @@ export default function RootLayout() {
         tabBarActiveTintColor: "#503a3a", 
         tabBarStyle: styles.tabBarStyle,
         tabBarLabelStyle: styles.tabBarLabelStyle,
-        tabBarBackground: () => (
-          <View style={styles.tabBarBackgroundStyle} />
-        ),
-        tabBarBackgroundStyle:  {
-          backgroundColor: 'transparent'
-        }
       }}
-      sceneContainerStyle={{
-        flex: 1,
-        backgroundColor: 'transparent',
-      }}
+      tabBar={props => <TabBar {...props} />}
     >
       <Tabs.Screen
         name='index'

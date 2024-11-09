@@ -40,6 +40,9 @@ const TransactionCustomerScreen = () => {
   const selesaiString = "done%2Crejected";
   const berlangsungString = "upcoming%2Cwaiting_pay%2Cwaiting_approve";
 
+  const [refresh, setRefresh] = useState(false);
+  const toggleRefresh = () => setRefresh((prev) => !prev);
+
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
@@ -71,10 +74,10 @@ const TransactionCustomerScreen = () => {
     console.log(show);
     console.log(transactionHistoryLists);
     fetchTransactions();
-  }, [dispatch, show]);
+  }, [dispatch, show, refresh]);
 
   return (
-    <SafeAreaView className='flex-1'>
+    <SafeAreaView className='flex-1 pb-20'>
       <StatusBar backgroundColor={"#503A3A"} barStyle={"light-content"} />
       <View className='bg-grayCustom flex-1 gap-6'>
         <View className='gap-5'>
@@ -99,6 +102,7 @@ const TransactionCustomerScreen = () => {
                   tourGuideData={transactionHistoryLists}
                   customerData={transactionHistoryLists}
                   role={role}
+                  onTransactionComplete={toggleRefresh}
                 />
               ) : (
                 <TransaksiSelesai

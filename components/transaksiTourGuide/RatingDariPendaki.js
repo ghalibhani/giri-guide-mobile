@@ -9,7 +9,7 @@ const RatingDariPendaki = ({rating, review}) => {
     const emptyStars = totalStars - filledStars;
     return (
         <View className="gap-6">
-            <View className="gap-5 justify-center items-center px-6 py-5 rounded-verylarge bg-white">
+            <View className="gap-5 mx-6 justify-center items-center px-6 py-5 rounded-verylarge bg-white">
                 <Text className="font-ibold text-soil">Rating dari Pendaki</Text>
                 <View className="flex-row gap-5">
                     {Array.from({ length: filledStars }, (_, index) => (

@@ -25,7 +25,10 @@ const TourGuideCard = ({
             <View className='flex flex-row items-center'>
               <FontAwesome name='star' size={16} color={"#ecd768"} />
               <Text className='text-[12px] font-isemibold ml-1 text-plum'>
-                {rating} / 5 ({totalRating})
+                {rating.toLocaleString("id-ID", {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                })} ({totalRating})
               </Text>
             </View>
           </View>

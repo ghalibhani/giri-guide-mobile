@@ -1,4 +1,4 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView,Text } from "react-native";
 import React, { memo } from "react";
 import { useState } from "react";
 import TourGuideCard from "./TourGuideCard";
@@ -65,12 +65,12 @@ const TransaksiSelesai = ({ tourGuideData = [], customerData = [], role }) => {
                 } 
               }}
               customElements={
-                tourGuide.status === "DONE" ? (
+                tourGuide.transactionStatus === "DONE" ? (
                   <View>
                     <View className='my-5 h-[1] bg-borderCustom'></View>
-                    {tourGuide.rating ? (
+                    {tourGuide.review.review !== null ? (
                       <View className='flex-row items-center justify-center gap-4'>
-                        <Star star={tourGuide.rating} />
+                        <Star star={tourGuide.review.rating} />
                       </View>
                     ) : role === "ROLE_CUSTOMER"
                     ? (
@@ -78,7 +78,7 @@ const TransaksiSelesai = ({ tourGuideData = [], customerData = [], role }) => {
                         customStyle={"bg-soil min-w-full"}
                         title={"Berikan Rating"}
                         buttonHandling={() =>
-                          router.push("/transaction/beriRating" + tourGuide.id)
+                          router.push(`/transaction/beriRating?transactionId=${tourGuide.id}&tourGuideId=${tourGuide.tourGuideId}`)
                         }
                       />
                     ) : (

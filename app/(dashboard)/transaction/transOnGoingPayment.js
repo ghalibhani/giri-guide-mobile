@@ -12,9 +12,10 @@ import moment from "moment";
 import CustomButton from "../../../components/miniComponent/CustomButton";
 import { useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getSnapTokenByTransactionId, getTransactionHistoryByTransactionId } from "../../../redux/transactionSlice";
 import WebView from "react-native-webview";
+import { useFocusEffect } from "@react-navigation/native";
 
 const TransactionOnGoingPaymentScreen = () => {
   const {id} = useLocalSearchParams()
@@ -39,7 +40,7 @@ const TransactionOnGoingPaymentScreen = () => {
   useEffect(() => {
       if(id) {
           dispatch(getTransactionHistoryByTransactionId(id))
-          // console.log(transactionHistoryDetail)
+          console.log(transactionHistoryDetail.endOfPay)
           // console.log(transactionHistoryDetail.hikers)
       }
       const loadingTimeout = setTimeout(() => setLoading(false), 1000)
@@ -64,7 +65,15 @@ const TransactionOnGoingPaymentScreen = () => {
       }
     }, [loading, statusTransactionHistoryDetail]);
 
-  const startDate = "2024-10-01T08:00:00";
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        setSnapToken(null)
+      }
+    }, [])
+  )
+
+  const startDate = new Date();
   const endDate = "2024-10-02T09:12:14";
   
 
@@ -121,7 +130,7 @@ const TransactionOnGoingPaymentScreen = () => {
     try {
       dispatch(getSnapTokenByTransactionId(id));
       console.log("Transaction Payment State:", transactionPayment);
-console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
+      console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
     } catch (error) {
       console.error("Error saat memproses pembayaran:", error);
     }
@@ -164,7 +173,7 @@ console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
             <View className="px-6">
               <MinimizeCard
                 title={"Sisa Waktu Pembayaran"}
-                data={calculateTimeDifference(startDate, endDate)}
+                data={calculateTimeDifference(startDate, transactionHistoryDetail.endOfPay)}
                 icon={"clock"}
               />
             </View>

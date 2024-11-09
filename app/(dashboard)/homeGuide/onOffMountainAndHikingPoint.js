@@ -88,7 +88,7 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
 
     return (
       <View className='border-borderCustom border-[1px] bg-white rounded-xl mx-6 px-5 py-5 flex-row justify-between items-center'>
-        <View className='flex-row items-center gap-[15] '>
+        <View className='flex-row items-center gap-[15] max-w-[70%] '>
           <FontAwesome6 name='mountain-sun' size={20} color={"#ECD768"} />
 
           <View className='gap-[5]'>

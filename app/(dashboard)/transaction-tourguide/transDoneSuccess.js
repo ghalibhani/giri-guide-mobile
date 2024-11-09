@@ -77,10 +77,10 @@ const TransactionDoneSuccessScreen = () => {
 
                     <ScrollView showsVerticalScrollIndicator={false} className="gap-6" contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}>
                         <View className="">
-                            {rating ? (
-                                <RatingDariPendaki rating={rating} review={review}/>
-                            ) : (
+                            {transactionHistoryDetail.review.review === null ? (
                                 <CustomToastInfo message={"Belum ada ulasan dari pendaki"} />
+                            ) : (
+                                <RatingDariPendaki rating={transactionHistoryDetail.review.rating} review={transactionHistoryDetail.review.review}/>
                             )}
                             
                         </View>

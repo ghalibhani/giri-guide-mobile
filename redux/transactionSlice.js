@@ -30,6 +30,7 @@ export const getSnapTokenByTransactionId = createAsyncThunk(
     "transaction/getSnapTokenByTransactionId",
     async(transactionId, {rejectWithValue}) => {
         try{
+            console.log('ini berhasil di awal')
             const response = await axiosInstance.post(`/transactions/payment?transactionId=${transactionId}`)
             console.log(response)
             return response.data
@@ -52,6 +53,23 @@ export const createNewTransaction = createAsyncThunk(
             });
             // console.log(response)
             return response.data.transactionStatus;
+        } catch(e) {
+            return rejectWithValue(e.response.data.message)
+        }
+    }
+)
+
+export const giveRatingForDoneTransaction = createAsyncThunk(
+    "transaction/giveRatingForDoneTransaction",
+    async({dataRating, transactionId}, {rejectWithValue}) => {
+        try{
+            const response = await axiosInstance.put(`/guide/reviews/${transactionId}`, dataRating, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log('ini response setelah kasih rating: ', response)
+            return response.data.rating;
         } catch(e) {
             return rejectWithValue(e.response.data.message)
         }
@@ -153,6 +171,18 @@ const transactionSlice = createSlice({
                 state.error = action.payload;
             })
 
+
+            .addCase(giveRatingForDoneTransaction.pending, (state) => {
+                state.status = "loading"; // Set loading status while fetching
+            })
+            .addCase(giveRatingForDoneTransaction.fulfilled, (state, action) => {
+                state.status = "succeed";
+                state.error = null;
+            })
+            .addCase(giveRatingForDoneTransaction.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
 
 
             .addCase(updatingTransactionStatus.pending, (state) => {

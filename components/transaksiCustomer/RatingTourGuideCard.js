@@ -4,11 +4,10 @@ import TouchStarRating from "../miniComponent/TouchStarRating";
 
 import React, { useState } from "react";
 
-const RatingTourGuideCard = ({ guideName, guideImage }) => {
-  const [rating, setRating] = useState(null);
+const RatingTourGuideCard = ({ guideName, guideImage, giveRating, setGiveRating, guideReviewCount, guideRating }) => {
 
   const handleRatingChange = (newRating) => {
-    setRating(newRating);
+    setGiveRating(newRating);
     console.log("Rating changed:", newRating);
   };
 
@@ -34,7 +33,11 @@ const RatingTourGuideCard = ({ guideName, guideImage }) => {
         <View className='ml-auto flex-row items-center'>
           <AntDesign name='star' size={20} color='#ECD768' />
           <Text className='font-isemibold text-sm text-plum ml-2'>
-            4,5 (12)
+            {guideRating.toLocaleString("id-ID", {
+                                              minimumFractionDigits: 0,
+                                              maximumFractionDigits: 2,
+                                            })} 
+            ({guideReviewCount})
           </Text>
         </View>
       </View>
@@ -42,7 +45,7 @@ const RatingTourGuideCard = ({ guideName, guideImage }) => {
       <View className='flex-row justify-center items-center gap-4'>
         <TouchStarRating
           onRatingChange={handleRatingChange}
-          initialRating={rating}
+          initialRating={giveRating}
         />
       </View>
     </View>

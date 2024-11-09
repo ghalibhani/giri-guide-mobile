@@ -14,6 +14,8 @@ import CustomButton from "../../../components/miniComponent/CustomButton";
 import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactionHistoryByTransactionId } from "../../../redux/transactionSlice";
+import CustomToastInfo from "../../../components/miniComponent/CustomToastInfo";
+import RatingDariPendaki from "../../../components/transaksiTourGuide/RatingDariPendaki";
 
 const TransactionDoneSuccessScreen = () => {
   const {id} = useLocalSearchParams()
@@ -69,7 +71,8 @@ const TransactionDoneSuccessScreen = () => {
   }
 
   const continueHandling = () => {
-    router.push("/transaction/beriRating");
+    console.log('ini dari trans done success customer ', id, transactionHistoryDetail.tourGuideId)
+    router.push(`/transaction/beriRating?transactionId=${id}&tourGuideId=${transactionHistoryDetail.tourGuideId}`);
   };
 
   return (
@@ -87,7 +90,16 @@ const TransactionDoneSuccessScreen = () => {
             className='gap-6'
             contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}
           >
-            <View className='px-6'>
+            <View className="">
+                {transactionHistoryDetail.review.review === null ? (
+                    <CustomToastInfo message={"Ayo beri ulasan untuk pendakian ini!"} />
+                ) : (
+                    <RatingDariPendaki rating={transactionHistoryDetail.review.rating} review={transactionHistoryDetail.review.review}/>
+                )}
+                
+            </View>
+
+            <View className='px-6 mt-6'>
               <MinimizeCard
                 title={"Tanggal Pendakian"}
                 data={`${formattedDate(transactionHistoryDetail.startDate)} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
@@ -143,13 +155,16 @@ const TransactionDoneSuccessScreen = () => {
             </View>
           </ScrollView>
 
-          <View className='w-full flex-row justify-between bg-white px-6 py-3'>
-            <CustomButton
-              buttonHandling={continueHandling}
-              customStyle='bg-soil flex-1'
-              title='Beri Rating'
-            />
-          </View>
+          {transactionHistoryDetail.review.review === null ?
+            <View className='w-full flex-row justify-between bg-white px-6 py-3'>
+              <CustomButton
+                buttonHandling={continueHandling}
+                customStyle='bg-soil flex-1'
+                title='Beri Rating'
+              />
+            </View>
+          : null
+          }
         </View>
       </SafeAreaView>
     </Animated.View>
