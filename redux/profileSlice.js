@@ -27,6 +27,24 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+export const updateProfileImage = createAsyncThunk(
+  "profile/updateProfileImage",
+  async ({ id, image }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`profile/${id}/image`, image, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(">>>>>>>", response.data.data);
+      return response.data.data;
+    } catch (error) {
+      console.log("error slice ---------", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   id: "",
   fullName: "",
@@ -87,6 +105,22 @@ const profileSlice = createSlice({
       })
       .addCase(updateProfile.rejected, (state, action) => {
         // console.log("update profile rejected", action);
+        state.loading = false;
+        state.error = action.payload
+          ? action.payload.message
+          : "Something went wrong";
+      })
+
+      // UPDATE PROFILE IMAGE
+      .addCase(updateProfileImage.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProfileImage.fulfilled, (state, action) => {
+        state.loading = false;
+        state.imageId = action.payload.imageId;
+      })
+      .addCase(updateProfileImage.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload
           ? action.payload.message

@@ -9,6 +9,7 @@ import {
   fetchProfileCustomer,
   updateProfile,
 } from "../../../redux/profileSlice";
+import CustomModalSuccess from "../../../components/miniComponent/CustomModalSuccess";
 
 const UpdateProfileScreen = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const UpdateProfileScreen = () => {
   const [fullName, setFullName] = useState(profileCustomer.fullName);
   const [address, setAddress] = useState(profileCustomer.address);
   const [gender, setGender] = useState(profileCustomer.gender);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (role === "ROLE_CUSTOMER") {
@@ -39,7 +41,8 @@ const UpdateProfileScreen = () => {
       })
     );
 
-    Alert.alert("Success", "Profile has been updated");
+    // Alert.alert("Success", "Profile has been updated");
+    setModalVisible(true);
   };
 
   const formattedDate = (date) => {
@@ -62,7 +65,6 @@ const UpdateProfileScreen = () => {
             isEditable={false}
             nameIcon={"card-outline"}
           />
-
           <CustomInputOrPickerWithIcon
             title={"Tanggal Lahir"}
             value={
@@ -73,14 +75,12 @@ const UpdateProfileScreen = () => {
             isEditable={false}
             nameIcon={"calendar-outline"}
           />
-
           <CustomInputOrPickerWithIcon
             title={"Email"}
             value={profileCustomer?.email}
             isEditable={false}
             nameIcon={"mail-outline"}
           />
-
           <CustomInputOrPickerWithIcon
             title={"Nama Lengkap"}
             value={fullName}
@@ -88,7 +88,6 @@ const UpdateProfileScreen = () => {
             isEditable={true}
             nameIcon={"person-outline"}
           />
-
           <CustomInputOrPickerWithIcon
             title={"Jenis Kelamin"}
             value={gender}
@@ -96,7 +95,6 @@ const UpdateProfileScreen = () => {
             isEditable={true}
             nameIcon={"male-female-outline"}
           />
-
           <CustomInputOrPickerWithIcon
             title={"Alamat"}
             value={address}
@@ -104,12 +102,20 @@ const UpdateProfileScreen = () => {
             isEditable={true}
             nameIcon={"home-outline"}
           />
-
           <CustomButton
             buttonHandling={updateProfileHandler}
             customStyle={"bg-evergreen"}
             title={"Update"}
           />
+          <CustomModalSuccess
+            children={
+              <Text className='font-iregular mb-2 text-base text-evergreen'>
+                Profile has been updated
+              </Text>
+            }
+            isModalVisible={modalVisible}
+            handleDone={() => setModalVisible(false)}
+          ></CustomModalSuccess>
         </View>
       </ScrollView>
     </SafeAreaView>
