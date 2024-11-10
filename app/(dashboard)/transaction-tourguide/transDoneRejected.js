@@ -77,8 +77,8 @@ const TransactionDoneRejectedScreen = ({transDetail}) => {
                     <View>
                         <CatatanUntukTourGuide 
                             isEditable={false}
-                            title={"Alasan penolakan oleh kamu"}
-                            catatan={transactionHistoryDetail.rejectedNote}
+                            title={"Alasan penolakan pendakian"}
+                            catatan={transactionHistoryDetail.rejectedNote === null ? 'Waktu pembayaran sudah habis' : transactionHistoryDetail.rejectedNote}
                         />
                     </View>
 

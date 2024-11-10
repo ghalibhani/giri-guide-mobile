@@ -13,7 +13,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } fr
 
 export default function LoginScreen() {
   const { currentStageToBeParsed } = useLocalSearchParams()
-  console.log(currentStageToBeParsed)
+  // console.log(currentStageToBeParsed)
 
   const dispatch = useDispatch();
   const { error, isLoggedIn } = useSelector((state) => state.auth);
