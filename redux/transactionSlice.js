@@ -30,9 +30,9 @@ export const getSnapTokenByTransactionId = createAsyncThunk(
     "transaction/getSnapTokenByTransactionId",
     async(transactionId, {rejectWithValue}) => {
         try{
-            console.log('ini berhasil di awal')
+            // console.log('ini berhasil di awal')
             const response = await axiosInstance.post(`/transaction-payment?transactionId=${transactionId}`)
-            console.log(response)
+            // console.log(response)
             return response.data
         } catch(e) {
             return rejectWithValue(e.response?.data || 'Network error')
@@ -68,7 +68,7 @@ export const giveRatingForDoneTransaction = createAsyncThunk(
                     'Content-Type': 'application/json',
                 },
             });
-            console.log('ini response setelah kasih rating: ', response)
+            // console.log('ini response setelah kasih rating: ', response)
             return response.data.rating;
         } catch(e) {
             return rejectWithValue(e.response.data.message)
@@ -85,7 +85,7 @@ export const updatingTransactionStatus = createAsyncThunk(
                     'Content-Type': 'application/json',
                 },
             });
-            console.log(response)
+            // console.log(response)
             return response.data.transactionStatus;
         } catch(e) {
             return rejectWithValue(e.response.data.message)

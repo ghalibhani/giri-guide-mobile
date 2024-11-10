@@ -31,7 +31,7 @@ const TransactionCustomerScreen = () => {
   const [show, setShow] = useState("berlangsung");
   const role = useSelector((state) => state.auth.role);
 
-  console.log(role);
+  // console.log(role);
 
   const selesai = ["DONE", "REJECTED"];
   const berlangsung = ["UPCOMING", "WAITING_PAY", "WAITING_APPROVE"];
@@ -50,8 +50,8 @@ const TransactionCustomerScreen = () => {
         try {
           const userId = await AsyncStorage.getItem("userId");
           const userRole = await AsyncStorage.getItem("userRole");
-          console.log(`ini dari transaction: ${userId}`);
-          console.log(`ini role dari transaction: ${userRole}`);
+          // console.log(`ini dari transaction: ${userId}`);
+          // console.log(`ini role dari transaction: ${userRole}`);
           if (!userId) {
             console.error("User ID not found.");
             return;
@@ -73,8 +73,8 @@ const TransactionCustomerScreen = () => {
           setLoading(false);
         }
       };
-      console.log(show);
-      console.log(transactionHistoryLists);
+      // console.log(show);
+      // console.log(transactionHistoryLists);
       fetchTransactions();
     }, [dispatch, show, refresh])
   )

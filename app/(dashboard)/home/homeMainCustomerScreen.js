@@ -26,7 +26,7 @@ const HomeMainCustomerScreen = () => {
 
   useEffect(() => {
     dispatch(fetchProfileCustomer(userId));
-    console.log(profile);
+    // console.log(profile);
   }, [dispatch, userId]);
 
   // useEffect(() => {

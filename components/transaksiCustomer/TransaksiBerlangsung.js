@@ -83,7 +83,7 @@ const TransactionBerlangsung = ({
       d1.getFullYear() === d2.getFullYear()
     );
   };
-  console.log(isSameDate(timeNow, timeNow))
+  // console.log(isSameDate(timeNow, timeNow))
 
   const timeNow = new Date()
 

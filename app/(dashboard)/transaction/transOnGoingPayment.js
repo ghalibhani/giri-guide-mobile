@@ -19,7 +19,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const TransactionOnGoingPaymentScreen = () => {
   const {id} = useLocalSearchParams()
-  console.log('ini dari transaction pay customer: transaction id = ', id)
+  // console.log('ini dari transaction pay customer: transaction id = ', id)
   const dispatch = useDispatch();
 
   const transactionHistoryDetail = useSelector((state) => state.transaction.transactionHistoryDetail)
@@ -41,7 +41,7 @@ const TransactionOnGoingPaymentScreen = () => {
   useEffect(() => {
       if(id) {
           dispatch(getTransactionHistoryByTransactionId(id))
-          console.log(transactionHistoryDetail.endOfPay)
+          // console.log(transactionHistoryDetail.endOfPay)
           // console.log(transactionHistoryDetail.hikers)
       }
       const loadingTimeout = setTimeout(() => setLoading(false), 1000)
@@ -135,12 +135,12 @@ const TransactionOnGoingPaymentScreen = () => {
 
   const continueHandling = async () => {
     try {
-      dispatch(getSnapTokenByTransactionId(id));
-      console.log("Transaction Payment State:", transactionPayment);
-      console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
+      // dispatch(getSnapTokenByTransactionId(id));
+      // console.log("Transaction Payment State:", transactionPayment);
+      // console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
 
       if (transactionPayment?.paymentResponse?.redirectUrl) {
-        setWebViewVisible(true); // Only show WebView after the button is clicked
+        setWebViewVisible(true); 
       }
     } catch (error) {
       console.error("Error saat memproses pembayaran:", error);
@@ -161,12 +161,12 @@ const TransactionOnGoingPaymentScreen = () => {
         const response = await dispatch(getSnapTokenByTransactionId(id));
         // console.log('ini response nya dapat nih: di bawah aiwaait dispatch', response.payload?.data?.paymentResponse)
         const paymentStatus = response.payload?.data?.paymentResponse?.PaymentStatus;
-        console.log('dapat nih response nya: ', paymentStatus)
+        // console.log('dapat nih response nya: ', paymentStatus)
         if(paymentStatus === "PAID"){
           router.replace('/transaction')
         } else if(paymentStatus === "PENDING"){
           setWebViewVisible(false)
-          console.log('ini paymentstatus pending terbaca')
+          // console.log('ini paymentstatus pending terbaca')
           router.push(`/transaction/transOnGoingPayment?id=${id}`)
         } else{
           router.replace('/transaction')

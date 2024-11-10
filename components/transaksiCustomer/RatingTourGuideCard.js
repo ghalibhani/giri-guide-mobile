@@ -8,7 +8,7 @@ const RatingTourGuideCard = ({ guideName, guideImage, giveRating, setGiveRating,
 
   const handleRatingChange = (newRating) => {
     setGiveRating(newRating);
-    console.log("Rating changed:", newRating);
+    // console.log("Rating changed:", newRating);
   };
 
   const getImageSource = () => {

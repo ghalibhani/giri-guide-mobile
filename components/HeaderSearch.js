@@ -38,7 +38,7 @@ const HeaderSearch = ({mountains}) => {
   useEffect(() => {
     if (mountainId) {
       setMountain(mountainId);
-      console.log(`ini isi dari useeffect mountain id ${mountainName}`)
+      // console.log(`ini isi dari useeffect mountain id ${mountainName}`)
     } else {
       setMountain(null); 
     }
@@ -63,7 +63,7 @@ const HeaderSearch = ({mountains}) => {
         value: hikingPoint.id,
       }));
       setPositionOfInterestList(formattedItems);
-      console.log(mountainName)
+      // console.log(mountainName)
     }
   }, [hikingPoints]);
 

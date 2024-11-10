@@ -84,7 +84,7 @@ export const toggleTourGuideOnOrOff = createAsyncThunk(
       console.log("---------", response.data);
       return response.data;
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
@@ -128,12 +128,12 @@ const tourGuideSlice = createSlice({
         state.tourGuide = action.payload.data;
         state.error = null;
         state.status = "succeed";
-        console.log(action.payload)
+        // console.log(action.payload)
       })
       .addCase(fetchTourGuideById.rejected, (state, action) => {
         state.error = action.payload;
         state.status = "failed";
-        console.log(action.payload)
+        // console.log(action.payload)
       })
 
       // FETCH PROFILE GUIDE BY USER ID

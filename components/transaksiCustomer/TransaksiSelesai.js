@@ -10,7 +10,7 @@ import CustomNotFound from "../miniComponent/CustomNotFound";
 import { remapProps } from "nativewind";
 
 const TransaksiSelesai = ({ tourGuideData = [], customerData = [], role }) => {
-  console.log("ini dari transaksi selesai: ", tourGuideData)
+  // console.log("ini dari transaksi selesai: ", tourGuideData)
   const [show, setShow] = useState("selesai");
 
   const filteredData = tourGuideData?.filter((tourGuide) => {
@@ -18,7 +18,7 @@ const TransaksiSelesai = ({ tourGuideData = [], customerData = [], role }) => {
     if (show === "ditolak") return tourGuide.transactionStatus === "REJECTED";
     return true;
   }) || [];
-  console.log(filteredData.length)
+  // console.log(filteredData.length)
 
   const formatRupiah = (amount) => {
     return new Intl.NumberFormat("id-ID", {

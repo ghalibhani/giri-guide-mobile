@@ -48,7 +48,7 @@ export default function transBeriPersetujuan() {
         status: isApproved ? "waiting_pay" : "rejected",
         rejectedNote: isApproved ? "" : rejectedNote,
       }
-      console.log(dataBody)
+      // console.log(dataBody)
       await dispatch(updatingTransactionStatus({dataBody, transactionId: id})).unwrap()
       setIsModalConfirmationVisible(false)
       setRejectedNote('')

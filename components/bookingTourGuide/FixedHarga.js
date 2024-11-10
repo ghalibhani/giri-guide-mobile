@@ -28,7 +28,7 @@ const FixedHarga = ({
             maximumFractionDigits: 0,
         }).format(value);
     };
-    console.log(hikersCount)
+    // console.log(hikersCount)
 
     return (
         <View className="gap-[15] bg-white px-6 py-6 rounded-verylarge">

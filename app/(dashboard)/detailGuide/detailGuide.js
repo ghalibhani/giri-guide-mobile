@@ -25,7 +25,7 @@ import { fetchTourGuideById } from "../../../redux/tourGuideSlice";
 export default function DetailTourGuideScreen() {
   const { tourGuideId, hikingPointId, hikingPointName, mountainName, mountainId } = useLocalSearchParams();
 
-  console.log(`ini dari detail guide: tourGuideId= ${tourGuideId}, hikingPointId=${hikingPointId}, hikingPointName=${hikingPointName}, mountainName=${mountainName}, mountainId=${mountainId}`)
+  // console.log(`ini dari detail guide: tourGuideId= ${tourGuideId}, hikingPointId=${hikingPointId}, hikingPointName=${hikingPointName}, mountainName=${mountainName}, mountainId=${mountainId}`)
 
   const dispatch = useDispatch();
   const tourGuide = useSelector((state) => state.tourGuide.tourGuide);
@@ -47,9 +47,9 @@ export default function DetailTourGuideScreen() {
 
   useEffect(() => {
     dispatch(fetchTourGuideById(tourGuideId));
-    console.log(`tourGuide: ${tourGuide}`)
+    // console.log(`tourGuide: ${tourGuide}`)
     dispatch(fetchTourGuideReview(tourGuideId));
-    console.log()
+    // console.log()
   }, [dispatch, tourGuideId]);
 
   useEffect(() => {

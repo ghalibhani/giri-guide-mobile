@@ -9,7 +9,7 @@ const JasaPorter = ({continueHandling, maxPorter, eachPorterPrice, countPorter, 
     const [maxPorterErrorMessage, setMaxPorterErrorMessage] = useState('')
     const [porterPrice, setPorterPrice] = useState(0)
 
-    console.log(totalPrice)
+    // console.log(totalPrice)
 
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('id-ID', {
