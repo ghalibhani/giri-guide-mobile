@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TransaksiSlideBerlangsung from "../../../components/transaksiCustomer/TransaksiSlideBerlangsung";
@@ -19,6 +19,7 @@ import TransaksiSelesai from "../../../components/transaksiCustomer/TransaksiSel
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTransactionsByUserId } from "../../../redux/transactionSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 //  transCustomer.js ada di folder transaction
 
@@ -43,38 +44,73 @@ const TransactionCustomerScreen = () => {
   const [refresh, setRefresh] = useState(false);
   const toggleRefresh = () => setRefresh((prev) => !prev);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const userId = await AsyncStorage.getItem("userId");
-        const userRole = await AsyncStorage.getItem("userRole");
-        console.log(`ini dari transaction: ${userId}`);
-        console.log(`ini role dari transaction: ${userRole}`);
-        if (!userId) {
-          console.error("User ID not found.");
-          return;
+  useFocusEffect(
+    useCallback(() => {
+      const fetchTransactions = async () => {
+        try {
+          const userId = await AsyncStorage.getItem("userId");
+          const userRole = await AsyncStorage.getItem("userRole");
+          console.log(`ini dari transaction: ${userId}`);
+          console.log(`ini role dari transaction: ${userRole}`);
+          if (!userId) {
+            console.error("User ID not found.");
+            return;
+          }
+          const listStatus =
+            show === "berlangsung" ? berlangsungString : selesaiString;
+          setLoading(true);
+          dispatch(
+            getAllTransactionsByUserId({
+              userId,
+              listStatus,
+              userRole,
+              page: 1,
+              size: 40,
+            })
+          ).then(() => setLoading(false));
+        } catch (error) {
+          console.error("Failed to fetch transactions:", error);
+          setLoading(false);
         }
-        const listStatus =
-          show === "berlangsung" ? berlangsungString : selesaiString;
-        setLoading(true);
-        dispatch(
-          getAllTransactionsByUserId({
-            userId,
-            listStatus,
-            userRole,
-            page: 1,
-            size: 40,
-          })
-        ).then(() => setLoading(false));
-      } catch (error) {
-        console.error("Failed to fetch transactions:", error);
-        setLoading(false);
-      }
-    };
-    console.log(show);
-    console.log(transactionHistoryLists);
-    fetchTransactions();
-  }, [dispatch, show, refresh]);
+      };
+      console.log(show);
+      console.log(transactionHistoryLists);
+      fetchTransactions();
+    }, [dispatch, show, refresh])
+  )
+
+  // useEffect(() => {
+  //   const fetchTransactions = async () => {
+  //     try {
+  //       const userId = await AsyncStorage.getItem("userId");
+  //       const userRole = await AsyncStorage.getItem("userRole");
+  //       console.log(`ini dari transaction: ${userId}`);
+  //       console.log(`ini role dari transaction: ${userRole}`);
+  //       if (!userId) {
+  //         console.error("User ID not found.");
+  //         return;
+  //       }
+  //       const listStatus =
+  //         show === "berlangsung" ? berlangsungString : selesaiString;
+  //       setLoading(true);
+  //       dispatch(
+  //         getAllTransactionsByUserId({
+  //           userId,
+  //           listStatus,
+  //           userRole,
+  //           page: 1,
+  //           size: 40,
+  //         })
+  //       ).then(() => setLoading(false));
+  //     } catch (error) {
+  //       console.error("Failed to fetch transactions:", error);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   console.log(show);
+  //   console.log(transactionHistoryLists);
+  //   fetchTransactions();
+  // }, [dispatch, show, refresh]);
 
   return (
     <SafeAreaView className='flex-1 pb-20'>
