@@ -10,7 +10,7 @@ import TipsMeetingWithGuide from "../../../components/transaksiCustomer/TipsMeet
 import { ScrollView } from "react-native";
 import moment from "moment";
 import CustomButton from "../../../components/miniComponent/CustomButton";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import { getSnapTokenByTransactionId, getTransactionHistoryByTransactionId } from "../../../redux/transactionSlice";
@@ -134,18 +134,45 @@ const TransactionOnGoingPaymentScreen = () => {
   };
 
   const continueHandling = async () => {
-  try {
-    dispatch(getSnapTokenByTransactionId(id));
-    console.log("Transaction Payment State:", transactionPayment);
-    console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
+    try {
+      dispatch(getSnapTokenByTransactionId(id));
+      console.log("Transaction Payment State:", transactionPayment);
+      console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
 
-    if (transactionPayment?.paymentResponse?.redirectUrl) {
-      setWebViewVisible(true); // Only show WebView after the button is clicked
+      if (transactionPayment?.paymentResponse?.redirectUrl) {
+        setWebViewVisible(true); // Only show WebView after the button is clicked
+      }
+    } catch (error) {
+      console.error("Error saat memproses pembayaran:", error);
     }
-  } catch (error) {
-    console.error("Error saat memproses pembayaran:", error);
-  }
-};
+  };
+
+    const handleWebViewNavigationStateChange = async(navState) => {
+      const exampleUrl = 'http://example.com'
+      // console.log('handlewebviewnavigationstatechange dapat', navState.url)
+
+      if (navState.url.startsWith(exampleUrl)) {
+        // if (navState.url !== exampleUrl) {
+        //   console.log('Navigation canceled: already on the correct URL');
+        //   return; // Exit the function, no further navigation happens
+        // }
+
+        // console.log('ini navstate startswith jalan')
+        const response = await dispatch(getSnapTokenByTransactionId(id));
+        // console.log('ini response nya dapat nih: di bawah aiwaait dispatch', response.payload?.data?.paymentResponse)
+        const paymentStatus = response.payload?.data?.paymentResponse?.PaymentStatus;
+        console.log('dapat nih response nya: ', paymentStatus)
+        if(paymentStatus === "PAID"){
+          router.replace('/transaction')
+        } else if(paymentStatus === "PENDING"){
+          setWebViewVisible(false)
+          console.log('ini paymentstatus pending terbaca')
+          router.push(`/transaction/transOnGoingPayment?id=${id}`)
+        } else{
+          router.replace('/transaction')
+        }
+      }
+    }
 
   const renderWebView = () => {
     if (transactionPayment && transactionPayment.paymentResponse?.redirectUrl) {
@@ -153,6 +180,7 @@ const TransactionOnGoingPaymentScreen = () => {
         <WebView
           source={{ uri: transactionPayment.paymentResponse.redirectUrl }}
           style={{ flex: 1 }}
+          onNavigationStateChange={handleWebViewNavigationStateChange}
         />
       );
     }
