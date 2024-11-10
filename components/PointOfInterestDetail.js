@@ -114,12 +114,15 @@ const PointOfInterestDetail = ({
             <Text className="text-xs font-iregular text-thistle">
               ({item.distance} dalam waktu {item.estimate})
             </Text>
-            <View
-              style={{
-                borderBottomColor: "#d4d6dd",
-                borderBottomWidth: 0.5,
-                marginBottom: 20,
-              }}></View>
+            {index < lengthPointOfInterest - 1 && (
+              <View
+                style={{
+                  borderBottomColor: "#d4d6dd",
+                  borderBottomWidth: 0.5,
+                  marginBottom: 20,
+                }}>
+              </View>
+            )}
           </View>
         </View>
       ))}

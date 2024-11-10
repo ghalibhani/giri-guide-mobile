@@ -80,7 +80,7 @@ const HeaderSearch = ({mountains}) => {
 
   const handlePress = () => {
     if (mountain && positionOfInterest) {
-      console.log(`mountain name ${mountainName}, hiking point name ${hikingPointName}`)
+      // console.log(`mountain name ${mountainName}, hiking point name ${hikingPointName}`)
       router.navigate(`/search/searchList?hikingPointId=${positionOfInterest}&hikingPointName=${hikingPointName}&mountainName=${mountainName}&mountainId=${mountain}`);
       setMountain(null);
       setPositionOfInterest(null);

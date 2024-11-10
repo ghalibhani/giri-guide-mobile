@@ -1,4 +1,4 @@
-import { ScrollView, StatusBar } from "react-native";
+import { Image, ScrollView, StatusBar, View } from "react-native";
 import OverFlowCarousel from "../../../components/OverFlowCarousel";
 import HeaderHome from "../../../components/HeaderHome";
 import SlideCarousel from "../../../components/SlideCarousel";
@@ -10,6 +10,7 @@ import { loginRefresh } from "../../../redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllMountains } from "../../../redux/mountainSlice";
 import { fetchProfileCustomer } from "../../../redux/profileSlice";
+import { fetchAllRoutes } from "../../../redux/routesSlice";
 
 const HomeMainCustomerScreen = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,29 @@ const HomeMainCustomerScreen = () => {
   const statusMountains = useSelector((state) => state.mountain.status);
   const errorMountains = useSelector((state) => state.mountain.error);
 
-  const travelRoutes = useSelector((state) => state.mountain.mountains);
-  const statusTravelRoutes= useSelector((state) => state.mountain.status);
-  const errorTravelRoutes = useSelector((state) => state.mountain.error);
+  const travelRoutes = useSelector((state) => state.travelRoute.travelRoutes);
+  const statusTravelRoutes= useSelector((state) => state.travelRoute.status);
+  const errorTravelRoutes = useSelector((state) => state.travelRoute.error);
+
+  const [loading, setLoading] = useState(true)
 
   const userId = useSelector((state) => state.auth.userId);
   const profile = useSelector((state) => state.profile);
+
+  const [hidden, setHidden] = useState(false);
+  const [statusBarStyle, setStatusBarStyle] = useState("default");
+  const [statusBarTransition, setStatusBarTransition] = useState("fade");
+
+  const handleScroll = (event) => {
+    const { nativeEvent } = event;
+    const { contentOffset } = nativeEvent;
+    const { y } = contentOffset;
+    if (y > 300) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchProfileCustomer(userId));
@@ -59,8 +77,26 @@ const HomeMainCustomerScreen = () => {
 
   useEffect(() => {
     dispatch(fetchAllMountains({ page: 1, size: 40 }));
+    dispatch(fetchAllRoutes({page: 1, size: 40}))
     // console.log(statusMountains)
   }, [dispatch]);
+
+  useEffect(() => {
+    if(statusMountains === "succeed" && statusTravelRoutes === "succeed"){
+      setLoading(false)
+    }
+  }, [statusMountains, statusTravelRoutes])
+
+  if (loading || statusMountains === "loading" || statusTravelRoutes === "loading") {
+    return (
+      <View className="flex-1 items-center justify-center bg-white">
+        <Image
+          source={require("../../../assets/loading.gif")}
+          style={{ width: 80, height: 80 }}
+        />
+      </View>
+    );
+  }
 
   const data = [
     {
@@ -100,58 +136,40 @@ const HomeMainCustomerScreen = () => {
     },
   ];
 
-  try {
-    const [hidden, setHidden] = useState(false);
-    const [statusBarStyle, setStatusBarStyle] = useState("default");
-    const [statusBarTransition, setStatusBarTransition] = useState("fade");
-
-    const handleScroll = (event) => {
-      const { nativeEvent } = event;
-      const { contentOffset } = nativeEvent;
-      const { y } = contentOffset;
-      if (y > 300) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
-    };
-
-    return (
-      <SafeAreaView>
-        <StatusBar
-          animated={true}
-          backgroundColor='#503a3a'
-          barStyle={statusBarStyle}
-          showHideTransition={statusBarTransition}
-          hidden={hidden}
-          style='light'
+  return (
+    <SafeAreaView>
+      <StatusBar
+        animated={true}
+        backgroundColor='#503a3a'
+        barStyle={statusBarStyle}
+        showHideTransition={statusBarTransition}
+        hidden={hidden}
+        style='light'
+      />
+      {/* <Link href={'/home/mountainDetail'}>loncat</Link> */}
+      <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+        <HeaderHome fullName={profile.fullName} />
+        <SlideCarousel data={data} />
+        <OverFlowCarousel
+          data={mountains}
+          title={"Jelajahi Gunung di Jawa Timur"}
+          continueToAllLists={"/home/allMountainCards"}
         />
-        {/* <Link href={'/home/mountainDetail'}>loncat</Link> */}
-        <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
-          <HeaderHome fullName={profile.fullName} />
-          <SlideCarousel data={data} />
-          <OverFlowCarousel
-            data={travelRoutes}
-            title={"Jelajahi Gunung di Jawa Timur"}
-            continueToAllLists={"/home/allMountainCards"}
-          />
-          <OverFlowCarousel
-            data={data}
-            title={"Rute Perjalanan ke Destinasi"}
-            withDescription={true}
-            continueToAllLists={"/home/allRoutesCards"}
-          />
-          {/* <OverFlowCarousel
-                data={data}
-                title={"Pengalaman pendaki lain"}
-                withDescription={true}
-              /> */}
-        </ScrollView>
-      </SafeAreaView>
-    );
-  } catch (error) {
-    // console.error("Error rendering HomeScreen:", error);
-  }
+        <OverFlowCarousel
+          data={travelRoutes}
+          additionalImage={data}
+          title={"Rute Perjalanan ke Destinasi"}
+          withDescription={true}
+          continueToAllLists={"/home/allRoutesCards"}
+        />
+        {/* <OverFlowCarousel
+              data={data}
+              title={"Pengalaman pendaki lain"}
+              withDescription={true}
+            /> */}
+      </ScrollView>
+    </SafeAreaView>
+  );
 };
 
 export default HomeMainCustomerScreen;

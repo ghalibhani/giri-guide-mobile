@@ -16,10 +16,18 @@ const AllMountainCardsScreen = () => {
   const statusMountains = useSelector((state) => state.mountain.status)
   const errorMountains = useSelector((state) => state.mountain.error)
 
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     dispatch(fetchAllMountains({page: 1, size: 40}))
     // console.log(statusMountains)
   }, [dispatch])
+
+  useEffect(() => {
+    if(statusMountains === "succeed"){
+      setLoading(false)
+    }
+  }, [statusMountains])
 
   const screenWidth = Dimensions.get('window').width;
 
@@ -33,6 +41,17 @@ const AllMountainCardsScreen = () => {
     result[rowIndex].push(mountain);
     return result;
   }, []);
+
+  if (loading ||statusMountains === "loading") {
+    return (
+        <View className="flex-1 items-center justify-center bg-white">
+          <Image
+            source={require("../../../assets/loading.gif")}
+            style={{ width: 80, height: 80 }}
+          />
+        </View>
+    );
+  }
 
   return (
     <SafeAreaView className=' flex-1'>
@@ -52,10 +71,10 @@ const AllMountainCardsScreen = () => {
         <ScrollView>
           <View className="px-6">
             {groupedMountainList.map((row, rowIndex) => (
-              <View key={rowIndex} className="flex-row gap-4 justify-between mb-4">
+              <View key={rowIndex} className="flex-row gap-4 justify-between mb-6">
                 {row.map((mountain) => (
                   <TouchableOpacity key={mountain.id} onPress={() => router.push(`/home/mountainDetail?id=${mountain.id}`)} >
-                    <View className="relative h-48" style={{ width: (screenWidth - 64) / 2 }}>
+                    <View className="relative h-48 shadow-lg shadow-evergreen" style={{ width: (screenWidth - 64) / 2 }}>
                       <Image
                         source={{ uri: mountain.image }}
                         className="w-full h-full rounded-verylarge"
