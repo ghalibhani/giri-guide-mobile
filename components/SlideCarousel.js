@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FlatList, View } from "react-native";
 import { Dimensions, Image } from "react-native";
 const { width, height } = Dimensions.get("window");
@@ -31,6 +31,18 @@ const SlideCarousel = ({ data }) => {
       </View>
     );
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+      flatListRef.current?.scrollToIndex({
+        index: (currentIndex + 1) % data.length,
+        animated: true,
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex, data.length]);
 
   return (
     <>
