@@ -17,6 +17,10 @@ const HomeMainCustomerScreen = () => {
   const statusMountains = useSelector((state) => state.mountain.status);
   const errorMountains = useSelector((state) => state.mountain.error);
 
+  const travelRoutes = useSelector((state) => state.mountain.mountains);
+  const statusTravelRoutes= useSelector((state) => state.mountain.status);
+  const errorTravelRoutes = useSelector((state) => state.mountain.error);
+
   const userId = useSelector((state) => state.auth.userId);
   const profile = useSelector((state) => state.profile);
 
@@ -127,7 +131,7 @@ const HomeMainCustomerScreen = () => {
           <HeaderHome fullName={profile.fullName} />
           <SlideCarousel data={data} />
           <OverFlowCarousel
-            data={mountains}
+            data={travelRoutes}
             title={"Jelajahi Gunung di Jawa Timur"}
             continueToAllLists={"/home/allMountainCards"}
           />
@@ -135,7 +139,7 @@ const HomeMainCustomerScreen = () => {
             data={data}
             title={"Rute Perjalanan ke Destinasi"}
             withDescription={true}
-            route='/home/poinOfInterest'
+            continueToAllLists={"/home/allRoutesCards"}
           />
           {/* <OverFlowCarousel
                 data={data}

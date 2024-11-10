@@ -27,10 +27,10 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='login' />
-        <Stack.Screen name='(dashboard)' />
-      </Stack>
+      <Stack screenOptions={{ headerShown: false }} />
+        {/* <Stack.Screen name='login' />
+        <Stack.Screen name='(dashboard)' /> */}
+      {/* </Stack> */}
     </Provider>
   );
 }

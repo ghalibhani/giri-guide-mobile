@@ -1,7 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, StatusBar, TextInput } from "react-native";
 import React, { useState } from "react";
-import moment from 'moment'
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomInput from "../components/miniComponent/CustomInput";
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -9,9 +7,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 import CustomButton from "../components/miniComponent/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewHiker } from "../redux/registerSlice";
+import { router, useLocalSearchParams } from "expo-router";
 
 export default function RegisterScreen() {
-  const navigation = useNavigation();
+  
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => state.register);
 
@@ -157,9 +156,7 @@ export default function RegisterScreen() {
   };
 
   const handleNavigateToLogin = () => {
-    navigation.reset({
-        routes: [{ name: 'login' }],
-    })
+    router.replace(`/login?currentStageToBeParsed=4`);
   };
 
   return (

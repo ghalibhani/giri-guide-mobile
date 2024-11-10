@@ -31,7 +31,7 @@ export const getSnapTokenByTransactionId = createAsyncThunk(
     async(transactionId, {rejectWithValue}) => {
         try{
             console.log('ini berhasil di awal')
-            const response = await axiosInstance.post(`/transactions/payment?transactionId=${transactionId}`)
+            const response = await axiosInstance.post(`/transaction-payment?transactionId=${transactionId}`)
             console.log(response)
             return response.data
         } catch(e) {

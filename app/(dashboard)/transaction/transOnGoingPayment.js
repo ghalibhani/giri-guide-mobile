@@ -19,6 +19,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const TransactionOnGoingPaymentScreen = () => {
   const {id} = useLocalSearchParams()
+  console.log('ini dari transaction pay customer: transaction id = ', id)
   const dispatch = useDispatch();
 
   const transactionHistoryDetail = useSelector((state) => state.transaction.transactionHistoryDetail)
@@ -47,13 +48,19 @@ const TransactionOnGoingPaymentScreen = () => {
       return () => clearTimeout(loadingTimeout)
   }, [dispatch, id])
 
-  useEffect(() => {
-    if (transactionPayment && transactionPayment.paymentResponse?.redirectUrl) {
-      setSnapToken(transactionPayment); // Set snapToken di sini
-      setWebViewVisible(true); // Tampilkan WebView jika snapToken sudah tersedia
-      console.log("Redirect URL:",transactionPayment.paymentResponse.redirectUrl);
-    }
-  }, [transactionPayment, statusTransactionPayment]);
+  // useEffect(() => {
+  //   if (transactionPayment && transactionPayment.paymentResponse?.redirectUrl) {
+  //     setSnapToken(transactionPayment); // Set snapToken di sini
+  //     setWebViewVisible(true); // Tampilkan WebView jika snapToken sudah tersedia
+  //     console.log("Redirect URL:",transactionPayment.paymentResponse.redirectUrl);
+  //   }
+  // }, [transactionPayment, statusTransactionPayment]);
+
+  // useEffect(() => {
+  //   if (transactionPayment?.paymentResponse?.redirectUrl) {
+  //     setWebViewVisible(true);
+  //   }
+  // }, [transactionPayment]);
 
   useEffect(() => {
       if (!loading && statusTransactionHistoryDetail === "succeed") {
@@ -127,27 +134,33 @@ const TransactionOnGoingPaymentScreen = () => {
   };
 
   const continueHandling = async () => {
-    try {
-      dispatch(getSnapTokenByTransactionId(id));
-      console.log("Transaction Payment State:", transactionPayment);
-      console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
-    } catch (error) {
-      console.error("Error saat memproses pembayaran:", error);
+  try {
+    dispatch(getSnapTokenByTransactionId(id));
+    console.log("Transaction Payment State:", transactionPayment);
+    console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
+
+    if (transactionPayment?.paymentResponse?.redirectUrl) {
+      setWebViewVisible(true); // Only show WebView after the button is clicked
     }
-  };
+  } catch (error) {
+    console.error("Error saat memproses pembayaran:", error);
+  }
+};
 
   const renderWebView = () => {
     if (transactionPayment && transactionPayment.paymentResponse?.redirectUrl) {
-      const redirectUrl = transactionPayment.paymentResponse.redirectUrl;
-      
       return (
         <WebView
-          source={{ uri: redirectUrl }} // Memuat URL redirect dari snapToken
+          source={{ uri: transactionPayment.paymentResponse.redirectUrl }}
           style={{ flex: 1 }}
         />
       );
     }
-    return null;
+    return (
+      <View className="flex-1 items-center justify-center">
+        <Text>Tidak dapat memuat halaman pembayaran.</Text>
+      </View>
+    );
   };
 
   
