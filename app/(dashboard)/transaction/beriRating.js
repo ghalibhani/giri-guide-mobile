@@ -13,7 +13,7 @@ import CustomModalSuccess from "../../../components/miniComponent/CustomModalSuc
 
 export default function beriRating() {
   const { transactionId, tourGuideId } = useLocalSearchParams()
-  console.log(`ini dari beri rating: transactionId: ${transactionId} tourGuideId: ${tourGuideId}`)
+  // console.log(`ini dari beri rating: transactionId: ${transactionId} tourGuideId: ${tourGuideId}`)
 
   const dispatch = useDispatch()
   const tourGuide = useSelector((state) => state.tourGuide.tourGuide);
@@ -27,7 +27,7 @@ export default function beriRating() {
 
   useEffect(() => {
     dispatch(fetchTourGuideById(tourGuideId))
-    console.log(`tourguide dari beri rating: ${tourGuide.rating}`)
+    // console.log(`tourguide dari beri rating: ${tourGuide.rating}`)
   }, [dispatch, tourGuideId])
 
   const handleDone = () => {
@@ -46,7 +46,7 @@ export default function beriRating() {
         review: review,
       }
 
-      console.log('ini data rating: ', dataRating)
+      // console.log('ini data rating: ', dataRating)
       await dispatch(giveRatingForDoneTransaction({dataRating, transactionId: transactionId})).unwrap()
       setReview('')
       setRating(0)

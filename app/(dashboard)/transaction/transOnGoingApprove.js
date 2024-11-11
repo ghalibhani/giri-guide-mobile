@@ -35,7 +35,7 @@ const TransactionOnGoingApproveScreen = () => {
   useEffect(() => {
     if (id) {
       dispatch(getTransactionHistoryByTransactionId(id));
-      console.log(transactionHistoryDetail);
+      // console.log(transactionHistoryDetail);
     }
     const loadingTimeout = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(loadingTimeout);

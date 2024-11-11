@@ -151,6 +151,7 @@ const tourGuideSlice = createSlice({
 
       // FETCH PROFILE GUIDE HIKING POINT BY USER ID
       .addCase(fetchTourGuideProfileHikingPointsByUserId.pending, (state) => {
+        state.status = 'loading'
         state.error = null;
       })
       .addCase(
