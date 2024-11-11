@@ -92,7 +92,7 @@ const HomeMainTourGuideScreen = () => {
                 <View className='rounded-verylarge bg-daisy px-6 py-5 flex-row justify-between'>
                   <View className='gap-[5]'>
                     <Text className='font-iregular text-sm text-soil'>
-                      Pemasukan
+                      Laporan Pemasukan
                     </Text>
                     <Text className='font-ibold text-base text-evergreen'>
                       {formatCurrency(statsGuide?.totalIncome)}
@@ -101,7 +101,7 @@ const HomeMainTourGuideScreen = () => {
 
                   <View className='gap-[5]'>
                     <Text className='font-iregular text-sm text-soil'>
-                      Pengeluaran
+                      Laporan Pengeluaran
                     </Text>
                     <Text className='font-ibold text-base text-evergreen'>
                       {formatCurrency(statsGuide?.totalWithdraw)}

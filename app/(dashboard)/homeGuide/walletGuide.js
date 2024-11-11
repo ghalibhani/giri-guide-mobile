@@ -38,6 +38,8 @@ const WalletGuideScreen = () => {
     );
   };
 
+  console.log("----------saldo", statsGuide.totalBalance);
+
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -59,7 +61,7 @@ const WalletGuideScreen = () => {
   const withdrawHandling = () =>
     router.push({
       pathname: "/homeGuide/withdrawGuide",
-      params: { maxAmount: totalBalance },
+      params: { maxAmount: statsGuide?.totalBalance },
     });
 
   const DetailTransItem = ({ item }) => {
