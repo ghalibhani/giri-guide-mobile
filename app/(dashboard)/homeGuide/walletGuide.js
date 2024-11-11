@@ -68,34 +68,38 @@ const WalletGuideScreen = () => {
     return (
       <View className='gap-5' key={item?.id}>
         {item?.status !== "REJECTED" && (
-          <View className='flex-row justify-between'>
+          <View className='flex-row justify-between gap-0'>
             {item.status === "IN" ? (
               <>
-                <View>
-                  <Text className='font-iregular text-sm text-soil max-w-3/5 flex-shrink'>
+                <View style={{ flex: 3 }}>
+                  <Text className='font-iregular text-sm text-soil'>
                     Pemasukan {formattedDate(new Date(item?.createdAt))}
                   </Text>
-                  <Text className='font-iregular text-sm text-soil w-5/6 flex-shrink'>
+                  <Text className='font-iregular text-sm text-soil'>
                     Catatan : {item?.description}
                   </Text>
                 </View>
-                <Text className='font-ibold text-sm text-successHover'>
-                  + {formatCurrency(item?.nominal)}
-                </Text>
+                <View style={{ flex: 2, alignItems: 'flex-end' }}>
+                  <Text className='font-ibold text-sm text-successHover'>
+                    + {formatCurrency(item?.nominal)}
+                  </Text>
+                </View>
               </>
             ) : (
               <>
-                <View>
-                  <Text className='font-iregular text-sm text-soil max-w-3/5 flex-shrink'>
+                <View style={{ flex: 3 }}>
+                  <Text className='font-iregular text-sm text-soil'>
                     Penarikan {formattedDate(new Date(item?.createdAt))}
                   </Text>
-                  <Text className='font-iregular text-sm text-soil w-4/6 flex-shrink'>
+                  <Text className='font-iregular text-sm text-soil'>
                     Catatan : {item?.description}
                   </Text>
                 </View>
-                <Text className='font-ibold text-sm text-errorHover'>
-                  - {formatCurrency(item?.nominal)}
-                </Text>
+                <View style={{ flex: 2, alignItems: 'flex-end' }}>
+                  <Text className='font-ibold text-sm text-errorHover'>
+                    - {formatCurrency(item?.nominal)}
+                  </Text>
+                </View>
               </>
             )}
           </View>
@@ -103,17 +107,19 @@ const WalletGuideScreen = () => {
 
         {item.status === "REJECTED" && (
           <View className='flex-row justify-between'>
-            <View>
-              <Text className='font-iregular text-sm text-thistle max-w-3/5 flex-shrink'>
+            <View style={{ flex: 3 }}>
+              <Text className='font-iregular text-sm text-thistle '>
                 Penolakan {formattedDate(new Date(item?.createdAt))}
               </Text>
-              <Text className='font-iregular text-sm text-thistle  max-w-3/5 flex-shrink'>
+              <Text className='font-iregular text-sm text-thistle '>
                 Catatan : {item?.description}
               </Text>
             </View>
-            <Text className='font-ibold text-sm text-thistle'>
-              {formatCurrency(item?.nominal)}
-            </Text>
+            <View style={{ flex: 2, alignItems: 'flex-end' }}>
+              <Text className='font-ibold text-sm text-thistle'>
+                {formatCurrency(item?.nominal)}
+              </Text>
+            </View>
           </View>
         )}
 
@@ -139,7 +145,7 @@ const WalletGuideScreen = () => {
           <View className='py-6 gap-7 rounded-verylarge bg-white mx-6'>
             <View className='gap-2 px-6 '>
               <Text className='font-iregular text-sm text-thistle'>
-                Total Balance
+                Uang yang bisa ditarik
               </Text>
               <Text className='font-ibold text-3xl text-evergreen'>
                 {formatCurrency(statsGuide?.totalBalance)}

@@ -73,6 +73,7 @@ const ReviewPembayaran = ({
                 catatan={catatan}
                 setCatatan={setCatatan}
                 title={"Beri catatan ke tour guide"}
+                required={true}
             />
 
             <View className="px-6">

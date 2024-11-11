@@ -118,6 +118,20 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
       isTourGuideActive && item.isActive
     );
 
+    // const handleToggle = () => {
+    //   const newStatus = !isActive;
+    //   setIsActive(newStatus);
+
+    //   dispatch(
+    //     toggleTourGuideHikingPoint({
+    //       tourGuideId: userId,
+    //       hikingPointId: item.id,
+    //       isActive: newStatus,
+    //     })
+    //   );
+    //   dispatch(fetchTourGuideProfileHikingPointsByUserId(userId)).unwrap();
+    // };
+
     const handleToggle = () => {
       const newStatus = !isActive;
       setIsActive(newStatus);

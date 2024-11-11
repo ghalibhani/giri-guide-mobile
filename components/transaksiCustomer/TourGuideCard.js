@@ -41,7 +41,7 @@ const TourGuideCard = ({
           <Text className='font-isemibold mb-[10] text-soil text-base'>
             {role === 'ROLE_GUIDE' ? customerName : guideName}
           </Text>
-          <Text className='font-imedium mb-[5] text-thistle text-base'>
+          <Text className='font-imedium mb-[5] text-thistle text-base pr-6'>
             {mountainName} - {hikingPoint}
           </Text>
           <Text className='font-iregular text-soil text-sm'>
