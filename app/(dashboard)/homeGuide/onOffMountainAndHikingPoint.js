@@ -114,6 +114,20 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
   const DetailMountainAndHikingPoint = ({ item }) => {
     const [isActive, setIsActive] = useState(isTourGuideActive && item.isActive);
 
+    // const handleToggle = () => {
+    //   const newStatus = !isActive;
+    //   setIsActive(newStatus);
+
+    //   dispatch(
+    //     toggleTourGuideHikingPoint({
+    //       tourGuideId: userId,
+    //       hikingPointId: item.id,
+    //       isActive: newStatus,
+    //     })
+    //   );
+    //   dispatch(fetchTourGuideProfileHikingPointsByUserId(userId)).unwrap();
+    // };
+
     const handleToggle = () => {
       const newStatus = !isActive;
       setIsActive(newStatus);
@@ -124,8 +138,20 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
           hikingPointId: item.id,
           isActive: newStatus,
         })
-      );
-      dispatch(fetchTourGuideProfileHikingPointsByUserId(userId)).unwrap();
+      )
+        .unwrap()
+        .then(() => {
+          return dispatch(
+            fetchTourGuideProfileHikingPointsByUserId(userId)
+          ).unwrap();
+        })
+        .catch((error) => {
+          console.error(
+            "Gagal mengupdate status atau fetch data terbaru:",
+            error
+          );
+          setIsActive(!newStatus);
+        });
     };
 
     return (

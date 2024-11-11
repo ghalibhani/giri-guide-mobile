@@ -43,8 +43,8 @@ const TransaksiSlideSelesai = ({ onFilterChange }) => {
             }`}
           >
             {userRole === "ROLE_GUIDE"
-              ? "Ditolak oleh kamu"
-              : "Ditolak oleh tour guide"}
+              ? "Ditolak"
+              : "Ditolak"}
           </Text>
         </TouchableOpacity>
       </ScrollView>

@@ -1,4 +1,4 @@
-import { View, StatusBar, ScrollView } from "react-native";
+import { View, StatusBar, ScrollView, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TransactionHeader from "../../../components/transaksiCustomer/TransactionHeader";
 import CardProfile from "../../../components/profileTourGuide/CardProfile";
@@ -6,13 +6,20 @@ import ShortDescription from "../../../components/profileTourGuide/ShortDescript
 import CardRatingReview from "../../../components/profileTourGuide/CardRatingReview";
 import SubMenuProfileTourGuide from "../../../components/profileTourGuide/SubMenuProfileTourGuide";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchTourGuideProfileByUserId } from "../../../redux/tourGuideSlice";
 import { fetchTourGuideReview } from "../../../redux/guideReviewSlice";
 
 const HomeProfileGuideScreen = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.userId);
+
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(fetchTourGuideProfileByUserId(userId));
+    dispatch(fetchTourGuideReview(tourGuideProfileData.tourGuideId)).finally(() => setRefreshing(false))
+  }
 
   const tourGuideProfileData = useSelector(
     (state) => state.tourGuide.tourGuide
@@ -47,6 +54,9 @@ const HomeProfileGuideScreen = () => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           <View className='gap-1'>
             <View className='gap-5'>
