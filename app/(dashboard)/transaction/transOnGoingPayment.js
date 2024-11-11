@@ -135,7 +135,7 @@ const TransactionOnGoingPaymentScreen = () => {
 
   const continueHandling = async () => {
     try {
-      // dispatch(getSnapTokenByTransactionId(id));
+      dispatch(getSnapTokenByTransactionId(id));
       // console.log("Transaction Payment State:", transactionPayment);
       // console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
 

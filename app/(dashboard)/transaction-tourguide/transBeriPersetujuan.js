@@ -68,11 +68,11 @@ export default function transBeriPersetujuan() {
         </View>
         <View className='gap-8 flex flex-row justify-center'>
 
-          <TouchableOpacity className={`px-4 ${isApproved ? 'bg-soil' : 'bg-white'} border-soil border-2 py-[16.5] gap-2 rounded-xl flex-row items-center justify-center`} onPress={() => setIsApproved(!isApproved)}>
+          <TouchableOpacity className={`px-4 ${isApproved ? 'bg-soil' : 'bg-white'} border-soil border-2 py-[16.5] gap-2 rounded-xl flex-row items-center justify-center`} onPress={() => setIsApproved(true)}>
             <Text className={`${isApproved ? 'text-white' : 'text-soil'} font-isemibold text-sm`}>Terima Pendakian</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className={`px-4 ${!isApproved ? 'bg-soil' : 'bg-white'} border-soil border-2 py-[16.5] gap-2 rounded-xl flex-row items-center justify-center`} onPress={() => setIsApproved(!isApproved)}>
+          <TouchableOpacity className={`px-4 ${!isApproved ? 'bg-soil' : 'bg-white'} border-soil border-2 py-[16.5] gap-2 rounded-xl flex-row items-center justify-center`} onPress={() => setIsApproved(false)}>
             <Text className={`${!isApproved ? 'text-white' : 'text-soil'} font-isemibold text-sm`}>Tolak Pendakian</Text>
           </TouchableOpacity>
         </View>

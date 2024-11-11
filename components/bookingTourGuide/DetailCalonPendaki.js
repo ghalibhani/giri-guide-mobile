@@ -37,7 +37,7 @@ const DetailCalonPendaki = ({continueHandling, hikerDetails, setHikerDetails, sh
     )
 
     return (
-        <View className="gap-6 flex-1 flex-col justify-between">
+        <View className="gap-6 flex-1 flex-col justify-between mb-20">
             <View className="gap-6">
                 <Text className="font-ibold text-soil">Detail Calon Pendaki</Text>
 
