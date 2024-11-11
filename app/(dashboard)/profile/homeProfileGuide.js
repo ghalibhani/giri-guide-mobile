@@ -46,7 +46,7 @@ const HomeProfileGuideScreen = () => {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 0 }}
+          contentContainerStyle={{ paddingBottom: 80 }}
         >
           <View className='gap-1'>
             <View className='gap-5'>

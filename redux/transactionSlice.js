@@ -69,6 +69,7 @@ export const createNewTransaction = createAsyncThunk(
     } catch (e) {
       return rejectWithValue(e.response.data.message);
     }
+  }
 )
 
 export const giveRatingForDoneTransaction = createAsyncThunk(
@@ -182,32 +183,6 @@ const transactionSlice = createSlice({
                 state.error = null;
             })
             .addCase(createNewTransaction.rejected, (state, action) => {
-                state.status = "failed";
-                state.error = action.payload;
-            })
-
-
-            .addCase(giveRatingForDoneTransaction.pending, (state) => {
-                state.status = "loading"; // Set loading status while fetching
-            })
-            .addCase(giveRatingForDoneTransaction.fulfilled, (state, action) => {
-                state.status = "succeed";
-                state.error = null;
-            })
-            .addCase(giveRatingForDoneTransaction.rejected, (state, action) => {
-                state.status = "failed";
-                state.error = action.payload;
-            })
-
-
-            .addCase(updatingTransactionStatus.pending, (state) => {
-                state.status = "loading"; // Set loading status while fetching
-            })
-            .addCase(updatingTransactionStatus.fulfilled, (state, action) => {
-                state.status = "succeed";
-                state.error = null;
-            })
-            .addCase(updatingTransactionStatus.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
             })
