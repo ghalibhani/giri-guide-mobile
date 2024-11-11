@@ -20,7 +20,7 @@ import CustomModalSuccess from "../../../components/miniComponent/CustomModalSuc
 const SewaTourGuideTigaTahap = () => {
   const {tourGuideId, hikingPointId, hikingPointName, mountainName, tourGuideName, totalPorter, fixedHikerCount, startDate, endDate, mountainId} = useLocalSearchParams();
 
-  console.log(`ini dari bookthreestep guide: tourGuideId= ${tourGuideId}, hikingPointId=${hikingPointId}, hikingPointName=${hikingPointName}, mountainName=${mountainName}, tourGuideName=${tourGuideName}, totalPorter=${totalPorter}, fixedMaxHiker=${fixedHikerCount}, startDate=${startDate}, endDate=${endDate}, mountainId=${mountainId}`)
+  // console.log(`ini dari bookthreestep guide: tourGuideId= ${tourGuideId}, hikingPointId=${hikingPointId}, hikingPointName=${hikingPointName}, mountainName=${mountainName}, tourGuideName=${tourGuideName}, totalPorter=${totalPorter}, fixedMaxHiker=${fixedHikerCount}, startDate=${startDate}, endDate=${endDate}, mountainId=${mountainId}`)
   const startDateMoment = moment(startDate, "ddd MMM DD YYYY HH:mm:ss ZZ").toDate();
   const endDateMoment = moment(endDate, "ddd MMM DD YYYY HH:mm:ss ZZ").toDate();
 
@@ -59,10 +59,10 @@ const SewaTourGuideTigaTahap = () => {
   }, [dispatch, tourGuideId])
 
   useEffect(() => {
-    console.log('ini ketrigger');
+    // console.log('ini ketrigger');
     const initializeUserId = async () => {
       const userIdFromStorage = await AsyncStorage.getItem('userId');
-      console.log(`ini user id ${userIdFromStorage}`);
+      // console.log(`ini user id ${userIdFromStorage}`);
       if (userIdFromStorage) {
         setUserId(userIdFromStorage);
         dispatch(fetchProfileCustomer(userIdFromStorage));
@@ -70,7 +70,7 @@ const SewaTourGuideTigaTahap = () => {
     };
     initializeUserId();
   }, []);
-  console.log(profile.id)
+  // console.log(profile.id)
 
   const [hikerDetails, setHikerDetails] = useState(
     Array.from({ length: fixedHikerCount }, () => ({
@@ -172,7 +172,7 @@ const SewaTourGuideTigaTahap = () => {
     return jsonString
   }
 
-  console.log(generateTransactionData())
+  // console.log(generateTransactionData())
 
   const resetForm = () => {
     setAdditionalHikerCount(0);
@@ -192,9 +192,9 @@ const SewaTourGuideTigaTahap = () => {
 
   const tahapAjukanHandler = async() => {
     try {
-      console.log(`ini customer id: ${profile.id}`)
+      // console.log(`ini customer id: ${profile.id}`)
       const jsonString = generateTransactionData()
-      console.log(jsonString)
+      // console.log(jsonString)
       await dispatch(createNewTransaction(jsonString)).unwrap()
       setIsModalSuccess(true)
       resetForm()

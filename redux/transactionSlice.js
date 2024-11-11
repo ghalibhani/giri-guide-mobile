@@ -36,19 +36,18 @@ export const getTransactionHistoryByTransactionId = createAsyncThunk(
 );
 
 export const getSnapTokenByTransactionId = createAsyncThunk(
-  "transaction/getSnapTokenByTransactionId",
-  async (transactionId, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post(
-        `/transactions/payment?transactionId=${transactionId}`
-      );
-      console.log(response);
-      return response.data;
-    } catch (e) {
-      return rejectWithValue(e.response?.data || "Network error");
+    "transaction/getSnapTokenByTransactionId",
+    async(transactionId, {rejectWithValue}) => {
+        try{
+            // console.log('ini berhasil di awal')
+            const response = await axiosInstance.post(`/transaction-payment?transactionId=${transactionId}`)
+            // console.log(response)
+            return response.data
+        } catch(e) {
+            return rejectWithValue(e.response?.data || 'Network error')
+        }
     }
-  }
-);
+)
 
 export const createNewTransaction = createAsyncThunk(
   "transaction/createNewTransaction",
@@ -71,7 +70,41 @@ export const createNewTransaction = createAsyncThunk(
       return rejectWithValue(e.response.data.message);
     }
   }
-);
+)
+
+export const giveRatingForDoneTransaction = createAsyncThunk(
+    "transaction/giveRatingForDoneTransaction",
+    async({dataRating, transactionId}, {rejectWithValue}) => {
+        try{
+            const response = await axiosInstance.put(`/guide/reviews/${transactionId}`, dataRating, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            // console.log('ini response setelah kasih rating: ', response)
+            return response.data.rating;
+        } catch(e) {
+            return rejectWithValue(e.response.data.message)
+        }
+    }
+)
+
+export const updatingTransactionStatus = createAsyncThunk(
+    "transaction/updatingTransactionStatus",
+    async({dataBody, transactionId}, {rejectWithValue}) => {
+        try{
+            const response = await axiosInstance.put(`/transactions/${transactionId}`, dataBody, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            // console.log(response)
+            return response.data.transactionStatus;
+        } catch(e) {
+            return rejectWithValue(e.response.data.message)
+        }
+    }
+)
 
 const transactionSlice = createSlice({
   name: "transaction",
@@ -142,17 +175,18 @@ const transactionSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(createNewTransaction.pending, (state) => {
-        state.status = "loading"; // Set loading status while fetching
-      })
-      .addCase(createNewTransaction.fulfilled, (state, action) => {
-        state.status = "succeed";
-        state.error = null;
-      })
-      .addCase(createNewTransaction.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
+            .addCase(createNewTransaction.pending, (state) => {
+                state.status = "loading"; // Set loading status while fetching
+            })
+            .addCase(createNewTransaction.fulfilled, (state, action) => {
+                state.status = "succeed";
+                state.error = null;
+            })
+            .addCase(createNewTransaction.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+
 
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),

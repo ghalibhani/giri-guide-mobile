@@ -8,6 +8,7 @@ import registerReducer from "./redux/registerSlice";
 import mountainReducer from "./redux/mountainSlice";
 import statsTransactionGuideReducer from "./redux/statsTransactionGuideSlice";
 import transactionReducer from "./redux/transactionSlice";
+import travelRouteReducer from "./redux/routesSlice";
 
 
 const store = configureStore({
@@ -21,6 +22,7 @@ const store = configureStore({
     mountain: mountainReducer,
     statsTransactionGuide: statsTransactionGuideReducer,
     transaction: transactionReducer,
+    travelRoute: travelRouteReducer,
   },
 });
 

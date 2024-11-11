@@ -24,7 +24,7 @@ export default function ProfileInfoScreen() {
   useEffect(() => {
     if (role === "ROLE_CUSTOMER") {
       dispatch(fetchProfileCustomer(userId));
-    } else {
+    } else {  
       dispatch(fetchTourGuideProfileByUserId(userId));
     }
   }, [dispatch, userId]);
@@ -38,12 +38,12 @@ export default function ProfileInfoScreen() {
   };
 
   const tanggalLahir = () => {
-    if (role === "ROLE_CUSTOMER") {
-      const birthDate = new Date(profileCustomer?.birthDate);
-      return formattedDate(birthDate);
+    const birthDate = role === "ROLE_CUSTOMER" ? profileCustomer?.birthDate : profileTourGuide?.birthDate;
+
+    if (birthDate) {
+      return formattedDate(new Date(birthDate));
     } else {
-      const birthDate = new Date(profileTourGuide?.birthDate);
-      return formattedDate(birthDate);
+      return "Tanggal lahir tidak tersedia"; // Fallback value
     }
   };
 

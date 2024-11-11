@@ -28,12 +28,12 @@ const FixedHarga = ({
             maximumFractionDigits: 0,
         }).format(value);
     };
-    console.log(hikersCount)
+    // console.log(hikersCount)
 
     return (
         <View className="gap-[15] bg-white px-6 py-6 rounded-verylarge">
             <View className="flex-row justify-between items-center">
-                <View>
+                <View className="max-w-[70%]">
                     <Text className="font-iregular text-thistle text-sm">Jasa tour guide {days} hari max. 5 pendaki </Text>
                     <Text className="font-iregular text-thistle text-sm">(1 hari = {formatCurrency(tourGuidePriceEachDay)})</Text>
                 </View>
@@ -42,7 +42,7 @@ const FixedHarga = ({
             </View>
 
             <View className="flex-row justify-between items-center">
-                <View>
+                <View className="max-w-[70%]">
                     <Text className="font-iregular text-thistle text-sm">Uang masuk gunung {days} hari {hikersCount} pendaki </Text>
                     <Text className="font-iregular text-thistle text-sm">(1 hari 1 pendaki = {formatCurrency(entranceFeeEachDay)})</Text>
                 </View>
@@ -51,7 +51,7 @@ const FixedHarga = ({
             </View>
 
             <View className="flex-row justify-between items-center">
-                <View>
+                <View className="max-w-[70%]">
                     <Text className="font-iregular text-thistle text-sm">Pengurusan SIMAKSI</Text>
                     <Text className="font-iregular text-thistle text-sm">(1 pendaki = {formatCurrency(simaksiPriceEachPerson)})</Text>
                 </View>
@@ -60,8 +60,8 @@ const FixedHarga = ({
             </View>
 
             <View className="flex-row justify-between items-center">
-                <View>
-                    <Text className="font-iregular text-thistle text-sm max-w-[70%]">Jasa tour guide untuk penambahan orang</Text>
+                <View className="max-w-[70%]">
+                    <Text className="font-iregular text-thistle text-sm">Jasa tour guide untuk penambahan orang</Text>
                     <Text className="font-iregular text-thistle text-sm">(1 pendaki 1 hari = {formatCurrency(additionalTourGuidePricePerDayPerPerson)})</Text>
                 </View>
                 
@@ -69,7 +69,7 @@ const FixedHarga = ({
             </View>
 
             <View className="flex-row justify-between items-center">
-                <View>
+                <View className="max-w-[70%]">
                     <Text className="font-iregular text-thistle text-sm">Jasa porter {days} hari {porterCount} porter </Text>
                     <Text className="font-iregular text-thistle text-sm">(1 porter 1 hari = {formatCurrency(porterPricePerDayPerPerson)})</Text>
                 </View>
@@ -77,15 +77,13 @@ const FixedHarga = ({
                 <Text className="font-iregular text-soil text-sm">{formatCurrency(porterPriceTotal)}</Text>
             </View>
 
-            {!isTourGuide && (
-                <View className="flex-row justify-between items-center">
-                    <View>
-                        <Text className="font-iregular text-thistle text-sm">Biaya lain-lain</Text>
-                    </View>
-                    
-                    <Text className="font-iregular text-soil text-sm">{formatCurrency(adminCost)}</Text>
+            <View className="flex-row justify-between items-center">
+                <View className="max-w-[70%]">
+                    <Text className="font-iregular text-thistle text-sm">Biaya lain-lain {isTourGuide && ("(ditujukan untuk customer)")}</Text>
                 </View>
-            )}
+                
+                <Text className="font-iregular text-soil text-sm">{formatCurrency(adminCost)}</Text>
+            </View>
             
 
             <View className="h-[1] bg-borderCustom"></View>

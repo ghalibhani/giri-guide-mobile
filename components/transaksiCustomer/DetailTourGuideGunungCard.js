@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const DetailTourGuideGunungCard = ({tourGuideName, orderId, mountainName, hikingPointName, tourGuideImage}) => {
+const DetailTourGuideGunungCard = ({tourGuideName, orderId, mountainName, hikingPointName, tourGuideImage=''}) => {
   return (
     <View className="gap-5">
         <Text className="font-ibold text-soil">Detail Gunung dan Tour Guide</Text>
@@ -9,7 +9,7 @@ const DetailTourGuideGunungCard = ({tourGuideName, orderId, mountainName, hiking
 
             <View className="flex-row gap-5 items-center">
                 <Image 
-                    source={{ uri: tourGuideImage}}
+                    source={tourGuideImage ? { uri: tourGuideImage } : require("../../assets/profile-image.jpg")}
                     className="w-16 rounded-xl h-16"
                 />
                 <View className="gap-2">

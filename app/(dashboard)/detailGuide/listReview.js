@@ -37,11 +37,11 @@ export default function ListReviewGuideScreen() {
     <ScrollView className='flex-1' style={{ backgroundColor: "#f8f8f8" }}>
       <SafeAreaView>
         {/* Header */}
-        <Text className='text-3xl text-center mt-5 text-soil font-ibold'>
+        <Text className='text-lg text-center mt-5 text-soil font-ibold'>
           Ulasan ({tourGuideData?.totalReview})
         </Text>
         <TouchableOpacity
-          className='bg-ivory w-[30] h-[30] border border-soil absolute top-10 left-6 z-10 items-center justify-center rounded-full'
+          className='bg-ivory w-[30] h-[30] border border-soil absolute top-14 left-6 z-10 items-center justify-center rounded-full'
           onPress={() => router.back()}
         >
           <View className='justify-center items-center'>

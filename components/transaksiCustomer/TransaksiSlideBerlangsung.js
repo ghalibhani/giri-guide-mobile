@@ -49,9 +49,7 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
               activeButton === "pembayaran" ? "text-white" : "text-soil"
             }`}
           >
-            {userRole === "ROLE_GUIDE"
-              ? "Butuh Persetujuan"
-              : "Menunggu Pembayaran"}
+            Menunggu Pembayaran
           </Text>
         </TouchableOpacity>
 
@@ -66,7 +64,10 @@ const TransaksiSlideBerlangsung = ({ data, onFilterChange, titleSlide }) => {
               activeButton === "approve" ? "text-white" : "text-soil"
             }`}
           >
-            {titleSlide}
+            {userRole === "ROLE_GUIDE"
+              ? "Butuh Persetujuan"
+              : "Menunggu Persetujuan"
+            }
           </Text>
         </TouchableOpacity>
       </ScrollView>
