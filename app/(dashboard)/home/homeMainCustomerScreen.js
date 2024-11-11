@@ -19,10 +19,10 @@ const HomeMainCustomerScreen = () => {
   const errorMountains = useSelector((state) => state.mountain.error);
 
   const travelRoutes = useSelector((state) => state.travelRoute.travelRoutes);
-  const statusTravelRoutes= useSelector((state) => state.travelRoute.status);
+  const statusTravelRoutes = useSelector((state) => state.travelRoute.status);
   const errorTravelRoutes = useSelector((state) => state.travelRoute.error);
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   const userId = useSelector((state) => state.auth.userId);
   const profile = useSelector((state) => state.profile);
@@ -77,19 +77,23 @@ const HomeMainCustomerScreen = () => {
 
   useEffect(() => {
     dispatch(fetchAllMountains({ page: 1, size: 40 }));
-    dispatch(fetchAllRoutes({page: 1, size: 40}))
+    dispatch(fetchAllRoutes({ page: 1, size: 40 }));
     // console.log(statusMountains)
   }, [dispatch]);
 
   useEffect(() => {
-    if(statusMountains === "succeed" && statusTravelRoutes === "succeed"){
-      setLoading(false)
+    if (statusMountains === "succeed" && statusTravelRoutes === "succeed") {
+      setLoading(false);
     }
-  }, [statusMountains, statusTravelRoutes])
+  }, [statusMountains, statusTravelRoutes]);
 
-  if (loading || statusMountains === "loading" || statusTravelRoutes === "loading") {
+  if (
+    loading ||
+    statusMountains === "loading" ||
+    statusTravelRoutes === "loading"
+  ) {
     return (
-      <View className="flex-1 items-center justify-center bg-white">
+      <View className='flex-1 items-center justify-center bg-white'>
         <Image
           source={require("../../../assets/loading.gif")}
           style={{ width: 80, height: 80 }}
