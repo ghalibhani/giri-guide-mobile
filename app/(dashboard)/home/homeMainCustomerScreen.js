@@ -136,6 +136,39 @@ const HomeMainCustomerScreen = () => {
     },
   ];
 
+  const dataWithText = [
+    {
+      id: 1,
+      text: "Item 1",
+      image: require("../../../assets/slide-1.png"),
+      description: "Description 1",
+    },
+    {
+      id: 2,
+      text: "Item 2",
+      image: require("../../../assets/slide-2.png"),
+      description: "Description 2",
+    },
+    {
+      id: 3,
+      text: "Item 3",
+      image: require("../../../assets/slide-3.png"),
+      description: "Description 3",
+    },
+    {
+      id: 4,
+      text: "Item 4",
+      image: require("../../../assets/slide-4.png"),
+      description: "Description 4",
+    },
+    {
+      id: 5,
+      text: "Item 5",
+      image: require("../../../assets/slide-5.png"),
+      description: "Description 5",
+    },
+  ];
+
   return (
     <SafeAreaView>
       <StatusBar
@@ -149,7 +182,7 @@ const HomeMainCustomerScreen = () => {
       {/* <Link href={'/home/mountainDetail'}>loncat</Link> */}
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
         <HeaderHome fullName={profile.fullName} />
-        <SlideCarousel data={data} />
+        <SlideCarousel data={dataWithText} />
         <OverFlowCarousel
           data={mountains}
           title={"Jelajahi Gunung di Jawa Timur"}
