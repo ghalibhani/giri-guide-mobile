@@ -10,7 +10,7 @@ import CustomNotFound from "../../../components/miniComponent/CustomNotFound";
 const SearchListScreen = () => {
   const {hikingPointId, hikingPointName, mountainName, mountainId} = useLocalSearchParams()
   
-  console.log(`ini dari search list: ${hikingPointId} ${hikingPointName} ${mountainName} ${mountainId}`)
+  // console.log(`ini dari search list: ${hikingPointId} ${hikingPointName} ${mountainName} ${mountainId}`)
   const dispatch = useDispatch()
   const tourGuideLists = useSelector((state) => state.tourGuide.tourGuides)
   const statusTourGuideLists = useSelector((state) => state.tourGuide.status)

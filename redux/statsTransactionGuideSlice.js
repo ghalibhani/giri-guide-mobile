@@ -8,7 +8,7 @@ export const fetchHomeTransactionGuide = createAsyncThunk(
       const response = await axiosInstance.get(`tour-guide/stats/${id}`);
       return response.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return rejectWithValue(error.response?.data || "Network error");
     }
   }
@@ -21,7 +21,7 @@ export const fetchHistoryTransactionGuide = createAsyncThunk(
       const response = await axiosInstance.get(`tour-guide/deposit/${id}`);
       return response.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return rejectWithValue(error.response?.data || "Network error");
     }
   }
@@ -38,7 +38,7 @@ export const withdrawTransactionGuide = createAsyncThunk(
       console.log("---------", response.data);
       return response.data;
     } catch (error) {
-      console.log(error.response?.data);
+      // console.log(error.response?.data);
       return rejectWithValue(error.response?.data || "Network error");
     }
   }

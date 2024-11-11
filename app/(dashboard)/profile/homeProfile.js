@@ -40,6 +40,7 @@ export default function HomeProfileScreen() {
   return (
     <View className='flex-1 '>
       <ScrollView
+      contentContainerStyle={{ paddingBottom: 80 }}
         className='flex-1 bg-hex-#F8F8F8'
         refreshControl={
           <RefreshControl refreshing={refresh} onRefresh={onRefresh} />

@@ -38,7 +38,7 @@ const HeaderSearch = ({mountains}) => {
   useEffect(() => {
     if (mountainId) {
       setMountain(mountainId);
-      console.log(`ini isi dari useeffect mountain id ${mountainName}`)
+      // console.log(`ini isi dari useeffect mountain id ${mountainName}`)
     } else {
       setMountain(null); 
     }
@@ -63,7 +63,7 @@ const HeaderSearch = ({mountains}) => {
         value: hikingPoint.id,
       }));
       setPositionOfInterestList(formattedItems);
-      console.log(mountainName)
+      // console.log(mountainName)
     }
   }, [hikingPoints]);
 
@@ -80,7 +80,7 @@ const HeaderSearch = ({mountains}) => {
 
   const handlePress = () => {
     if (mountain && positionOfInterest) {
-      console.log(`mountain name ${mountainName}, hiking point name ${hikingPointName}`)
+      // console.log(`mountain name ${mountainName}, hiking point name ${hikingPointName}`)
       router.navigate(`/search/searchList?hikingPointId=${positionOfInterest}&hikingPointName=${hikingPointName}&mountainName=${mountainName}&mountainId=${mountain}`);
       setMountain(null);
       setPositionOfInterest(null);

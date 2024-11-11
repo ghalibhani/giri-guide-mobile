@@ -13,7 +13,7 @@ const SewaTourGuideTahapStart = () => {
 
   const {tourGuideId, hikingPointId, hikingPointName, mountainName, tourGuideName, totalPorter, maxHiker, mountainId} = useLocalSearchParams();
 
-  console.log(`ini dari bookfirst guide: tourGuideId= ${tourGuideId}, hikingPointId=${hikingPointId}, hikingPointName=${hikingPointName}, mountainName=${mountainName}, tourGuideName=${tourGuideName}, totalPorter=${totalPorter}, maxhiker=${maxHiker}`)
+  // console.log(`ini dari bookfirst guide: tourGuideId= ${tourGuideId}, hikingPointId=${hikingPointId}, hikingPointName=${hikingPointName}, mountainName=${mountainName}, tourGuideName=${tourGuideName}, totalPorter=${totalPorter}, maxhiker=${maxHiker}`)
 
   const [count, setCount] = useState(1)
 
