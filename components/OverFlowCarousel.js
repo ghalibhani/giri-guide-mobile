@@ -66,7 +66,9 @@ const OverFlowCarousel = ({
           </View>
 
           {withDescription && (
-            <Text className="text-[14px] font-ibold p-4">{item.description}</Text>
+            <View className="w-[200px] h-[80px]">
+              <Text className="text-[14px] font-ibold p-4 flex-shrink">{item.title}</Text>
+            </View>
           )}
         </View>
       </TouchableOpacity>
