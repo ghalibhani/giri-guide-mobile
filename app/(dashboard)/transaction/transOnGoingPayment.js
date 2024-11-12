@@ -133,15 +133,16 @@ const TransactionOnGoingPaymentScreen = () => {
     return result.trim();
   };
 
-  const continueHandling = async () => {
+  const continueHandling = async() => {
     try {
-      dispatch(getSnapTokenByTransactionId(id));
+      await dispatch(getSnapTokenByTransactionId(id));
       // console.log("Transaction Payment State:", transactionPayment);
       // console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
 
-      if (transactionPayment?.paymentResponse?.redirectUrl) {
-        setWebViewVisible(true); 
-      }
+      setWebViewVisible(true); 
+      // if (transactionPayment?.paymentResponse?.redirectUrl) {
+      //   setWebViewVisible(true); 
+      // }
     } catch (error) {
       console.error("Error saat memproses pembayaran:", error);
     }

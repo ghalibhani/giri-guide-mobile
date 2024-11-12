@@ -194,7 +194,7 @@ const SewaTourGuideTigaTahap = () => {
     try {
       // console.log(`ini customer id: ${profile.id}`)
       const jsonString = generateTransactionData()
-      // console.log(jsonString)
+      console.log(jsonString)
       await dispatch(createNewTransaction(jsonString)).unwrap()
       setIsModalSuccess(true)
       resetForm()
