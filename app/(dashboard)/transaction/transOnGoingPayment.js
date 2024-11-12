@@ -13,40 +13,52 @@ import CustomButton from "../../../components/miniComponent/CustomButton";
 import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
-import { getSnapTokenByTransactionId, getTransactionHistoryByTransactionId } from "../../../redux/transactionSlice";
+import {
+  getSnapTokenByTransactionId,
+  getTransactionHistoryByTransactionId,
+} from "../../../redux/transactionSlice";
 import WebView from "react-native-webview";
 import { useFocusEffect } from "@react-navigation/native";
 
 const TransactionOnGoingPaymentScreen = () => {
-  const {id} = useLocalSearchParams()
+  const { id } = useLocalSearchParams();
   // console.log('ini dari transaction pay customer: transaction id = ', id)
   const dispatch = useDispatch();
 
-  const transactionHistoryDetail = useSelector((state) => state.transaction.transactionHistoryDetail)
-  const statusTransactionHistoryDetail = useSelector((state) => state.transaction.status)
-  const errorTransactionHistoryDetail = useSelector((state) => state.transaction.error)
+  const transactionHistoryDetail = useSelector(
+    (state) => state.transaction.transactionHistoryDetail
+  );
+  const statusTransactionHistoryDetail = useSelector(
+    (state) => state.transaction.status
+  );
+  const errorTransactionHistoryDetail = useSelector(
+    (state) => state.transaction.error
+  );
 
-  const transactionPayment = useSelector((state) => state.transaction.snapToken)
-  const statusTransactionPayment = useSelector((state) => state.transaction.status)
-
+  const transactionPayment = useSelector(
+    (state) => state.transaction.snapToken
+  );
+  const statusTransactionPayment = useSelector(
+    (state) => state.transaction.status
+  );
 
   const [loading, setLoading] = useState(true);
-  const fadeAnim = useState(new Animated.Value(0))[0]; 
+  const fadeAnim = useState(new Animated.Value(0))[0];
 
-  const [snapToken, setSnapToken] = useState(null)
+  const [snapToken, setSnapToken] = useState(null);
   // const [redirectUrl, setRedirectUrl] = useState(null)
-  const [isWebViewVisible, setWebViewVisible] = useState(false)
-  // const [paymentStatus, setPaymentStatus] = useState(null); 
+  const [isWebViewVisible, setWebViewVisible] = useState(false);
+  // const [paymentStatus, setPaymentStatus] = useState(null);
 
   useEffect(() => {
-      if(id) {
-          dispatch(getTransactionHistoryByTransactionId(id))
-          // console.log(transactionHistoryDetail.endOfPay)
-          // console.log(transactionHistoryDetail.hikers)
-      }
-      const loadingTimeout = setTimeout(() => setLoading(false), 1000)
-      return () => clearTimeout(loadingTimeout)
-  }, [dispatch, id])
+    if (id) {
+      dispatch(getTransactionHistoryByTransactionId(id));
+      // console.log(transactionHistoryDetail.endOfPay)
+      // console.log(transactionHistoryDetail.hikers)
+    }
+    const loadingTimeout = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(loadingTimeout);
+  }, [dispatch, id]);
 
   // useEffect(() => {
   //   if (transactionPayment && transactionPayment.paymentResponse?.redirectUrl) {
@@ -63,54 +75,52 @@ const TransactionOnGoingPaymentScreen = () => {
   // }, [transactionPayment]);
 
   useEffect(() => {
-      if (!loading && statusTransactionHistoryDetail === "succeed") {
-          Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 500,
-          useNativeDriver: true,
-        }).start();
-      }
-    }, [loading, statusTransactionHistoryDetail]);
+    if (!loading && statusTransactionHistoryDetail === "succeed") {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [loading, statusTransactionHistoryDetail]);
 
   useFocusEffect(
     useCallback(() => {
       return () => {
-        setSnapToken(null)
-      }
+        setSnapToken(null);
+      };
     }, [])
-  )
+  );
 
   const startDate = new Date();
   const endDate = "2024-10-02T09:12:14";
-  
 
-  const dummy = moment(new Date()).format('DD MMM YYYY')
+  const dummy = moment(new Date()).format("DD MMM YYYY");
 
-  // const continueHandling = () => 
-
+  // const continueHandling = () =>
 
   const formattedDate = (date) => {
-      return moment(date).format('DD MMM YYYY')
-  }
+    return moment(date).format("DD MMM YYYY");
+  };
 
   const formatCurrency = (value) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
   };
 
   if (loading || statusTransactionHistoryDetail === "loading") {
-      return (
-          <View className="flex-1 items-center justify-center bg-white">
-              <Image
-                  source={require("../../../assets/loading.gif")}
-                  style={{ width: 80, height: 80 }}
-              />
-          </View>
-      );
+    return (
+      <View className='flex-1 items-center justify-center bg-white'>
+        <Image
+          source={require("../../../assets/loading.gif")}
+          style={{ width: 80, height: 80 }}
+        />
+      </View>
+    );
   }
 
   const calculateTimeDifference = (startDate, endDate) => {
@@ -140,39 +150,40 @@ const TransactionOnGoingPaymentScreen = () => {
       // console.log("Redirect URL:", transactionPayment?.paymentResponse?.redirectUrl);
 
       if (transactionPayment?.paymentResponse?.redirectUrl) {
-        setWebViewVisible(true); 
+        setWebViewVisible(true);
       }
     } catch (error) {
       console.error("Error saat memproses pembayaran:", error);
     }
   };
 
-    const handleWebViewNavigationStateChange = async(navState) => {
-      const exampleUrl = 'http://example.com'
-      // console.log('handlewebviewnavigationstatechange dapat', navState.url)
+  const handleWebViewNavigationStateChange = async (navState) => {
+    const exampleUrl = "http://example.com";
+    // console.log('handlewebviewnavigationstatechange dapat', navState.url)
 
-      if (navState.url.startsWith(exampleUrl)) {
-        // if (navState.url !== exampleUrl) {
-        //   console.log('Navigation canceled: already on the correct URL');
-        //   return; // Exit the function, no further navigation happens
-        // }
+    if (navState.url.startsWith(exampleUrl)) {
+      // if (navState.url !== exampleUrl) {
+      //   console.log('Navigation canceled: already on the correct URL');
+      //   return; // Exit the function, no further navigation happens
+      // }
 
-        // console.log('ini navstate startswith jalan')
-        const response = await dispatch(getSnapTokenByTransactionId(id));
-        // console.log('ini response nya dapat nih: di bawah aiwaait dispatch', response.payload?.data?.paymentResponse)
-        const paymentStatus = response.payload?.data?.paymentResponse?.PaymentStatus;
-        // console.log('dapat nih response nya: ', paymentStatus)
-        if(paymentStatus === "PAID"){
-          router.replace('/transaction')
-        } else if(paymentStatus === "PENDING"){
-          setWebViewVisible(false)
-          // console.log('ini paymentstatus pending terbaca')
-          router.push(`/transaction/transOnGoingPayment?id=${id}`)
-        } else{
-          router.replace('/transaction')
-        }
+      // console.log('ini navstate startswith jalan')
+      const response = await dispatch(getSnapTokenByTransactionId(id));
+      // console.log('ini response nya dapat nih: di bawah aiwaait dispatch', response.payload?.data?.paymentResponse)
+      const paymentStatus =
+        response.payload?.data?.paymentResponse?.PaymentStatus;
+      // console.log('dapat nih response nya: ', paymentStatus)
+      if (paymentStatus === "PAID") {
+        router.replace("/transaction");
+      } else if (paymentStatus === "PENDING") {
+        setWebViewVisible(false);
+        // console.log('ini paymentstatus pending terbaca')
+        router.push(`/transaction/transOnGoingPayment?id=${id}`);
+      } else {
+        router.replace("/transaction");
       }
     }
+  };
 
   const renderWebView = () => {
     if (transactionPayment && transactionPayment.paymentResponse?.redirectUrl) {
@@ -185,21 +196,19 @@ const TransactionOnGoingPaymentScreen = () => {
       );
     }
     return (
-      <View className="flex-1 items-center justify-center">
+      <View className='flex-1 items-center justify-center'>
         <Text>Tidak dapat memuat halaman pembayaran.</Text>
       </View>
     );
   };
 
-  
-
   return (
     <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
-      <SafeAreaView className="flex-1">
-        <StatusBar barStyle="light-content" backgroundColor="#503A3A" />
+      <SafeAreaView className='flex-1'>
+        <StatusBar barStyle='light-content' backgroundColor='#503A3A' />
 
-        <View className="flex-1">
-          <View className="bg-soil pb-7 rounded-b-verylarge mb-5">
+        <View className='flex-1'>
+          <View className='bg-soil pb-7 rounded-b-verylarge mb-5'>
             <HeaderSubMenu title={"Detail Transaksi"} />
           </View>
 
@@ -207,88 +216,116 @@ const TransactionOnGoingPaymentScreen = () => {
             renderWebView()
           ) : (
             <>
-            <ScrollView
-            showsVerticalScrollIndicator={false}
-            className="gap-6"
-            contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}>
-            <View className="px-6">
-              <MinimizeCard
-                title={"Sisa Waktu Pembayaran"}
-                data={calculateTimeDifference(startDate, transactionHistoryDetail.endOfPay)}
-                icon={"clock"}
-              />
-            </View>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                className='gap-6'
+                contentContainerStyle={{ paddingBottom: 20, flexGrow: 1 }}
+              >
+                <View className='px-6'>
+                  <MinimizeCard
+                    title={"Sisa Waktu Pembayaran"}
+                    data={calculateTimeDifference(
+                      startDate,
+                      transactionHistoryDetail.endOfPay
+                    )}
+                    icon={"clock"}
+                  />
+                </View>
 
-            <View className="px-6 mt-6">
-              <MinimizeCard
-                title={"Tanggal Pendakian"}
-                data={`${formattedDate(transactionHistoryDetail.startDate)} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
-                icon={"mountain-sun"}
-              />
-            </View>
+                <View className='px-6 mt-6'>
+                  <MinimizeCard
+                    title={"Tanggal Pendakian"}
+                    data={`${formattedDate(
+                      transactionHistoryDetail.startDate
+                    )} s/d ${formattedDate(transactionHistoryDetail.endDate)}`}
+                    icon={"mountain-sun"}
+                  />
+                </View>
 
-            <View className="px-6 mt-6">
-              <DetailTourGuideGunungCard 
-                tourGuideName={transactionHistoryDetail.tourGuideName}
-                orderId={transactionHistoryDetail.id}
-                mountainName={transactionHistoryDetail.mountainName}
-                hikingPointName={transactionHistoryDetail.hikingPointName}
-                tourGuideImage={transactionHistoryDetail.tourGuideImage}
-              />
-            </View>
+                <View className='px-6 mt-6'>
+                  <DetailTourGuideGunungCard
+                    tourGuideName={transactionHistoryDetail.tourGuideName}
+                    orderId={transactionHistoryDetail.id}
+                    mountainName={transactionHistoryDetail.mountainName}
+                    hikingPointName={transactionHistoryDetail.hikingPointName}
+                    tourGuideImage={transactionHistoryDetail.tourGuideImage}
+                  />
+                </View>
 
-            <View className="px-6 mt-6">
-              <DetailHikers data={transactionHistoryDetail.hikers} />
-            </View>
+                <View className='px-6 mt-6'>
+                  <DetailHikers data={transactionHistoryDetail.hikers} />
+                </View>
 
-            <View className="mt-6 gap-5">
-              <Text className="font-ibold text-soil ml-6">Detail Harga</Text>
-              <FixedHarga
-                days={transactionHistoryDetail.days}
-                tourGuidePriceEachDay={transactionHistoryDetail.tourGuidePerDay}
-                tourGuidePriceTotal={transactionHistoryDetail.totalPriceTourGuide}
-                entranceFeeEachDay={transactionHistoryDetail.entryPerDay}
-                entranceFeeTotal={transactionHistoryDetail.totalEntry}
-                simaksiPriceEachPerson={transactionHistoryDetail.priceSimaksi}
-                simaksiPriceTotal={transactionHistoryDetail.totalPriceSimaksi}
-                additionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.additionalPerDay}
-                totalAdditionalTourGuidePricePerDayPerPerson={transactionHistoryDetail.totalPriceAdditional}
-                porterPricePerDayPerPerson={transactionHistoryDetail.porterPerDay}
-                porterCount={transactionHistoryDetail.porter}
-                porterPriceTotal={transactionHistoryDetail.totalPricePorter}
-                adminCost={transactionHistoryDetail.adminCost}
-                totalPrice={transactionHistoryDetail.totalPrice}
-                hikersCount={transactionHistoryDetail.hikers ? transactionHistoryDetail.hikers.length : 0}
-              />
-            </View>
+                <View className='mt-6 gap-5'>
+                  <Text className='font-ibold text-soil ml-6'>
+                    Detail Harga
+                  </Text>
+                  <FixedHarga
+                    days={transactionHistoryDetail.days}
+                    tourGuidePriceEachDay={
+                      transactionHistoryDetail.tourGuidePerDay
+                    }
+                    tourGuidePriceTotal={
+                      transactionHistoryDetail.totalPriceTourGuide
+                    }
+                    entranceFeeEachDay={transactionHistoryDetail.entryPerDay}
+                    entranceFeeTotal={transactionHistoryDetail.totalEntry}
+                    simaksiPriceEachPerson={
+                      transactionHistoryDetail.priceSimaksi
+                    }
+                    simaksiPriceTotal={
+                      transactionHistoryDetail.totalPriceSimaksi
+                    }
+                    additionalTourGuidePricePerDayPerPerson={
+                      transactionHistoryDetail.additionalPerDay
+                    }
+                    totalAdditionalTourGuidePricePerDayPerPerson={
+                      transactionHistoryDetail.totalPriceAdditional
+                    }
+                    porterPricePerDayPerPerson={
+                      transactionHistoryDetail.porterPerDay
+                    }
+                    porterCount={transactionHistoryDetail.porter}
+                    porterPriceTotal={transactionHistoryDetail.totalPricePorter}
+                    adminCost={transactionHistoryDetail.adminCost}
+                    totalPrice={transactionHistoryDetail.totalPrice}
+                    hikersCount={
+                      transactionHistoryDetail.hikers
+                        ? transactionHistoryDetail.hikers.length
+                        : 0
+                    }
+                  />
+                </View>
 
-            <View className="mt-6">
-              <CatatanUntukTourGuide
-                isEditable={false}
-                title={"Catatan kepada tour guide"}
-                catatan={transactionHistoryDetail.customerNote}
-              />
-            </View>
+                <View className='mt-6'>
+                  <CatatanUntukTourGuide
+                    isEditable={false}
+                    title={"Catatan kepada tour guide"}
+                    catatan={transactionHistoryDetail.customerNote}
+                  />
+                </View>
 
-            <View className="mt-6">
-              <TipsMeetingWithGuide />
-            </View>
-          </ScrollView>
-          <View className="w-full flex-row justify-between bg-white px-6 py-3">
-            <View className="flex-col gap-1">
-              <Text className="font-iregular text-thistle text-sm">Total</Text>
-              <Text className="font-ibold text-soil text-lg">{formatCurrency(transactionHistoryDetail.totalPrice)}</Text>
-            </View>
-            <CustomButton
-              buttonHandling={continueHandling}
-              customStyle="bg-soil w-40"
-              title="Bayar Sekarang"
-            />
-          </View>
-          </>
+                <View className='mt-6'>
+                  <TipsMeetingWithGuide />
+                </View>
+              </ScrollView>
+              <View className='w-full flex-row justify-between bg-white px-6 py-3'>
+                <View className='flex-col gap-1'>
+                  <Text className='font-iregular text-thistle text-sm'>
+                    Total
+                  </Text>
+                  <Text className='font-ibold text-soil text-lg'>
+                    {formatCurrency(transactionHistoryDetail.totalPrice)}
+                  </Text>
+                </View>
+                <CustomButton
+                  buttonHandling={continueHandling}
+                  customStyle='bg-soil w-40'
+                  title='Bayar Sekarang'
+                />
+              </View>
+            </>
           )}
-
-          
         </View>
       </SafeAreaView>
     </Animated.View>

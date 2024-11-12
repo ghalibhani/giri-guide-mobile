@@ -38,6 +38,8 @@ const WalletGuideScreen = () => {
     );
   };
 
+  console.log("----------saldo", statsGuide.totalBalance);
+
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",

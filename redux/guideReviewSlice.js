@@ -3,11 +3,15 @@ import axiosInstance from "../api/axiosInstance";
 
 export const fetchTourGuideReview = createAsyncThunk(
   "tourGuideReview/fetchTourGuideReview",
-  async (id, { rejectWithValue }) => {
+  async ({ id, page = 1, size = 10 }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`guide/${id}/reviews`);
+      const response = await axiosInstance.get(
+        `guide/${id}/reviews?page=${page}&size=${size}`
+      );
+      // console.log("sliceee-------", id);
       return response.data;
     } catch (error) {
+      console.log(error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
@@ -18,7 +22,7 @@ const initialState = {
   reviews: [],
   paging: {
     page: 1,
-    size: 5,
+    size: 10,
     totalPages: 1,
     totalElements: 0,
   },
@@ -42,7 +46,7 @@ const guideReviewSlice = createSlice({
         state.reviews = action.payload;
       })
       .addCase(fetchTourGuideReview.rejected, (state, action) => {
-        console.log(action.payload);
+        // console.log(action.payload);
         state.isLoading = false;
         state.error = action.payload
           ? action.payload.message
