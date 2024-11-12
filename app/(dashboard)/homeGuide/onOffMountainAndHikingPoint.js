@@ -72,7 +72,9 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
               )
             )
           );
-          await dispatch(fetchTourGuideProfileHikingPointsByUserId(userId)).unwrap();
+          await dispatch(
+            fetchTourGuideProfileHikingPointsByUserId(userId)
+          ).unwrap();
         }
       }
     } catch (error) {
@@ -99,10 +101,10 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
         }`}
       >
         {isActive ? (
-          <MaterialCommunityIcons name="check" size={10} color="#ECD768" />
+          <MaterialCommunityIcons name='check' size={10} color='#ECD768' />
         ) : (
           <MaterialCommunityIcons
-            name="window-close"
+            name='window-close'
             size={10}
             color={"#91A0B8"}
           />
@@ -112,7 +114,9 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
   );
 
   const DetailMountainAndHikingPoint = ({ item }) => {
-    const [isActive, setIsActive] = useState(isTourGuideActive && item.isActive);
+    const [isActive, setIsActive] = useState(
+      isTourGuideActive && item.isActive
+    );
 
     // const handleToggle = () => {
     //   const newStatus = !isActive;
@@ -155,14 +159,14 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
     };
 
     return (
-      <View className="border-borderCustom border-[1px] bg-white rounded-xl mx-6 px-5 py-5 flex-row justify-between items-center">
-        <View className="flex-row items-center gap-[15] max-w-[70%]">
-          <FontAwesome6 name="mountain-sun" size={20} color={"#ECD768"} />
-          <View className="gap-[5]">
-            <Text className="font-imedium text-base color-soil">
+      <View className='border-borderCustom border-[1px] bg-white rounded-xl mx-6 px-5 py-5 flex-row justify-between items-center'>
+        <View className='flex-row items-center gap-[15] max-w-[70%]'>
+          <FontAwesome6 name='mountain-sun' size={20} color={"#ECD768"} />
+          <View className='gap-[5]'>
+            <Text className='font-imedium text-base color-soil'>
               {item.mountainName}
             </Text>
-            <Text className="font-iregular text-sm w-2/3 text-thistle">
+            <Text className='font-iregular text-sm w-2/3 text-thistle'>
               {item.hikingPointName}
             </Text>
           </View>
@@ -177,30 +181,30 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
     <Modal
       visible={isModalVisible}
       transparent={true}
-      animationType="fade"
+      animationType='fade'
       onRequestClose={closeModalConfirmation}
     >
-      <View className="flex-1 justify-center items-center bg-[rgba(0,0,0,0.5)]">
-        <View className="gap-6 rounded-verylarge bg-white px-6 py-6 mx-6">
-          <Text className="text-center font-isemibold text-base text-evergreen">
+      <View className='flex-1 justify-center items-center bg-[rgba(0,0,0,0.5)]'>
+        <View className='gap-6 rounded-verylarge bg-white px-6 py-6 mx-6'>
+          <Text className='text-center font-isemibold text-base text-evergreen'>
             {isTourGuideActive
               ? "Apakah kamu yakin untuk menonaktifkan akun untuk saat ini?"
               : "Apakah kamu yakin untuk mengaktifkan akun untuk saat ini?"}
           </Text>
 
-          <View className="flex-row justify-between">
-            <View className="items-center justify-center flex-1 px-6">
+          <View className='flex-row justify-between'>
+            <View className='items-center justify-center flex-1 px-6'>
               <CustomButton
                 buttonHandling={saveHandler}
-                customStyle="bg-successHover w-full"
-                title="Ya"
+                customStyle='bg-successHover w-full'
+                title='Ya'
               />
             </View>
-            <View className="items-center justify-center flex-1 px-6">
+            <View className='items-center justify-center flex-1 px-6'>
               <CustomButton
                 buttonHandling={closeModalConfirmation}
-                customStyle="bg-warningHover w-full"
-                title="Tidak"
+                customStyle='bg-warningHover w-full'
+                title='Tidak'
               />
             </View>
           </View>
@@ -210,42 +214,42 @@ const OnOffMountainAndHikingPointScreen = ({ data }) => {
   );
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className='flex-1'>
       {isModalVisible && <ModalActiveNonActiveTourGuide />}
 
       <StatusBar backgroundColor={"#503A3A"} barStyle={"light-content"} />
 
-      <View className="flex-1 bg-grayCustom">
-        <View className="flex-row justify-between items-center bg-soil px-6 pt-10 pb-7 rounded-b-verylarge mb-5">
+      <View className='flex-1 bg-grayCustom'>
+        <View className='flex-row justify-between items-center bg-soil px-6 pt-10 pb-7 rounded-b-verylarge mb-5'>
           <TouchableOpacity
             onPress={() => router.back()}
-            className="bg-ivory w-[30] h-[30] items-center justify-center rounded-full"
+            className='bg-ivory w-[30] h-[30] items-center justify-center rounded-full'
           >
-            <Ionicons name="chevron-back" size={15} color={"#503A3A"} />
+            <Ionicons name='chevron-back' size={15} color={"#503A3A"} />
           </TouchableOpacity>
 
-          <Text className="color-ivory text-xl font-isemibold">
+          <Text className='color-ivory text-xl font-isemibold'>
             Gunung dan Titik
           </Text>
 
           <TouchableOpacity
-            className="rounded-full bg-ivory w-[30] h-[30] items-center justify-center"
+            className='rounded-full bg-ivory w-[30] h-[30] items-center justify-center'
             onPress={handleTogglePower}
           >
             <Ionicons
-              name="power"
+              name='power'
               color={isTourGuideActive ? "#298267" : "#ED3241"}
               size={18}
             />
           </TouchableOpacity>
         </View>
 
-        <Text className="font-ibold text-soil px-6 mb-3">
+        <Text className='font-ibold text-soil px-6 mb-3'>
           Detail Gunung dan Titik Pendakian
         </Text>
 
         <ScrollView>
-          <View className="gap-y-5">
+          <View className='gap-y-5'>
             {tourGuides.map((item) => (
               <DetailMountainAndHikingPoint key={item.id} item={item} />
             ))}

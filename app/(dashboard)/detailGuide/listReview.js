@@ -6,21 +6,26 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchTourGuideReview } from "../../../redux/guideReviewSlice";
+import { fetchTourGuideById } from "../../../redux/tourGuideSlice";
 
 export default function ListReviewGuideScreen() {
   const dispatch = useDispatch();
 
-  const searchParams = useLocalSearchParams();
-  const tourGuideId = searchParams.get;
+  const { tourGuideId } = useLocalSearchParams();
+  // const tourGuideId = searchParams.get("tourGuideId");
 
   const tourGuideReview = useSelector(
     (state) => state.tourGuideReview.reviews?.data
   );
   const tourGuideData = useSelector((state) => state.tourGuide.tourGuide);
 
+  // console.log("-----id-----", tourGuideId);
+  // console.log("-----status-----", state.tourGuide.isLoading);
+  // console.log("----------", tourGuideReview);
+
   useEffect(() => {
     if (tourGuideId) {
-      dispatch(fetchTourGuideReview(tourGuideId));
+      dispatch(fetchTourGuideReview({ id: tourGuideId }));
       dispatch(fetchTourGuideById(tourGuideId));
     }
   }, [dispatch, tourGuideId]);
@@ -55,23 +60,26 @@ export default function ListReviewGuideScreen() {
         </TouchableOpacity>
 
         {/* list */}
+        {/* <ScrollView> */}
         <View>
-          {tourGuideReview.length > 0 ? (
-            tourGuideReview.map((ulasan) => (
+          {tourGuideReview?.length > 0 ? (
+            tourGuideReview?.map((ulasan) => (
               <ReviewGuideCard
-                key={ulasan.id}
-                reviewerName={ulasan.customerName}
-                date={formattedDate(new Date(ulasan.createdAt))}
-                usePorter={ulasan.usePorter}
-                reviewText={ulasan.review}
-                rating={ulasan.rating}
-                imageUser={ulasan.customerImage}
+                key={ulasan?.id}
+                reviewerName={ulasan?.customerName}
+                date={formattedDate(new Date(ulasan?.createdAt))}
+                usePorter={ulasan?.usePorter}
+                reviewText={ulasan?.review}
+                rating={ulasan?.rating}
+                imageUser={ulasan?.customerImage}
               />
             ))
           ) : (
             <Text>Data tidak tersedia</Text>
           )}
         </View>
+
+        {/* </ScrollView> */}
       </SafeAreaView>
     </ScrollView>
   );

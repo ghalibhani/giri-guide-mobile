@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import Star from "../Star";
 
-const CardRatingReview = ({ averageData, data, show }) => {
+const CardRatingReview = ({ averageData, data, show, role }) => {
   const formattedDate = (date) => {
     return new Intl.DateTimeFormat("id-ID", {
       day: "numeric",
@@ -16,6 +16,12 @@ const CardRatingReview = ({ averageData, data, show }) => {
   function formatDecimal(value) {
     return value % 1 === 0 ? `${value.toFixed(1)}` : `${value.toFixed(1)}`;
   }
+
+  // if (role === "ROLE_GUIDE") {
+  //   console.log("data tour guide id------", averageData?.tourGuideId);
+  // } else {
+  //   console.log("data customer id------", averageData?.id);
+  // }
 
   return (
     <View className='bg-white rounded-verylarge my-4 p-6'>
@@ -68,7 +74,9 @@ const CardRatingReview = ({ averageData, data, show }) => {
       <TouchableOpacity
         onPress={() => {
           router.navigate(
-            `/detailGuide/listReview?tourGuideId=${data?.tourGuideId}`
+            `/detailGuide/listReview?tourGuideId=${
+              role === "ROLE_GUIDE" ? averageData?.tourGuideId : averageData?.id
+            }`
           );
         }}
       >
