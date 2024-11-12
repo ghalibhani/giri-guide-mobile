@@ -71,6 +71,7 @@ export default function RegisterScreen() {
     const regexEmail = /\S+@\S+\.\S+/;
     const regexInteger = /^\d+$/;
     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+    const regexName = /^[A-Za-z\s]+$/;
 
     let formErr = {}
 
@@ -84,6 +85,8 @@ export default function RegisterScreen() {
 
     if(!fullName) {
       formErr.fullName = "Nama lengkap harus diisi"
+    } else if(!regexName.test(fullName)){
+      formErr.fullName = "Nama hanya boleh mangandung huruf dan spasi"
     }
 
     if(gender !== "MALE" && gender !== "FEMALE") {
