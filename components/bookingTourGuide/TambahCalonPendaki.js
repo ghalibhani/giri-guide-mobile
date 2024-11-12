@@ -4,7 +4,7 @@ import moment from 'moment'
 import CustomButton from '../miniComponent/CustomButton'
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const TambahCalonPendaki = ({isVisible, onClose, onSave, dataPendaki}) => {
+const TambahCalonPendaki = ({isVisible, onClose, onSave, dataPendaki, dataSemuaPendaki}) => {
     const [nik, setNik] = useState('')
     const [name, setName] = useState('')
 
@@ -20,6 +20,10 @@ const TambahCalonPendaki = ({isVisible, onClose, onSave, dataPendaki}) => {
     const maximumDate = new Date();
     const minimumDate = new Date(new Date().setFullYear(new Date().getFullYear() - maxAge));
     const maxBirthDate = new Date(new Date().setFullYear(new Date().getFullYear() - minAge));
+
+    useEffect(() => {
+        console.log("Data Semua Pendaki:", dataSemuaPendaki);
+    }, [dataSemuaPendaki]);
 
     useEffect(() => {
         if(dataPendaki) {
@@ -50,6 +54,15 @@ const TambahCalonPendaki = ({isVisible, onClose, onSave, dataPendaki}) => {
             formErr.nik = "Format NIK invalid"
         } else if (nik.length !== 16) {
             formErr.nik = "Format NIK harus 16 angka"
+        // } else if (dataSemuaPendaki.some(hiker => hiker.nik === nik)) {
+        //     formErr.nik = "NIK ini sudah ditambahkan dalam detail calon pendaki"
+        // }
+        } else {
+            const nikAlreadyExists = dataSemuaPendaki.some(hiker => hiker.nik === nik && hiker.nik !== dataPendaki?.nik)
+            console.log('Apakah nik sudah terdaftar? ', nikAlreadyExists)
+            if(nikAlreadyExists) {
+                formErr.nik = "NIK ini sudah ditambahkan dalam detail calon pendaki"
+            }
         }
 
         if(!name) {

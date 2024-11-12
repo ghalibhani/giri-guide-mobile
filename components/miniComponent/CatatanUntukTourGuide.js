@@ -10,12 +10,12 @@ const CatatanUntukTourGuide = ({ isEditable, catatan, setCatatan, title, require
       <View className='border-borderCustom border-[1px] bg-white rounded-xl px-6 py-5 gap-[5]'>
         <TextInput
           editable={isEditable}
-          placeholder={`Catatan minimal ${minLength ? minLength : 20} karakter dan maksimal 150 karakter. Kamu harus memberi catatan`}
+          placeholder={`Catatan minimal ${minLength ? minLength : 20} karakter dan maksimal 150 karakter. Kamu harus memberi catatan ${title === 'Beri catatan ke tour guide' ? 'tentang jam pertemuan dan kebutuhan kamu' : ''}`}
           placeholderTextColor={"#D6D6D6"}
           value={catatan}
           onChangeText={setCatatan}
           multiline={true}
-          numberOfLines={4}
+          numberOfLines={5}
           className='font-imedium text-base align-top color-evergreen'
         />
       </View>
