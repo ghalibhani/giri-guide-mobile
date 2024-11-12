@@ -8,10 +8,10 @@ export const fetchTourGuideReview = createAsyncThunk(
       const response = await axiosInstance.get(
         `guide/${id}/reviews?page=${page}&size=${size}`
       );
-      // console.log("sliceee-------", id);
+      console.log("sliceee-------", id);
       return response.data;
     } catch (error) {
-      console.log(error.response.data);
+      console.log("----error-----", error.response);
       return rejectWithValue(error.response.data);
     }
   }
@@ -38,6 +38,7 @@ const guideReviewSlice = createSlice({
     builder
       .addCase(fetchTourGuideReview.pending, (state) => {
         state.isLoading = true;
+        // console.log("ini loading");
         state.error = null;
       })
       .addCase(fetchTourGuideReview.fulfilled, (state, action) => {

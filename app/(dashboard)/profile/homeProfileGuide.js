@@ -18,8 +18,10 @@ const HomeProfileGuideScreen = () => {
   const onRefresh = () => {
     setRefreshing(true);
     dispatch(fetchTourGuideProfileByUserId(userId));
-    dispatch(fetchTourGuideReview(tourGuideProfileData.tourGuideId)).finally(() => setRefreshing(false))
-  }
+    dispatch(fetchTourGuideReview(tourGuideProfileData.tourGuideId)).finally(
+      () => setRefreshing(false)
+    );
+  };
 
   const tourGuideProfileData = useSelector(
     (state) => state.tourGuide.tourGuide
@@ -34,9 +36,11 @@ const HomeProfileGuideScreen = () => {
 
   useEffect(() => {
     if (tourGuideProfileData && tourGuideProfileData.tourGuideId) {
-      dispatch(fetchTourGuideReview(tourGuideProfileData.tourGuideId));
+      dispatch(fetchTourGuideReview({ id: tourGuideProfileData.tourGuideId }));
     }
   }, [tourGuideProfileData, dispatch]);
+
+  console.log("tourGuideProfileData--------------", tourGuideProfileData);
 
   const highestRatedReview =
     reviews && reviews.length > 0
@@ -68,6 +72,7 @@ const HomeProfileGuideScreen = () => {
               data={highestRatedReview}
               averageData={tourGuideProfileData}
               show={false}
+              role={"ROLE_GUIDE"}
             />
 
             <SubMenuProfileTourGuide />
