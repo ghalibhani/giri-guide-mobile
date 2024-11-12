@@ -81,7 +81,7 @@ export default function DetailTourGuideScreen() {
   }, [tourGuide, mountainId, hikingPointId]);
 
   const highestRatedReview =
-    tourGuideReview && tourGuideReview.length > 0
+    tourGuideReview && tourGuideReview?.length > 0
       ? tourGuideReview.reduce((prev, current) => {
           return prev.rating > current.rating ? prev : current;
         }, tourGuideReview[0])
