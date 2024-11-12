@@ -23,7 +23,13 @@ import { fetchTourGuideById } from "../../../redux/tourGuideSlice";
 // ada di folder detailGuide
 
 export default function DetailTourGuideScreen() {
-  const { tourGuideId, hikingPointId, hikingPointName, mountainName, mountainId } = useLocalSearchParams();
+  const {
+    tourGuideId,
+    hikingPointId,
+    hikingPointName,
+    mountainName,
+    mountainId,
+  } = useLocalSearchParams();
 
   // console.log(`ini dari detail guide: tourGuideId= ${tourGuideId}, hikingPointId=${hikingPointId}, hikingPointName=${hikingPointName}, mountainName=${mountainName}, mountainId=${mountainId}`)
 
@@ -41,37 +47,38 @@ export default function DetailTourGuideScreen() {
   const [selectedClimbingPoint, setSelectedClimbingPoint] = useState(null);
   const [climbingPointData, setClimbingPointData] = useState(null);
 
-  const [entranceFee, setEntranceFee] = useState(0)
-  const [simaksiFee, setSimaksiFee] = useState(0)
-  const [totalPriceFirst, setTotalPriceFirst] = useState(0)
+  const [entranceFee, setEntranceFee] = useState(0);
+  const [simaksiFee, setSimaksiFee] = useState(0);
+  const [totalPriceFirst, setTotalPriceFirst] = useState(0);
 
   useEffect(() => {
     dispatch(fetchTourGuideById(tourGuideId));
     // console.log(`tourGuide: ${tourGuide}`)
-    dispatch(fetchTourGuideReview(tourGuideId));
-    // console.log()
+    dispatch(fetchTourGuideReview({ id: tourGuideId }));
+    // console.log("tourGuideId: ", tourGuideId);
   }, [dispatch, tourGuideId]);
 
   useEffect(() => {
     if (tourGuide && tourGuide.mountains) {
-      const entranceFee = tourGuide.mountains.find(
-        (mountain) => mountain.mountainId === mountainId
-      )?.hikingPoints?.find(
-        (hikingPoint) => hikingPoint.id === hikingPointId
-      )?.price || 0;
-      setEntranceFee(entranceFee)
-  
-      const simaksiFee = tourGuide.mountains.find(
-        (mountain) => mountain.mountainId === mountainId
-      )?.priceSimaksi || 0;
-      setSimaksiFee(simaksiFee)
-  
-      const totalPriceFirst = tourGuide.price + entranceFee + simaksiFee + 20000;
-      setTotalPriceFirst(totalPriceFirst)
+      const entranceFee =
+        tourGuide.mountains
+          .find((mountain) => mountain.mountainId === mountainId)
+          ?.hikingPoints?.find(
+            (hikingPoint) => hikingPoint.id === hikingPointId
+          )?.price || 0;
+      setEntranceFee(entranceFee);
+
+      const simaksiFee =
+        tourGuide.mountains.find(
+          (mountain) => mountain.mountainId === mountainId
+        )?.priceSimaksi || 0;
+      setSimaksiFee(simaksiFee);
+
+      const totalPriceFirst =
+        tourGuide.price + entranceFee + simaksiFee + 20000;
+      setTotalPriceFirst(totalPriceFirst);
     }
   }, [tourGuide, mountainId, hikingPointId]);
-
- 
 
   const highestRatedReview =
     tourGuideReview && tourGuideReview.length > 0
@@ -123,7 +130,7 @@ export default function DetailTourGuideScreen() {
 
   if (statusTourGuide === "loading" && statusTourGuideReview) {
     return (
-      <View className="flex-1 items-center justify-center bg-white">
+      <View className='flex-1 items-center justify-center bg-white'>
         <Image
           source={require("../../../assets/loading.gif")}
           style={{ width: 80, height: 80 }}
@@ -287,17 +294,24 @@ export default function DetailTourGuideScreen() {
 
             <View className='bg-ivory py-4 my-6 px-6 rounded-verylarge'>
               <Text className='text-soil text-sm font-iregular'>
-                Tour guide ini mampu memandu maksimal 
-                <Text className="font-ibold">{' '}{tourGuide.maxHiker} pendaki</Text>. 
-                Harga jasa tour guide {formatRupiah(tourGuide.price)} berlaku untuk memandu maksimal 5 pendaki. Jika melebihi, akan dikenakan biaya tambahan.
+                Tour guide ini mampu memandu maksimal
+                <Text className='font-ibold'>
+                  {" "}
+                  {tourGuide.maxHiker} pendaki
+                </Text>
+                . Harga jasa tour guide {formatRupiah(tourGuide.price)} berlaku
+                untuk memandu maksimal 5 pendaki. Jika melebihi, akan dikenakan
+                biaya tambahan.
               </Text>
             </View>
 
-
-            <View className="gap-3">
+            <View className='gap-3'>
               <Text className='text-lg font-ibold my-4 text-soil'>
                 Rincian Biaya
-                <Text className="text-sm font-iregular text-soil">{'\n'}{mountainName} - {hikingPointName}</Text>
+                <Text className='text-sm font-iregular text-soil'>
+                  {"\n"}
+                  {mountainName} - {hikingPointName}
+                </Text>
               </Text>
             </View>
 
@@ -321,7 +335,9 @@ export default function DetailTourGuideScreen() {
             <View className='bg-borderCustom h-[1] my-4'></View>
             {/* total */}
             <View className='flex flex-row justify-between gap-2'>
-              <Text className='font-ibold text-sm text-evergreen'>Total awal untuk 1 pendaki</Text>
+              <Text className='font-ibold text-sm text-evergreen'>
+                Total awal untuk 1 pendaki
+              </Text>
               <Text className='font-ibold text-sm text-evergreen'>
                 {" "}
                 {formatRupiah(totalPriceFirst)}
@@ -333,7 +349,9 @@ export default function DetailTourGuideScreen() {
               mengangkat beban maksimal 25 kg.
             </Text>
             <CostDetailItem
-              label={"Jasa tour guide untuk penambahan / pendaki / hari (diluar 5 pendaki)"}
+              label={
+                "Jasa tour guide untuk penambahan / pendaki / hari (diluar 5 pendaki)"
+              }
               amount={formatRupiah(tourGuide.additionalPrice)}
               customLabelStyle={"w-2/3"}
             />
@@ -355,9 +373,13 @@ export default function DetailTourGuideScreen() {
           borderRadius: 10,
           alignItems: "center",
         }}
-        onPress={() => router.push(`/bookGuide/bookFirst?tourGuideId=${tourGuideId}&hikingPointId=${hikingPointId}&hikingPointName=${hikingPointName}&mountainName=${mountainName}&tourGuideName=${tourGuide.name}&totalPorter=${tourGuide.totalPorter}&maxHiker=${tourGuide.maxHiker}&mountainId=${mountainId}`)}
+        onPress={() =>
+          router.push(
+            `/bookGuide/bookFirst?tourGuideId=${tourGuideId}&hikingPointId=${hikingPointId}&hikingPointName=${hikingPointName}&mountainName=${mountainName}&tourGuideName=${tourGuide.name}&totalPorter=${tourGuide.totalPorter}&maxHiker=${tourGuide.maxHiker}&mountainId=${mountainId}`
+          )
+        }
       >
-        <Text className="font-isemibold text-sm text-white">
+        <Text className='font-isemibold text-sm text-white'>
           Sewa Tour Guide Ini
         </Text>
       </TouchableOpacity>

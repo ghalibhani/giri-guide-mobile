@@ -12,59 +12,64 @@ import { giveRatingForDoneTransaction } from "../../../redux/transactionSlice";
 import CustomModalSuccess from "../../../components/miniComponent/CustomModalSuccess";
 
 export default function beriRating() {
-  const { transactionId, tourGuideId } = useLocalSearchParams()
+  const { transactionId, tourGuideId } = useLocalSearchParams();
   // console.log(`ini dari beri rating: transactionId: ${transactionId} tourGuideId: ${tourGuideId}`)
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const tourGuide = useSelector((state) => state.tourGuide.tourGuide);
   const statusTourGuide = useSelector((state) => state.tourGuide.status);
-  
-  const [rating, setRating] = useState(0)
-  const [review, setReview] = useState('')
 
-  const isReviewValid = review.length >= 20 && review.length <= 150
-  const [isModalSuccessVisible, setIsModalSuccessVisible] = useState(false)
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+
+  const isReviewValid = review.length >= 5 && review.length <= 150;
+  const [isModalSuccessVisible, setIsModalSuccessVisible] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchTourGuideById(tourGuideId))
+    dispatch(fetchTourGuideById(tourGuideId));
     // console.log(`tourguide dari beri rating: ${tourGuide.rating}`)
-  }, [dispatch, tourGuideId])
+  }, [dispatch, tourGuideId]);
 
   const handleDone = () => {
-    setIsModalSuccessVisible(false)
-    router.replace('/transaction')
-  }
+    setIsModalSuccessVisible(false);
+    router.replace("/transaction");
+  };
 
   const showModalSuccess = () => {
-    setIsModalSuccessVisible(true)
-  }
+    setIsModalSuccessVisible(true);
+  };
 
-  const continueHandling = async() => {
-    try{
+  const continueHandling = async () => {
+    try {
       const dataRating = {
         rating: rating,
         review: review,
-      }
+      };
 
       // console.log('ini data rating: ', dataRating)
-      await dispatch(giveRatingForDoneTransaction({dataRating, transactionId: transactionId})).unwrap()
-      setReview('')
-      setRating(0)
-      setIsModalSuccessVisible(true)
-    } catch(error) {
-      console.error("Error in beriRating: ", error)
+      await dispatch(
+        giveRatingForDoneTransaction({
+          dataRating,
+          transactionId: transactionId,
+        })
+      ).unwrap();
+      setReview("");
+      setRating(0);
+      setIsModalSuccessVisible(true);
+    } catch (error) {
+      console.error("Error in beriRating: ", error);
     }
-  }
+  };
 
-  if(statusTourGuide === "loading") {
+  if (statusTourGuide === "loading") {
     return (
-      <View className="flex-1 items-center justify-center bg-white">
+      <View className='flex-1 items-center justify-center bg-white'>
         <Image
           source={require("../../../assets/loading.gif")}
           style={{ width: 80, height: 80 }}
         />
       </View>
-    )
+    );
   }
 
   return (
@@ -74,7 +79,7 @@ export default function beriRating() {
         <HeaderSubMenu title={"Beri Rating"} />
       </View>
 
-      <RatingTourGuideCard 
+      <RatingTourGuideCard
         guideName={tourGuide.name}
         guideImage={tourGuide.image}
         giveRating={rating}
@@ -97,10 +102,13 @@ export default function beriRating() {
         isDisabled={!isReviewValid}
       />
 
-      <CustomModalSuccess isModalVisible={isModalSuccessVisible} handleDone={handleDone}>
-        <Text className="text-base mb-4 font-iregular text-evergreen text-center">
-            Yeay! Terima kasih telah memberikan ulasan kepada kami
-          </Text>
+      <CustomModalSuccess
+        isModalVisible={isModalSuccessVisible}
+        handleDone={handleDone}
+      >
+        <Text className='text-base mb-4 font-iregular text-evergreen text-center'>
+          Yeay! Terima kasih telah memberikan ulasan kepada kami
+        </Text>
       </CustomModalSuccess>
     </SafeAreaView>
   );

@@ -55,6 +55,7 @@ export default function ListReviewGuideScreen() {
         </TouchableOpacity>
 
         {/* list */}
+        {/* <ScrollView> */}
         <View>
           {tourGuideReview.length > 0 ? (
             tourGuideReview.map((ulasan) => (
@@ -72,6 +73,8 @@ export default function ListReviewGuideScreen() {
             <Text>Data tidak tersedia</Text>
           )}
         </View>
+
+        {/* </ScrollView> */}
       </SafeAreaView>
     </ScrollView>
   );
