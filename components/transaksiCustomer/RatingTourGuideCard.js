@@ -33,11 +33,11 @@ const RatingTourGuideCard = ({ guideName, guideImage, giveRating, setGiveRating,
         <View className='ml-auto flex-row items-center'>
           <AntDesign name='star' size={20} color='#ECD768' />
           <Text className='font-isemibold text-sm text-plum ml-2'>
-            {guideRating.toLocaleString("id-ID", {
+            {(guideRating ?? 0).toLocaleString("id-ID", {
                                               minimumFractionDigits: 0,
                                               maximumFractionDigits: 2,
                                             })} 
-            ({guideReviewCount})
+            ({guideReviewCount ?? 0})
           </Text>
         </View>
       </View>

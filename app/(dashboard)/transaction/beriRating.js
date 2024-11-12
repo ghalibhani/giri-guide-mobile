@@ -22,8 +22,8 @@ export default function beriRating() {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
 
-  const isReviewValid = review.length >= 5 && review.length <= 150;
-  const [isModalSuccessVisible, setIsModalSuccessVisible] = useState(false);
+  const isReviewValid = review.length >= 5 && review.length <= 150
+  const [isModalSuccessVisible, setIsModalSuccessVisible] = useState(false)
 
   useEffect(() => {
     dispatch(fetchTourGuideById(tourGuideId));
@@ -93,6 +93,7 @@ export default function beriRating() {
         catatan={review}
         setCatatan={setReview}
         isEditable={true}
+        minLength={5}
       />
 
       <CustomButton

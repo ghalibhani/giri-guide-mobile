@@ -117,44 +117,35 @@ const AllRoutesCardsScreen = () => {
           />
         </View>
 
-        <ScrollView>
-          <View className='px-6'>
-            {groupedTravelRoutesList.map((row, rowIndex) => (
-              <View key={rowIndex} className='flex-row gap-4 justify-between'>
-                {row.map((travelRoute) => {
-                  const randomImage = data[rowIndex % data.length].image;
-                  return (
-                    <TouchableOpacity
-                      key={travelRoute.id}
-                      onPress={() =>
-                        router.push(
-                          `/home/routeDetail?id=${travelRoute.id}&imageUrl=${randomImage}`
-                        )
-                      }
-                    >
-                      <View
-                        className='mb-6 pb-6 bg-white rounded-verylarge shadow-lg shadow-evergreen'
-                        style={{ width: (screenWidth - 64) / 2 }}
-                      >
-                        <Image
-                          source={{ uri: randomImage }}
-                          className='w-full h-40 rounded-t-verylarge'
-                          resizeMode='cover'
-                        />
-                        <Text className='text-soil text-left pl-3  text-base font-imedium'>
-                          {travelRoute.title}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-            ))}
-          </View>
-        </ScrollView>
-      </View>
-    </SafeAreaView>
-  );
-};
+                <ScrollView>
+                    <View className="px-6">
+                        {groupedTravelRoutesList.map((row, rowIndex) => (
+                        <View key={rowIndex} className="flex-row gap-4 justify-between">
+                            {row.map((travelRoute) => {
+                                const randomImage = data[rowIndex % data.length].image
+                                return (
+                                    <TouchableOpacity key={travelRoute.id} onPress={() => router.push(`/home/routeDetail?id=${travelRoute.id}&imageUrl=${randomImage}`)} >
+                                        <View className="mb-6 h-[220px] bg-white rounded-verylarge shadow-lg shadow-evergreen" style={{ width: (screenWidth - 64) / 2 }}>
+                                            <Image
+                                                source={{ uri: randomImage }}
+                                                className="w-full h-40 rounded-t-verylarge"
+                                                resizeMode='cover'
+                                            />
+                                            <Text className="text-soil text-left px-4 py-4 text-base font-ibold">
+                                            {travelRoute.title.length > 30 ? `${travelRoute.title.slice(0, 30)}...` : travelRoute.title}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )
+                            })}
+                        </View>
+                        ))}
+                    </View>
+                </ScrollView>
+
+            </View>
+        </SafeAreaView>
+    )
+}
 
 export default AllRoutesCardsScreen;
