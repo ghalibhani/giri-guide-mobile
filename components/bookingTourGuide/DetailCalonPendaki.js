@@ -138,6 +138,7 @@ const DetailCalonPendaki = ({continueHandling, hikerDetails, setHikerDetails, sh
                 onClose={closeModalPendaki}
                 dataPendaki={hikerDetails[editingIndex] || {}}
                 onSave={saveHandler}
+                dataSemuaPendaki={hikerDetails}
             />
         </View>
     )
