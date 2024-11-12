@@ -15,6 +15,7 @@ import { useFocusEffect } from "@react-navigation/native";
 const mountainDetail = () => {
   const dispatch = useDispatch()
   const {id} = useLocalSearchParams()
+  console.log(id)
 
   const mountainData = useSelector((state) => state.mountain.mountain)
   const statusMountain = useSelector((state) => state.mountain.status)
