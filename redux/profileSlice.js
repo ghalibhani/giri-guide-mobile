@@ -20,8 +20,10 @@ export const updateProfile = createAsyncThunk(
   async ({ id, profileData }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`profile/${id}`, profileData);
+      console.log(">>>>>>>", response.data.data);
       return response.data.data;
     } catch (error) {
+      console.log("error slice ---------", error.response.data);
       return rejectWithValue(error.response.data);
     }
   }

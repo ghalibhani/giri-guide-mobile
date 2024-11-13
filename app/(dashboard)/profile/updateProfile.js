@@ -27,6 +27,8 @@ const UpdateProfileScreen = () => {
     }
   }, [dispatch, userId]);
 
+  console.log("User id customer--------------", userId);
+
   const updateProfileHandler = () => {
     const profileData = {
       fullName,
@@ -36,7 +38,7 @@ const UpdateProfileScreen = () => {
 
     dispatch(
       updateProfile({
-        id: profileCustomer.id,
+        id: userId,
         profileData,
       })
     );
