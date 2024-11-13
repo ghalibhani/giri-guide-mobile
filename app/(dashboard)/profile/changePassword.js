@@ -7,6 +7,9 @@ import CustomInput from "../../../components/miniComponent/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { changePassword } from "../../../redux/authSlice";
+import CustomModalSuccess from "../../../components/miniComponent/CustomModalSuccess";
+import { Text } from "react-native";
+import CustomModalError from "../../../components/miniComponent/CustomModalError";
 
 export default function ChangePasswordScreen() {
   const dispatch = useDispatch();
@@ -14,6 +17,11 @@ export default function ChangePasswordScreen() {
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+
+  const [isModalSuccessVisible, setIsModalSuccessVisible] = useState(false);
+  const [isModalErrorVisible, setIsModalErrorVisible] = useState(false);
+
+  const [cleanMessage, setCleanMessage] = useState("");
 
   const changePasswordHandler = async () => {
     try {
@@ -23,7 +31,8 @@ export default function ChangePasswordScreen() {
         newPassword,
       };
       await dispatch(changePassword(passwordData)).unwrap();
-      Alert.alert("Success", "Password berhasil diubah");
+      // Alert.alert("Success", "Password berhasil diubah");
+      setIsModalSuccessVisible(true);
     } catch (error) {
       const errorMessage =
         error.message || error.response?.data || "Terjadi kesalahan";
@@ -32,7 +41,10 @@ export default function ChangePasswordScreen() {
         ? errorMessage.split("FORBIDDEN ")[1]
         : errorMessage;
 
-      Alert.alert("Error", cleanMessage);
+      setCleanMessage(cleanMessage);
+      setIsModalErrorVisible(true);
+      // setOldPassword("");
+      // setNewPassword("");
     }
   };
 
@@ -64,6 +76,18 @@ export default function ChangePasswordScreen() {
           buttonHandling={changePasswordHandler}
           customStyle={"bg-soil"}
           title={"Ubah Password"}
+        />
+        <CustomModalSuccess
+          isModalVisible={isModalSuccessVisible}
+          handleDone={() => setIsModalSuccessVisible(false)}
+          children={
+            <Text className='text-center mb-6'>Update password berhasil</Text>
+          }
+        />
+        <CustomModalError
+          isModalVisible={isModalErrorVisible}
+          handleDone={() => setIsModalErrorVisible(false)}
+          children={<Text className='text-center mb-6'>{cleanMessage}</Text>}
         />
       </View>
     </SafeAreaView>
