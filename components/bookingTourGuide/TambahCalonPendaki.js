@@ -45,6 +45,7 @@ const TambahCalonPendaki = ({isVisible, onClose, onSave, dataPendaki, dataSemuaP
 
     const validate = () => {
         const regex = /^\d+$/;
+        const regexName = /^[A-Za-z\s]+$/;
 
         let formErr = {}
 
@@ -67,6 +68,8 @@ const TambahCalonPendaki = ({isVisible, onClose, onSave, dataPendaki, dataSemuaP
 
         if(!name) {
             formErr.name = "Nama lengkap harus diisi"
+        } else if(!regexName.test(name)) {
+            formErr.name = "Nama hanya boleh mangandung huruf dan spasi"
         }
 
         setFormErrors(formErr)
