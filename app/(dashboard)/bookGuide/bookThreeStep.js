@@ -313,6 +313,9 @@ const SewaTourGuideTigaTahap = () => {
                 showModalConfirmationDataHiker={showModalConfirmationDataHiker}
                 handleCancelCorfirmationDataHiker={handleCancelCorfirmationDataHiker}
                 isModalConfirmationDataHikerVisible={isModalConfirmationDataHikerVisible}
+                nikAccountOwner={profile.nik}
+                fullNameAccountOwner={profile.fullName}
+                birthDateAccountOwner={profile.birthDate}
               />
             </View>
           )}

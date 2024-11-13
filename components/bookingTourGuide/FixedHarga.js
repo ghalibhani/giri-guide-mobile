@@ -79,7 +79,7 @@ const FixedHarga = ({
 
             <View className="flex-row justify-between items-center">
                 <View className="max-w-[70%]">
-                    <Text className="font-iregular text-thistle text-sm">Biaya lain-lain {isTourGuide && ("(ditujukan untuk customer)")}</Text>
+                    <Text className="font-iregular text-thistle text-sm">Biaya layanan aplikasi {isTourGuide && ("(ditujukan untuk customer)")}</Text>
                 </View>
                 
                 <Text className="font-iregular text-soil text-sm">{formatCurrency(adminCost)}</Text>

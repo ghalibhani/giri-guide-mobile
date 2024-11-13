@@ -50,7 +50,7 @@ const TransactionCustomerScreen = () => {
         try {
           const userId = await AsyncStorage.getItem("userId");
           const userRole = await AsyncStorage.getItem("userRole");
-          // console.log(`ini dari transaction: ${userId}`);
+          console.log(`ini dari transaction: ${userId}`);
           // console.log(`ini role dari transaction: ${userRole}`);
           if (!userId) {
             console.error("User ID not found.");

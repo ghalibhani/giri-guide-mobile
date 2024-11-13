@@ -6,9 +6,12 @@ import TambahCalonPendaki from './TambahCalonPendaki'
 import moment from 'moment'
 import CustomModalConfirmation from '../miniComponent/CustomModalConfirmation'
 
-const DetailCalonPendaki = ({continueHandling, hikerDetails, setHikerDetails, showModalConfirmationDataHiker, handleCancelCorfirmationDataHiker, isModalConfirmationDataHikerVisible}) => {
+const DetailCalonPendaki = ({continueHandling, hikerDetails, setHikerDetails, showModalConfirmationDataHiker, handleCancelCorfirmationDataHiker, isModalConfirmationDataHikerVisible, nikAccountOwner, fullNameAccountOwner, birthDateAccountOwner}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editingIndex, setEditingIndex] = useState(null)
+    const [isCustDataIncluded, setIsCustDataIncluded] = useState(false);
+
+    const initialBirthDate = new Date(new Date().setFullYear(new Date().getFullYear() - 17));
 
     const showModalPendaki = (index) => {
         setEditingIndex(index)
@@ -36,10 +39,76 @@ const DetailCalonPendaki = ({continueHandling, hikerDetails, setHikerDetails, sh
         (hiker) => hiker.nik && hiker.fullName && hiker.birthDate
     )
 
+    const onToggle = () => {
+        setIsCustDataIncluded((prevState) => {
+            const newState = !prevState
+
+            setHikerDetails((prevHikers) => {
+                const updatedHikers = [...prevHikers]
+                updatedHikers[0] = newState
+                ? {
+                    nik: nikAccountOwner,
+                    fullName: fullNameAccountOwner,
+                    birthDate: birthDateAccountOwner
+                } : {
+                    nik: '',
+                    fullName: '',
+                    birthDate: initialBirthDate
+                }
+                return updatedHikers
+            })
+            return newState
+        })
+    }
+
     return (
         <View className="gap-6 flex-1 flex-col justify-between mb-20">
             <View className="gap-6">
                 <Text className="font-ibold text-soil">Detail Calon Pendaki</Text>
+
+                <View className='border-borderCustom border-[1px] bg-white rounded-xl px-5 py-5 gap-6'>
+                    
+                    <View className="gap-2">
+                        <Text className="color-thistle text-xs font-iregular">Nama</Text>
+                        <Text className="color-soil text-sm font-ibold">{fullNameAccountOwner}</Text>
+                    </View>
+                    <View className="gap-2">
+                        <Text className="color-thistle text-xs font-iregular">NIK</Text>
+                        <Text className="color-soil text-sm font-ibold">{nikAccountOwner}</Text>
+                    </View>
+
+                    <View className="gap-2">
+                        <Text className="color-thistle text-xs font-iregular">Tanggal Lahir</Text>
+                        <Text className="color-soil text-sm font-ibold">{formattedDate(birthDateAccountOwner)}</Text>
+                    </View>
+
+                    <View className="flex-row justify-between">
+                        <Text className="font-imedium text-evergreen text-sm">Tambah sebagai calon pendaki</Text>
+                        <TouchableOpacity
+                            className={`w-12 h-8 py-1 items-center justify-center rounded-2xl ${
+                                            isCustDataIncluded ? "bg-daisy" : "bg-thistle"
+                                        } p-1`}
+                            onPress={onToggle}
+                        >
+                            <View
+                                className={`w-5 h-5 rounded-full items-center justify-center bg-white ${
+                                            isCustDataIncluded ? "ml-auto" : "mr-auto"
+                                            }`}
+                            >
+                                {isCustDataIncluded ? (
+                                    <MaterialCommunityIcons name='check' size={10} color='#ECD768' />
+                                    ) : (
+                                    <MaterialCommunityIcons
+                                        name='window-close'
+                                        size={10}
+                                        color={"#91A0B8"}
+                                    />
+                                )}
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    
+                </View>
 
                 <View className="gap-3">
                     {hikerDetails.map((hiker, index) => (
@@ -138,6 +207,7 @@ const DetailCalonPendaki = ({continueHandling, hikerDetails, setHikerDetails, sh
                 onClose={closeModalPendaki}
                 dataPendaki={hikerDetails[editingIndex] || {}}
                 onSave={saveHandler}
+                dataSemuaPendaki={hikerDetails}
             />
         </View>
     )
