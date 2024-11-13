@@ -295,7 +295,7 @@ const SewaTourGuideTigaTahap = () => {
         </View>
       </View>
       
-        <ScrollView >
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View className='ml-6 mr-6 mb-5'>
             <CardKeteranganSewaTourGuide 
               mountainName={mountainName}
@@ -305,39 +305,61 @@ const SewaTourGuideTigaTahap = () => {
           </View>
 
           {currentStage === 1 && (
-            <View className='flex-col flex-1  bg-grayCustom rounded-t-verylarge px-6 max-h-fit pb-16 pt-5'>
-              <DetailCalonPendaki 
-                continueHandling={tahapPorterHandler} 
-                hikerDetails={hikerDetails}
-                setHikerDetails={setHikerDetails}
-                showModalConfirmationDataHiker={showModalConfirmationDataHiker}
-                handleCancelCorfirmationDataHiker={handleCancelCorfirmationDataHiker}
-                isModalConfirmationDataHikerVisible={isModalConfirmationDataHikerVisible}
-                nikAccountOwner={profile.nik}
-                fullNameAccountOwner={profile.fullName}
-                birthDateAccountOwner={profile.birthDate}
-              />
-            </View>
+            <>
+              <View className="mb-6 mx-6">
+                <View className="bg-white rounded-[12px] px-6 py-6 gap-6">
+                  <View className="gap-2">
+                    <Text className="color-thistle text-xs font-iregular">Tanggal pendakian</Text>
+                    <Text className="color-soil text-sm font-ibold">{formattedStartDate} s/d {formattedEndDate}</Text>
+                  </View>
+                </View>
+              </View>
+              
+              <View className=' flex-1  bg-grayCustom rounded-t-verylarge px-6 max-h-fit pt-5'>
+                <DetailCalonPendaki 
+                  continueHandling={tahapPorterHandler} 
+                  hikerDetails={hikerDetails}
+                  setHikerDetails={setHikerDetails}
+                  showModalConfirmationDataHiker={showModalConfirmationDataHiker}
+                  handleCancelCorfirmationDataHiker={handleCancelCorfirmationDataHiker}
+                  isModalConfirmationDataHikerVisible={isModalConfirmationDataHikerVisible}
+                  nikAccountOwner={profile.nik}
+                  fullNameAccountOwner={profile.fullName}
+                  birthDateAccountOwner={profile.birthDate}
+                />
+              </View>
+            </>
           )}
 
           {currentStage === 2 && (
-            <View className=' flex-col bg-grayCustom flex-1 rounded-t-verylarge'>
-              <JasaPorter 
-                continueHandling={tahapReviewHandler} 
-                maxPorter={tourGuide.totalPorter}
-                eachPorterPrice={tourGuide.pricePorter}
-                countPorter={countPorter}
-                tourGuidePriceEachDay={tourGuide.price}
-                additionalPriceEachDayEachHiker={tourGuide.additionalPrice}
-                setCountPorter={setCountPorter}
-                fixedHikerCount={fixedHikerCount}
-                totalPrice={totalPrice}
-                setTotalPrice={setTotalPrice}
-                totalDays={totalDays}
-                startDate={startDateMoment}
-                endDate={endDateMoment}
-              />
-            </View>
+            <>
+              <View className="mb-6 mx-6">
+                <View className="bg-white rounded-[12px] px-6 py-6 gap-6">
+                  <View className="gap-2">
+                    <Text className="color-thistle text-xs font-iregular">Tanggal pendakian</Text>
+                    <Text className="color-soil text-sm font-ibold">{formattedStartDate} s/d {formattedEndDate}</Text>
+                  </View>
+                </View>
+              </View>
+
+              <View className=' flex-col bg-grayCustom flex-1 max-h-fit rounded-t-verylarge'>
+                <JasaPorter 
+                  continueHandling={tahapReviewHandler} 
+                  maxPorter={tourGuide.totalPorter}
+                  eachPorterPrice={tourGuide.pricePorter}
+                  countPorter={countPorter}
+                  tourGuidePriceEachDay={tourGuide.price}
+                  additionalPriceEachDayEachHiker={tourGuide.additionalPrice}
+                  setCountPorter={setCountPorter}
+                  fixedHikerCount={fixedHikerCount}
+                  totalPrice={totalPrice}
+                  setTotalPrice={setTotalPrice}
+                  totalDays={totalDays}
+                  startDate={startDateMoment}
+                  endDate={endDateMoment}
+                />
+              </View>
+            </>
           )}
 
           {currentStage === 3 && (

@@ -39,30 +39,30 @@ const DetailCalonPendaki = ({continueHandling, hikerDetails, setHikerDetails, sh
         (hiker) => hiker.nik && hiker.fullName && hiker.birthDate
     )
 
-    const onToggle = () => {
+    const onToggle = React.useCallback(() => {
         setIsCustDataIncluded((prevState) => {
-            const newState = !prevState
-
+            const newState = !prevState;
             setHikerDetails((prevHikers) => {
-                const updatedHikers = [...prevHikers]
+                const updatedHikers = [...prevHikers];
                 updatedHikers[0] = newState
-                ? {
-                    nik: nikAccountOwner,
-                    fullName: fullNameAccountOwner,
-                    birthDate: birthDateAccountOwner
-                } : {
-                    nik: '',
-                    fullName: '',
-                    birthDate: initialBirthDate
-                }
-                return updatedHikers
-            })
-            return newState
-        })
-    }
+                    ? {
+                          nik: nikAccountOwner,
+                          fullName: fullNameAccountOwner,
+                          birthDate: birthDateAccountOwner,
+                      }
+                    : {
+                          nik: '',
+                          fullName: '',
+                          birthDate: initialBirthDate,
+                      };
+                return updatedHikers;
+            });
+            return newState;
+        });
+    }, [nikAccountOwner, fullNameAccountOwner, birthDateAccountOwner, initialBirthDate]);
 
     return (
-        <View className="gap-6 flex-1 flex-col justify-between mb-20">
+        <View className="gap-6 flex-1 flex-col justify-between">
             <View className="gap-6">
                 <Text className="font-ibold text-soil">Detail Calon Pendaki</Text>
 
@@ -191,7 +191,7 @@ const DetailCalonPendaki = ({continueHandling, hikerDetails, setHikerDetails, sh
 
             <CustomButton
                 buttonHandling={showModalConfirmationDataHiker}
-                customStyle={`min-w-full mb-16 ${isHikerDetailsComplete ? "bg-soil" : "bg-gray-300"}`}
+                customStyle={`min-w-full mb-6 ${isHikerDetailsComplete ? "bg-soil" : "bg-gray-300"}`}
                 title="Lanjutkan"
                 isDisabled={!isHikerDetailsComplete}
             />
