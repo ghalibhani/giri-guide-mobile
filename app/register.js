@@ -14,9 +14,11 @@ export default function RegisterScreen() {
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => state.register);
 
+  const initialBirthDate = new Date(new Date().setFullYear(new Date().getFullYear() - 17));
+
   const [nik, setNik] = useState('');
   const [fullName, setFullName] = useState('')
-  const [birthDate, setBirthDate] = useState(new Date());
+  const [birthDate, setBirthDate] = useState(initialBirthDate);
   const [gender, setGender] = useState('')
   const [address, setAddress] = useState('')
   const [email, setEmail] = useState('')
@@ -36,6 +38,13 @@ export default function RegisterScreen() {
   const [formErrors, setFormErrors] = useState('');
 
   const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const minAge = 17
+  const maxAge = 50
+
+  const maximumDate = new Date();
+  const minimumDate = new Date(new Date().setFullYear(new Date().getFullYear() - maxAge));
+  const maxBirthDate = new Date(new Date().setFullYear(new Date().getFullYear() - minAge));
 
   const showBirthDatePickerHandler = () => {
       setShowBirthDatePicker(true);
@@ -207,6 +216,8 @@ export default function RegisterScreen() {
                     mode='date'
                     display='default'
                     onChange={onChangeBirthDate}
+                    maximumDate={maxBirthDate}
+                    minimumDate={minimumDate}
                 />
               )}
             </View>
