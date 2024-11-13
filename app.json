@@ -5,7 +5,7 @@
       "CAMERA",
       "CAMERA_ROLL"
     ],
-    "slug": "giri-guide",
+    "slug": "giriguide",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logoFixedNoText.png",
@@ -22,12 +22,19 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "package": "com.giri.giri-guide",
+        "versionCode": 1
       },
-      "package": "com.margarethanaibaho2.giriguide"
+      "package": "com.ghalibpratama.giriguide"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "000cc4c8-c471-4ca1-ae9e-fffd034db02d"
+      }
     },
     "assets": [
       "./assets/fonts/"
@@ -35,13 +42,6 @@
     "plugins": [
       "expo-router"
     ],
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "7ed6cfb4-d7ec-4442-a640-ca6182500989"
-      }
-    }
+    "owner": "ghalibpratama"
   }
 }
