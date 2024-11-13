@@ -47,7 +47,7 @@ const JasaPorter = ({continueHandling, maxPorter, eachPorterPrice, countPorter, 
     }
 
     return (
-        <View className="flex-col justify-around">
+        <View className="flex-col flex-1 justify-around">
             <View className="gap-5 mb-24 px-6 pt-5">
                 <Text className="font-ibold text-soil">Jasa Porter</Text>
 

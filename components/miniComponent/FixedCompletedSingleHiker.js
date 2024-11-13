@@ -5,7 +5,7 @@ import moment from 'moment'
 
 const FixedCompletedSingleHiker = ({data, isTourGuide}) => {
     const formattedDate = (date) => {
-        return moment(date).format('DD/MM/YYYY')
+        return moment(date).format("DD MMM YYYY")
     }
     return (
         <View className="border-borderCustom border-[1px] bg-white rounded-xl px-5 py-5">

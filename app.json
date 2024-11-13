@@ -2,17 +2,17 @@
   "expo": {
     "name": "giri-guide",
     "permissions": [
-        "CAMERA",
-        "CAMERA_ROLL"
+      "CAMERA",
+      "CAMERA_ROLL"
     ],
     "slug": "giri-guide",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logoFixedNoText.png",
     "scheme": "myapp",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,12 +23,25 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.margarethanaibaho2.giriguide"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "assets": ["./assets/fonts/"],
-    "plugins": ["expo-router"]
+    "assets": [
+      "./assets/fonts/"
+    ],
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "7ed6cfb4-d7ec-4442-a640-ca6182500989"
+      }
+    }
   }
 }

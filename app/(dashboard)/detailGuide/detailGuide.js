@@ -343,7 +343,7 @@ export default function DetailTourGuideScreen() {
               amount={formatRupiah(simaksiFee || 0)}
             />
             <CostDetailItem
-              label={"Biaya lain-lain"}
+              label={"Biaya layanan aplikasi"}
               amount={formatRupiah(20000)}
             />
             <View className='bg-borderCustom h-[1] my-4'></View>
