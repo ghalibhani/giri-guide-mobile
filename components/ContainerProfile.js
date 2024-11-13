@@ -38,7 +38,13 @@ export default function ContainerProfile({ email, fullName, birthDate }) {
       quality: 1,
     });
 
+    // console.log(result.size);
     if (!result.canceled) {
+      if (result.assets[0].fileSize > 1000000) {
+        Alert.alert("Ukuran file tidak boleh lebih dari 1 MB");
+        return;
+      }
+
       const selectedImageUri = result.assets[0].uri;
 
       const formData = new FormData();

@@ -53,7 +53,7 @@ export default function DetailTourGuideScreen() {
   const [simaksiFee, setSimaksiFee] = useState(0);
   const [totalPriceFirst, setTotalPriceFirst] = useState(0);
 
-  const [isPhotoModalVisible, setIsPhotoModalVisible] = useState(false)
+  const [isPhotoModalVisible, setIsPhotoModalVisible] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTourGuideById(tourGuideId));
@@ -129,12 +129,12 @@ export default function DetailTourGuideScreen() {
   };
 
   const openModal = () => {
-    setIsPhotoModalVisible(true)
-  }
+    setIsPhotoModalVisible(true);
+  };
 
   const closeModal = () => {
-    setIsPhotoModalVisible(false)
-  }
+    setIsPhotoModalVisible(false);
+  };
 
   function formatDecimal(value) {
     return value % 1 === 0 ? `${value.toFixed(1)}` : `${value.toFixed(1)}`;
@@ -189,12 +189,15 @@ export default function DetailTourGuideScreen() {
             source={require("../../../assets/gunung-tour-guide.jpg")}
           />
 
-        <TouchableOpacity onPress={openModal} className=" absolute top-36 left-10 z-10 ">
-          <Image
-            className='w-24 h-24 rounded-full'
-            source={getImageSource(tourGuide.image)}
-          />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={openModal}
+            className=' absolute top-36 left-10 z-10 '
+          >
+            <Image
+              className='w-24 h-24 rounded-full'
+              source={getImageSource(tourGuide.image)}
+            />
+          </TouchableOpacity>
 
           <View className='p-6 rounded-b-3xl bg-white'>
             <View className='flex justify-end items-center gap-2 flex-row'>
@@ -343,7 +346,7 @@ export default function DetailTourGuideScreen() {
               amount={formatRupiah(simaksiFee || 0)}
             />
             <CostDetailItem
-              label={"Biaya lain-lain"}
+              label={"Biaya layanan aplikasi"}
               amount={formatRupiah(20000)}
             />
             <View className='bg-borderCustom h-[1] my-4'></View>
@@ -405,13 +408,13 @@ export default function DetailTourGuideScreen() {
         onRequestClose={closeModal}
       >
         <TouchableWithoutFeedback onPress={closeModal}>
-          <View className="flex-1 justify-center items-center bg-black/50">
-            <TouchableOpacity onPress={() => {}} className="p-0">
-            <Image
+          <View className='flex-1 justify-center items-center bg-black/50'>
+            <TouchableOpacity onPress={() => {}} className='p-0'>
+              <Image
                 source={getImageSource(tourGuide.image)}
-                className="w-96 h-96 rounded-xl"
+                className='w-96 h-96 rounded-xl'
                 resizeMode='cover'
-            />
+              />
             </TouchableOpacity>
           </View>
         </TouchableWithoutFeedback>
