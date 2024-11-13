@@ -13,6 +13,7 @@ import { updateProfileImage } from "../redux/profileSlice";
 import { useSelector } from "react-redux";
 import { Alert } from "react-native";
 import CustomModalSuccess from "./miniComponent/CustomModalSuccess";
+import CustomModalError from "./miniComponent/CustomModalError";
 
 const imageUrl =
   "https://img.freepik.com/free-vector/mountains-landscape-sundown_52683-24164.jpg?t=st=1730344884~exp=1730348484~hmac=19b8de13712b886d72c74b1e599df67156e185888242ecc83453e27b1a6d34f4&w=1380";
@@ -22,6 +23,7 @@ export default function ContainerProfile({ email, fullName, birthDate }) {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profile);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalErrorImage, setIsModalErrorImage] = useState(false);
 
   const pickImage = async () => {
     const permissionResult =
@@ -41,7 +43,8 @@ export default function ContainerProfile({ email, fullName, birthDate }) {
     // console.log(result.size);
     if (!result.canceled) {
       if (result.assets[0].fileSize > 1000000) {
-        Alert.alert("Ukuran file tidak boleh lebih dari 1 MB");
+        // Alert.alert("Ukuran file tidak boleh lebih dari 1 MB");
+        setIsModalErrorImage(true);
         return;
       }
 
@@ -110,6 +113,15 @@ export default function ContainerProfile({ email, fullName, birthDate }) {
       <Text className='mt-[8px] text-thistle text-[12px] font-light'>
         {birthDate}
       </Text>
+
+      <CustomModalError
+        isModalVisible={isModalErrorImage}
+        handleDone={() => setIsModalErrorImage(false)}
+      >
+        <Text className='text-center font-iregular text-evergreen mb-2'>
+          Ukuran file tidak boleh lebih dari 1 MB
+        </Text>
+      </CustomModalError>
       <CustomModalSuccess
         isModalVisible={isModalVisible}
         handleDone={() => setIsModalVisible(false)}
