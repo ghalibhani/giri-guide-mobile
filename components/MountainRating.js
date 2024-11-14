@@ -91,7 +91,7 @@ const MountainRating = ({
       </View> */}
       <View className='flex flex-row items-center gap-4'>
         <FontAwesome6 name='mountain-sun' size={20} color='#B8B591' />
-        <Text className='text-sm font-isemibold text-soil'>
+        <Text className='text-sm font-isemibold text-soil flex-shrink'>
           Berlokasi di {city}
         </Text>
       </View>
